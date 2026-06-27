@@ -15,11 +15,11 @@ paths = [ "/" ]
 localPort = 25207
 
 [services.development]
-run = "pnpm --filter @workspace/oneclick run dev"
+run = "pnpm --filter oneclick run dev"
 
 [services.production]
-build = [ "pnpm", "--filter", "@workspace/oneclick", "run", "build" ]
-publicDir = "artifacts/oneclick/dist/public"
+build = [ "pnpm", "--filter", "oneclick", "run", "build" ]
+publicDir = "artifacts/oneclick/dist"
 serve = "static"
 
 [[services.production.rewrites]]
