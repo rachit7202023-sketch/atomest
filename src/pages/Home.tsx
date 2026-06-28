@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ArrowRight, Zap, Shield, Globe, Clock } from "lucide-react";
+import { ArrowRight, Zap, Shield, Globe, Clock, Sparkles, ChevronRight } from "lucide-react";
 import { SearchBar } from "@/components/SearchBar";
 import { ToolCard } from "@/components/ToolCard";
 import { CategoryCard } from "@/components/CategoryCard";
@@ -59,23 +59,98 @@ export default function Home() {
       <Navbar />
 
       {/* Hero */}
-      <section className="relative overflow-hidden py-20 md:py-32">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-background pointer-events-none" />
-        <div className="container mx-auto px-4 relative text-center">
-          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary text-sm font-medium px-4 py-2 rounded-full mb-6 border border-primary/20">
-            <Zap className="h-4 w-4" />
-            31+ free tools, no sign-up required
+      <section className="relative overflow-hidden pt-24 pb-20 md:pt-32 md:pb-28">
+        {/* Background mesh */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden>
+          {/* Soft radial base */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,hsl(var(--primary)/0.12),transparent)]" />
+          {/* Left accent orb */}
+          <div className="absolute -left-40 top-10 w-[480px] h-[480px] rounded-full bg-[hsl(var(--primary)/0.07)] blur-[120px]" />
+          {/* Right accent orb */}
+          <div className="absolute -right-40 bottom-0 w-[400px] h-[400px] rounded-full bg-[hsl(var(--primary)/0.05)] blur-[100px]" />
+          {/* Subtle grid */}
+          <div
+            className="absolute inset-0 opacity-[0.025] dark:opacity-[0.04]"
+            style={{
+              backgroundImage:
+                "linear-gradient(hsl(var(--foreground)) 1px,transparent 1px),linear-gradient(90deg,hsl(var(--foreground)) 1px,transparent 1px)",
+              backgroundSize: "48px 48px",
+            }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative flex flex-col items-center text-center">
+          {/* Trust badge */}
+          <div className="inline-flex items-center gap-2 bg-primary/8 dark:bg-primary/12 text-primary border border-primary/20 text-xs sm:text-sm font-medium px-4 py-2 rounded-full mb-8 shadow-sm backdrop-blur-sm">
+            <span className="flex h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+            31+ Free Tools &nbsp;·&nbsp; No Sign-up Required &nbsp;·&nbsp; Runs in Your Browser
           </div>
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-none">
-            The Internet's
-            <br />
-            <span className="text-primary">Toolbox</span>
+
+          {/* Headline */}
+          <h1 className="text-[2.6rem] sm:text-6xl md:text-7xl lg:text-[5.25rem] font-extrabold tracking-[-0.03em] leading-[1.05] mb-6 max-w-4xl">
+            Every Tool
+            <br className="hidden sm:block" />
+            {" "}You Need,{" "}
+            <span className="relative inline-block">
+              <span className="relative z-10 bg-gradient-to-r from-primary via-primary to-[hsl(var(--primary)/0.75)] bg-clip-text text-transparent">
+                Instantly Free
+              </span>
+              {/* underline accent */}
+              <span
+                aria-hidden
+                className="absolute -bottom-1 left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-primary/60 to-primary/20"
+              />
+            </span>
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-            Free online tools for developers, students, creators and everyone.
+
+          {/* Sub-headline */}
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-xl mx-auto mb-10 leading-relaxed">
+            A clean, fast toolbox for developers, students, designers, and
+            creators — no ads, no accounts, no nonsense.
           </p>
-          <div className="max-w-2xl mx-auto mb-8">
+
+          {/* Search bar — primary CTA */}
+          <div className="w-full max-w-2xl mx-auto mb-8">
             <SearchBar />
+          </div>
+
+          {/* CTA buttons */}
+          <div className="flex flex-col sm:flex-row items-center gap-3 mb-10">
+            <Link href="/tools">
+              <Button
+                size="lg"
+                className="h-11 px-7 text-sm font-semibold gap-2 rounded-xl shadow-md"
+              >
+                Explore Tools
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </Link>
+            <Button
+              size="lg"
+              variant="outline"
+              disabled
+              className="h-11 px-7 text-sm font-semibold gap-2 rounded-xl opacity-70 cursor-not-allowed"
+            >
+              <Sparkles className="h-4 w-4" />
+              AI Workspace
+              <span className="ml-1 text-[10px] font-bold tracking-wide uppercase bg-primary/10 text-primary border border-primary/20 px-2 py-0.5 rounded-full">
+                Soon
+              </span>
+            </Button>
+          </div>
+
+          {/* Social proof micro-row */}
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs sm:text-sm text-muted-foreground">
+            {[
+              { icon: Shield, label: "Privacy-first — 100% client-side" },
+              { icon: Zap, label: "Instant results, zero latency" },
+              { icon: Globe, label: "Works on any device" },
+            ].map(({ icon: Icon, label }) => (
+              <span key={label} className="flex items-center gap-1.5">
+                <Icon className="h-3.5 w-3.5 shrink-0 text-primary/70" />
+                {label}
+              </span>
+            ))}
           </div>
         </div>
       </section>
