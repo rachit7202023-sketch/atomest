@@ -5,7 +5,7 @@ router = "application"
 deploymentTarget = "autoscale"
 
 [deployment.postBuild]
-args = ["pnpm", "store", "prune"]
+args = ["npm", "cache", "clean", "--force"]
 env = { "CI" = "true" }
 
 [workflows]
@@ -26,14 +26,14 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "pnpm run dev"
+args = "npm run dev"
 waitForPort = 3000
 
 [workflows.workflow.metadata]
 outputType = "webview"
 
 [agent]
-stack = "PNPM_WORKSPACE"
+stack = "NODE_JS"
 expertMode = true
 
 [postMerge]
