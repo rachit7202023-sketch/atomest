@@ -5,6 +5,7 @@ import { ToolCard } from "@/components/ToolCard";
 import { CategoryCard } from "@/components/CategoryCard";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { SEO } from "@/components/seo/SEO";
 import { tools } from "@/data/tools";
 import { categories } from "@/data/categories";
 import { Button } from "@/components/ui/button";
@@ -56,6 +57,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <SEO 
+        title="The Internet's Toolbox"
+        description="31+ free online tools for developers, students, creators and everyone. No sign-up required."
+        canonicalPath="/"
+      />
       <Navbar />
 
       <HeroSection />

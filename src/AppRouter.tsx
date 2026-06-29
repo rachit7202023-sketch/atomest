@@ -1,0 +1,39 @@
+import { Suspense, lazy } from "react";
+import { Switch, Route } from "wouter";
+
+const Home = lazy(() => import("@/pages/Home"));
+const Tools = lazy(() => import("@/pages/Tools"));
+const ToolPage = lazy(() => import("@/pages/ToolPage"));
+const Categories = lazy(() => import("@/pages/Categories"));
+const CategoryPage = lazy(() => import("@/pages/CategoryPage"));
+const About = lazy(() => import("@/pages/About"));
+const NotFound = lazy(() => import("@/pages/not-found"));
+const AtomestAI = lazy(() => import("@/pages/AtomestAI"));
+
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex flex-col items-center gap-4">
+        <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+        <p className="text-sm text-muted-foreground">Loading...</p>
+      </div>
+    </div>
+  );
+}
+
+export default function AppRouter() {
+  return (
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/tools" component={Tools} />
+        <Route path="/tools/:slug" component={ToolPage} />
+        <Route path="/categories" component={Categories} />
+        <Route path="/categories/:slug" component={CategoryPage} />
+        <Route path="/about" component={About} />
+        <Route path="/ai" component={AtomestAI} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
+  );
+}

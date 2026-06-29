@@ -14,6 +14,10 @@ export type Tool = {
   new?: boolean;
   seoTitle?: string;
   seoDescription?: string;
+  howItWorks?: { step: string; title: string; description: string }[];
+  faqs?: { question: string; answer: string }[];
+  benefits?: string[];
+  relatedToolSlugs?: string[];
 };
 
 export const tools: Tool[] = [
