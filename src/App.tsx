@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { HelmetProvider } from "react-helmet-async";
 import AppRouter from "./AppRouter";
+import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
 
 const queryClient = new QueryClient();
 
@@ -15,6 +16,7 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+              <GoogleAnalytics />
               <AppRouter />
             </WouterRouter>
             <Toaster />
