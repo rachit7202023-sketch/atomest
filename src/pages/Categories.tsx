@@ -5,10 +5,12 @@ import { categories } from "@/data/categories";
 import { tools } from "@/data/tools";
 
 export default function Categories() {
-  const categoriesWithCount = categories.map(cat => ({
-    ...cat,
-    toolCount: tools.filter(t => t.category === cat.id).length,
-  }));
+  const categoriesWithCount = categories
+    .filter(cat => !cat.isWorkspace)
+    .map(cat => ({
+      ...cat,
+      toolCount: tools.filter(t => t.category === cat.id).length,
+    }));
 
   return (
     <div className="min-h-screen bg-background flex flex-col">

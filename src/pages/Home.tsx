@@ -12,8 +12,14 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const popularSearches = [
-  "Word Counter", "JSON Formatter", "Password Generator",
-  "QR Code", "Base64", "UUID Generator", "Case Converter", "BMI Calculator"
+  { name: "Word Counter", slug: "word-counter" },
+  { name: "JSON Formatter", slug: "json-formatter" },
+  { name: "Password Generator", slug: "password-generator" },
+  { name: "QR Code", slug: "qr-code-generator" },
+  { name: "Base64", slug: "base64" },
+  { name: "UUID Generator", slug: "uuid-generator" },
+  { name: "Case Converter", slug: "case-converter" },
+  { name: "BMI Calculator", slug: "bmi-calculator" }
 ];
 
 const featuredSlugs = [
@@ -53,7 +59,7 @@ export default function Home() {
     .map(slug => tools.find(t => t.slug === slug))
     .filter(Boolean) as typeof tools;
 
-  const recentTools = tools.slice(-6);
+  const recentTools = tools.filter(t => t.category !== "ai").slice(-6);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -71,12 +77,12 @@ export default function Home() {
         <div className="flex flex-wrap gap-2 justify-center">
           <span className="text-sm text-muted-foreground font-medium py-2">Popular:</span>
           {popularSearches.map(term => (
-            <Link key={term} href={`/tools?q=${encodeURIComponent(term)}`}>
+            <Link key={term.slug} href={`/tools/${term.slug}`}>
               <button
                 className="text-sm px-4 py-2 rounded-full border border-border bg-card hover:border-primary hover:text-primary hover:bg-primary/5 transition-all font-medium"
-                data-testid={`tag-search-${term.toLowerCase().replace(/\s/g, "-")}`}
+                data-testid={`tag-search-${term.slug}`}
               >
-                {term}
+                {term.name}
               </button>
             </Link>
           ))}
@@ -138,7 +144,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {categories.map(cat => (
+            {categories.filter(cat => !cat.isWorkspace).map(cat => (
               <CategoryCard key={cat.id} category={cat} />
             ))}
           </div>

@@ -21,9 +21,15 @@ function PageLoader() {
   );
 }
 
+import { ScrollToTop } from "@/components/ScrollToTop";
+
 export default function AppRouter() {
+  const isClient = typeof window !== "undefined";
+  
   return (
-    <Suspense fallback={<PageLoader />}>
+    <>
+      {isClient && <ScrollToTop />}
+      <Suspense fallback={<PageLoader />}>
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/tools" component={Tools} />
@@ -34,6 +40,7 @@ export default function AppRouter() {
         <Route path="/ai" component={AtomestAI} />
         <Route component={NotFound} />
       </Switch>
-    </Suspense>
+      </Suspense>
+    </>
   );
 }

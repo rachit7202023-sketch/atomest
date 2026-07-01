@@ -438,30 +438,31 @@ export function HeroSection() {
                 </Link>
 
                 {/* Secondary */}
-                <button
-                  disabled
-                  className="inline-flex items-center gap-2 px-7 h-12 rounded-xl text-sm font-semibold cursor-not-allowed select-none"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(139,92,246,0.04) 100%)",
-                    border: "1px solid rgba(139,92,246,0.22)",
-                    color: "rgba(167,139,250,0.80)",
-                    backdropFilter: "blur(8px)",
-                  }}
-                >
-                  <Sparkles className="h-4 w-4" />
-                  AI Workspace
-                  <span
-                    className="ml-1 px-2 py-0.5 rounded-full text-[10px] font-bold tracking-widest uppercase"
+                <Link href="/ai">
+                  <button
+                    className="inline-flex items-center gap-2 px-7 h-12 rounded-xl text-sm font-semibold transition-all hover:bg-primary/10"
                     style={{
-                      background: "rgba(139,92,246,0.15)",
-                      border: "1px solid rgba(139,92,246,0.28)",
-                      color: "rgb(196,181,253)",
+                      background:
+                        "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(139,92,246,0.04) 100%)",
+                      border: "1px solid rgba(139,92,246,0.22)",
+                      color: "rgba(167,139,250,0.95)",
+                      backdropFilter: "blur(8px)",
                     }}
                   >
-                    Soon
-                  </span>
-                </button>
+                    <Sparkles className="h-4 w-4" />
+                    AI Workspace
+                    <span
+                      className="ml-1 px-2 py-0.5 rounded-full text-[10px] font-bold tracking-widest uppercase"
+                      style={{
+                        background: "rgba(139,92,246,0.15)",
+                        border: "1px solid rgba(139,92,246,0.28)",
+                        color: "rgb(196,181,253)",
+                      }}
+                    >
+                      New
+                    </span>
+                  </button>
+                </Link>
               </div>
 
               {/* Trust indicators */}

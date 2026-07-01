@@ -5,45 +5,11 @@ import { motion } from "framer-motion";
 import { Sparkles, BookOpen, Code2, PenTool, TrendingUp, Briefcase, CheckCircle2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-const workspaces = [
-  {
-    title: "Learn",
-    subtitle: "Study smarter with AI",
-    icon: BookOpen,
-    color: "from-blue-500/20 to-cyan-500/20 text-blue-500",
-    features: ["PDF Summaries", "Flashcards", "Quiz Generator", "Revision Notes", "Viva Questions"],
-  },
-  {
-    title: "Code",
-    subtitle: "Build software faster",
-    icon: Code2,
-    color: "from-emerald-500/20 to-teal-500/20 text-emerald-500",
-    features: ["Explain Code", "Debug", "Generate Regex", "SQL Helper", "API Assistant"],
-  },
-  {
-    title: "Write",
-    subtitle: "Your AI writing partner",
-    icon: PenTool,
-    color: "from-purple-500/20 to-pink-500/20 text-purple-500",
-    features: ["Rewrite", "Grammar", "Email Writer", "Summaries", "Tone Change"],
-  },
-  {
-    title: "Grow",
-    subtitle: "AI for creators & marketers",
-    icon: TrendingUp,
-    color: "from-orange-500/20 to-red-500/20 text-orange-500",
-    features: ["Hooks", "Captions", "SEO", "Product Copy", "Ads"],
-  },
-  {
-    title: "Career",
-    subtitle: "Land your next opportunity",
-    icon: Briefcase,
-    color: "from-indigo-500/20 to-violet-500/20 text-indigo-500",
-    features: ["Resume Review", "Cover Letter", "Interview Practice", "LinkedIn", "Resume Summary"],
-  },
-];
+import { tools } from "@/data/tools";
+import { ToolCard } from "@/components/ToolCard";
 
 export default function AtomestAI() {
+  const aiTools = tools.filter(t => t.category === "ai");
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
@@ -88,43 +54,17 @@ export default function AtomestAI() {
 
         {/* Workspaces Grid */}
         <section className="container mx-auto px-4 pb-32">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto justify-center">
-            {workspaces.map((space, index) => {
-              const Icon = space.icon;
-              return (
-                <motion.div
-                  key={space.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group relative"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="h-full rounded-3xl border border-border bg-card/50 backdrop-blur-xl p-8 hover:border-primary/30 transition-all duration-300 shadow-sm hover:shadow-xl hover:shadow-primary/5">
-                    <div className="flex justify-between items-start mb-6">
-                      <div className={`p-4 rounded-2xl bg-gradient-to-br ${space.color}`}>
-                        <Icon className="w-8 h-8" />
-                      </div>
-                      <Badge variant="outline" className="rounded-full bg-background/50 font-medium border-border">
-                        Early Access
-                      </Badge>
-                    </div>
-                    
-                    <h3 className="text-2xl font-bold mb-2 tracking-tight">{space.title}</h3>
-                    <p className="text-muted-foreground mb-8 text-lg">{space.subtitle}</p>
-                    
-                    <ul className="space-y-3">
-                      {space.features.map(feature => (
-                        <li key={feature} className="flex items-center gap-3 text-sm font-medium">
-                          <CheckCircle2 className="w-4 h-4 text-primary" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              );
-            })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto justify-center">
+            {aiTools.map((tool, index) => (
+              <motion.div
+                key={tool.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <ToolCard tool={tool} />
+              </motion.div>
+            ))}
           </div>
         </section>
 

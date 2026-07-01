@@ -6,7 +6,7 @@ import { HelmetProvider } from "react-helmet-async";
 import AppRouter from "./AppRouter";
 
 export function render(url: string, helmetContext: any) {
-  const { hook } = memoryLocation({ path: url });
+  const { hook } = memoryLocation({ path: url, static: true });
 
   const html = renderToString(
     <React.StrictMode>

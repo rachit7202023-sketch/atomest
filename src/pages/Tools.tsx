@@ -33,6 +33,9 @@ export default function Tools() {
         const text = [tool.name, tool.description, tool.category, ...tool.keywords].join(" ").toLowerCase();
         return terms.every(t => text.includes(t));
       });
+    } else {
+      // Hide AI tools by default when there is no explicit search
+      result = result.filter(tool => tool.category !== "ai");
     }
 
     if (selectedCategory !== "all") {
@@ -49,7 +52,7 @@ export default function Tools() {
   }, [query, selectedCategory, sortBy]);
 
   const activeCategories = categories.filter(c =>
-    tools.some(t => t.category === c.id)
+    !c.isWorkspace && tools.some(t => t.category === c.id)
   );
 
   return (
