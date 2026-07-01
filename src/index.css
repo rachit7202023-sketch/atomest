@@ -93,6 +93,14 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+:root {
+  /* Unified Motion Language */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
 /* LIGHT MODE */
 :root {
   --button-outline: rgba(0,0,0, .10);
@@ -233,6 +241,57 @@
   input[type="search"]::-webkit-search-cancel-button {
     @apply hidden;
   }
+  /* Depth System */
+  .depth-ambient {
+    z-index: -10;
+    pointer-events: none;
+  }
+  .depth-base {
+    z-index: 0;
+    background-color: hsl(var(--background));
+  }
+  .depth-elevated {
+    z-index: 10;
+    background-color: hsl(var(--card) / 0.65);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid hsl(var(--border) / 0.4);
+  }
+  .depth-floating {
+    z-index: 50;
+    box-shadow: 0 32px 64px -16px rgba(0,0,0,0.25);
+  }
+
+  /* Sophisticated Typography */
+  .tracking-tight-head {
+    letter-spacing: -0.04em;
+  }
+  .tracking-micro {
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Shimmer Loading Animation */
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+
+  /* Magnetic Spotlight Glow (for ToolCards) */
+  .spotlight-overlay {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    transition: opacity 0.4s var(--ease-out-expo);
+    background: radial-gradient(
+      600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      hsl(var(--primary) / 0.1),
+      transparent 40%
+    );
+  }
+  
   [contenteditable][data-placeholder]:empty::before {
     content: attr(data-placeholder);
     color: hsl(var(--muted-foreground));

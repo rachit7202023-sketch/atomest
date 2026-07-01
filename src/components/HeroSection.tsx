@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Search, ArrowRight, Sparkles, Type, QrCode, KeyRound, Palette, Image as ImageIcon, Calculator, Braces } from "lucide-react";
+import { motion } from "framer-motion";
 import { useSearch } from "@/hooks/useSearch";
 
 // ─── Orbital illustration ────────────────────────────────────────────────────
@@ -356,11 +357,19 @@ export function HeroSection() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center pt-20 pb-16 md:pt-28 md:pb-24">
 
             {/* ── LEFT COLUMN ── */}
-            <div className="flex flex-col items-start text-left max-w-xl">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="flex flex-col items-start text-left max-w-xl"
+            >
 
               {/* Announcement badge */}
-              <div
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs sm:text-sm font-medium"
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs sm:text-sm font-semibold tracking-wide"
                 style={{
                   background:
                     "linear-gradient(135deg, rgba(139,92,246,0.12) 0%, rgba(124,58,237,0.08) 100%)",
@@ -371,20 +380,23 @@ export function HeroSection() {
                 }}
               >
                 <Sparkles
-                  className="h-3.5 w-3.5 shrink-0"
+                  className="h-3.5 w-3.5 shrink-0 animate-pulse"
                   style={{ color: "rgb(167,139,250)" }}
                 />
-                31+ Browser Tools &nbsp;·&nbsp; Privacy First &nbsp;·&nbsp; No Sign-up Required
-              </div>
+                31+ Browser Tools &nbsp;·&nbsp; Privacy First &nbsp;·&nbsp; Free
+              </motion.div>
 
               {/* Headline */}
-              <h1
-                className="font-extrabold tracking-[-0.03em] leading-[1.06] mb-5"
-                style={{ fontSize: "clamp(2.4rem, 5vw, 4.25rem)" }}
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+                className="font-extrabold tracking-tight-head leading-[1.06] mb-6"
+                style={{ fontSize: "clamp(2.4rem, 5vw, 4.5rem)" }}
               >
                 <span className="text-foreground block">Your Browser—</span>
                 <span
-                  className="block"
+                  className="block drop-shadow-md"
                   style={{
                     background:
                       "linear-gradient(120deg, #c4b5fd 0%, #a78bfa 30%, #7c3aed 70%, #6d28d9 100%)",
@@ -395,52 +407,57 @@ export function HeroSection() {
                 >
                   Supercharged.
                 </span>
-              </h1>
+              </motion.h1>
 
               {/* Sub-headline */}
-              <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-8 max-w-md">
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+                className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-10 max-w-md opacity-90"
+              >
                 A curated collection of fast, privacy-first browser tools for
                 developers, students, creators, and professionals. No downloads.
                 No accounts. Just open and get things done.
-              </p>
+              </motion.p>
 
               {/* Search bar */}
-              <div className="w-full mb-6">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+                className="w-full mb-8 relative z-20"
+              >
                 <HeroSearch />
-              </div>
+              </motion.div>
 
               {/* CTA buttons */}
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-10">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+                className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-12 relative z-10"
+              >
                 {/* Primary */}
                 <Link href="/tools">
                   <button
-                    className="group inline-flex items-center gap-2 px-7 h-12 rounded-xl text-sm font-semibold text-white transition-all"
+                    className="group inline-flex items-center gap-2 px-8 h-[52px] rounded-xl text-[15px] font-bold text-white transition-all duration-300 ease-out-expo hover:scale-[1.02] active:scale-[0.98]"
                     style={{
                       background:
                         "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)",
                       boxShadow:
-                        "0 0 0 1px rgba(124,58,237,0.4), 0 4px 20px rgba(124,58,237,0.35)",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.boxShadow =
-                        "0 0 0 1px rgba(124,58,237,0.6), 0 6px 28px rgba(124,58,237,0.5)";
-                      (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLButtonElement).style.boxShadow =
-                        "0 0 0 1px rgba(124,58,237,0.4), 0 4px 20px rgba(124,58,237,0.35)";
-                      (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
+                        "0 0 0 1px rgba(124,58,237,0.4), 0 8px 24px -4px rgba(124,58,237,0.5)",
                     }}
                   >
                     Explore Tools
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </button>
                 </Link>
 
                 {/* Secondary */}
                 <Link href="/ai">
                   <button
-                    className="inline-flex items-center gap-2 px-7 h-12 rounded-xl text-sm font-semibold transition-all hover:bg-primary/10"
+                    className="group inline-flex items-center gap-2 px-8 h-[52px] rounded-xl text-[15px] font-bold transition-all duration-300 ease-out-expo hover:bg-primary/10 hover:scale-[1.02] active:scale-[0.98]"
                     style={{
                       background:
                         "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(139,92,246,0.04) 100%)",
@@ -463,7 +480,7 @@ export function HeroSection() {
                     </span>
                   </button>
                 </Link>
-              </div>
+              </motion.div>
 
               {/* Trust indicators */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3 w-full">
@@ -482,7 +499,7 @@ export function HeroSection() {
                   </div>
                 ))}
               </div>
-            </div>
+            </motion.div>
 
             {/* ── RIGHT COLUMN — Orbital illustration ── */}
             <div className="hidden lg:flex justify-center items-center">

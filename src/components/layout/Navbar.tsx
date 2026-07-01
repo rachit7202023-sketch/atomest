@@ -10,24 +10,25 @@ export function Navbar() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="sticky top-0 z-50 w-full bg-background/65 backdrop-blur-2xl border-b border-white/5 dark:border-white/5 transition-all duration-300">
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center gap-2 group">
-            <img src="/logo.svg" width="36" height="36" alt="Atomest" className="rounded-xl group-hover:scale-105 transition-transform flex-shrink-0" />
+        <div className="flex items-center gap-8">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <img src="/logo.svg" width="36" height="36" alt="Atomest" className="rounded-xl group-hover:scale-105 transition-transform duration-500 ease-out flex-shrink-0 shadow-sm" />
             <div className="flex flex-col leading-none">
-              <span className="font-bold text-lg tracking-tight">Atomest</span>
-              <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">The Internet's Toolbox</span>
+              <span className="font-extrabold text-[1.15rem] tracking-tight-head">Atomest</span>
+              <span className="text-[9px] text-muted-foreground font-semibold uppercase tracking-micro mt-[1px]">The Internet's Toolbox</span>
             </div>
           </Link>
-          <div className="hidden md:flex items-center gap-6 text-sm font-medium">
-            <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors">Home</Link>
-            <Link href="/tools" className="text-muted-foreground hover:text-foreground transition-colors">All Tools</Link>
-            <Link href="/categories" className="text-muted-foreground hover:text-foreground transition-colors">Categories</Link>
-            <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors">About</Link>
-            <Link href="/ai" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-primary" />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70 font-semibold">Atomest AI</span>
+          <div className="hidden md:flex items-center gap-7 text-[14px] font-medium tracking-tight">
+            <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors duration-200">Home</Link>
+            <Link href="/tools" className="text-muted-foreground hover:text-foreground transition-colors duration-200">All Tools</Link>
+            <Link href="/categories" className="text-muted-foreground hover:text-foreground transition-colors duration-200">Categories</Link>
+            <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors duration-200">About</Link>
+            <Link href="/ai" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5 duration-200">
+              <Sparkles className="w-3.5 h-3.5 text-primary animate-pulse" />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 font-bold">Atomest AI</span>
             </Link>
           </div>
         </div>

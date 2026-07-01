@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { ArrowRight, Zap, Shield, Globe, Clock } from "lucide-react";
+import { motion } from "framer-motion";
 import { HeroSection } from "@/components/HeroSection";
 import { ToolCard } from "@/components/ToolCard";
 import { CategoryCard } from "@/components/CategoryCard";
@@ -54,6 +55,19 @@ const faqs = [
   },
 ];
 
+const STAGGER_CONTAINER = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1 }
+  }
+};
+
+const STAGGER_ITEM = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" as const } }
+};
+
 export default function Home() {
   const featuredTools = featuredSlugs
     .map(slug => tools.find(t => t.slug === slug))
@@ -73,162 +87,261 @@ export default function Home() {
       <HeroSection />
 
       {/* Popular Searches */}
-      <section className="container mx-auto px-4 pb-16">
-        <div className="flex flex-wrap gap-2 justify-center">
-          <span className="text-sm text-muted-foreground font-medium py-2">Popular:</span>
+      <section className="container mx-auto px-4 pb-16 relative z-10 -mt-6">
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.7, ease: "easeOut" }}
+          className="flex flex-wrap gap-2 justify-center"
+        >
+          <span className="text-[13px] text-muted-foreground font-semibold py-2 px-2 uppercase tracking-widest">Popular:</span>
           {popularSearches.map(term => (
             <Link key={term.slug} href={`/tools/${term.slug}`}>
               <button
-                className="text-sm px-4 py-2 rounded-full border border-border bg-card hover:border-primary hover:text-primary hover:bg-primary/5 transition-all font-medium"
+                className="text-[13px] px-5 py-2 rounded-full border border-border/60 bg-card/60 backdrop-blur-md shadow-sm hover:shadow-md hover:border-primary/40 hover:text-primary transition-all font-bold tracking-wide"
                 data-testid={`tag-search-${term.slug}`}
               >
                 {term.name}
               </button>
             </Link>
           ))}
-        </div>
+        </motion.div>
       </section>
 
-      {/* Popular Tools */}
-      <section className="container mx-auto px-4 py-20 md:py-28">
+      {/* Featured Bento Box */}
+      <section className="container mx-auto px-4 py-24 relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 via-transparent to-transparent opacity-50 pointer-events-none depth-ambient" />
+        
         {/* Section heading */}
-        <div className="text-center mb-14">
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">
-            Popular Tools
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="text-center mb-16 relative z-10"
+        >
+          <h2 className="text-4xl sm:text-5xl font-extrabold tracking-tight-head mb-4">
+            Featured Tools
           </h2>
-          <p className="text-muted-foreground text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+          <p className="text-muted-foreground text-[1.1rem] max-w-xl mx-auto leading-relaxed">
             Discover the tools thousands of users rely on for everyday work.
-            Fast, accurate, and privacy-first.
+            Fast, accurate, and perfectly crafted.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredTools.map(tool => (
-            <ToolCard
-              key={tool.id}
-              tool={tool}
-              popular={[
-                "password-generator",
-                "word-counter",
-                "json-formatter",
-                "qr-code-generator",
-              ].includes(tool.slug)}
-            />
+        {/* Bento Grid */}
+        <motion.div 
+          variants={STAGGER_CONTAINER}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10"
+        >
+          {featuredTools.map((tool, index) => (
+            <motion.div 
+              key={tool.id} 
+              variants={STAGGER_ITEM}
+              className={
+                index === 0 ? "sm:col-span-2 lg:col-span-2 lg:row-span-2 [&>a>div]:h-full [&>a>div]:p-10 [&>a>div>div>h3]:text-3xl [&>a>div>div>p]:text-base" : 
+                index === 1 ? "sm:col-span-1 lg:col-span-2" : 
+                "col-span-1"
+              }
+            >
+              <ToolCard
+                tool={tool}
+                popular={[
+                  "password-generator",
+                  "word-counter",
+                  "json-formatter",
+                  "qr-code-generator",
+                ].includes(tool.slug)}
+              />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* CTA */}
-        <div className="text-center mt-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mt-16 relative z-10"
+        >
           <Link href="/tools">
-            <Button size="lg" className="gap-2 h-12 px-8 rounded-xl text-sm font-semibold">
+            <button className="group inline-flex items-center gap-2 px-8 h-[52px] rounded-xl text-[15px] font-bold text-foreground bg-card border border-border shadow-sm hover:shadow-lg hover:border-primary/30 transition-all duration-300 ease-out-expo hover:scale-[1.02] active:scale-[0.98]">
               Explore All Tools
-              <ArrowRight className="h-4 w-4" />
-            </Button>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1 text-primary" />
+            </button>
           </Link>
-        </div>
+        </motion.div>
       </section>
 
       {/* Categories Grid */}
-      <section className="bg-muted/30 py-16">
-        <div className="container mx-auto px-4">
-          <div className="flex items-end justify-between mb-10">
+      <section className="bg-muted/20 py-24 border-y border-border/40 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="flex items-end justify-between mb-12"
+          >
             <div>
-              <h2 className="text-3xl font-bold tracking-tight">Browse by Category</h2>
-              <p className="text-muted-foreground mt-2">Find the right tool for the job</p>
+              <h2 className="text-4xl font-extrabold tracking-tight-head">Browse by Category</h2>
+              <p className="text-muted-foreground text-[1.1rem] mt-3">Find the exact tool you need for your workflow.</p>
             </div>
             <Link href="/categories">
-              <Button variant="outline" className="gap-2 hidden sm:flex">
-                All Categories <ArrowRight className="h-4 w-4" />
-              </Button>
+              <button className="hidden sm:inline-flex items-center gap-2 px-6 h-12 rounded-xl text-[14px] font-bold text-foreground bg-background border border-border shadow-sm hover:shadow-md hover:border-primary/30 transition-all duration-300">
+                All Categories <ArrowRight className="h-4 w-4 text-primary" />
+              </button>
             </Link>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          </motion.div>
+          
+          <motion.div 
+            variants={STAGGER_CONTAINER}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-5"
+          >
             {categories.filter(cat => !cat.isWorkspace).map(cat => (
-              <CategoryCard key={cat.id} category={cat} />
+              <motion.div key={cat.id} variants={STAGGER_ITEM}>
+                <CategoryCard category={cat} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Recently Added */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="mb-10">
-          <h2 className="text-3xl font-bold tracking-tight">Recently Added</h2>
-          <p className="text-muted-foreground mt-2">The newest tools in our collection</p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section className="container mx-auto px-4 py-24">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="mb-12"
+        >
+          <h2 className="text-4xl font-extrabold tracking-tight-head">Recently Added</h2>
+          <p className="text-muted-foreground text-[1.1rem] mt-3">The newest tools in our collection</p>
+        </motion.div>
+        
+        <motion.div 
+          variants={STAGGER_CONTAINER}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {recentTools.map(tool => (
-            <ToolCard key={tool.id} tool={tool} />
+            <motion.div key={tool.id} variants={STAGGER_ITEM}>
+              <ToolCard tool={tool} />
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* Why Atomest */}
-      <section className="bg-muted/30 py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tight">Why Atomest?</h2>
-            <p className="text-muted-foreground mt-2 max-w-xl mx-auto">
+      <section className="bg-muted/10 py-24 relative overflow-hidden border-t border-border/40">
+        <div className="absolute left-0 bottom-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-[100px] pointer-events-none translate-y-1/3 -translate-x-1/3" />
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-extrabold tracking-tight-head">Why Atomest?</h2>
+            <p className="text-muted-foreground text-[1.1rem] mt-4 max-w-xl mx-auto">
               Built for speed, privacy, and simplicity — the tools you need, right now.
             </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          </motion.div>
+          
+          <motion.div 
+            variants={STAGGER_CONTAINER}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
             {[
               { icon: Globe, title: "100% Free Forever", desc: "Every tool is completely free. No premium tiers, no paywalls, no subscriptions." },
               { icon: Shield, title: "Privacy First", desc: "All processing happens in your browser. Your data never leaves your device." },
               { icon: Zap, title: "Instant Results", desc: "No loading screens. Results appear as you type, without any server round-trips." },
               { icon: Clock, title: "No Account Needed", desc: "Just open and use. No sign-up, no email, no personal information required." },
             ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="bg-card border border-border rounded-xl p-6 flex flex-col items-center text-center">
-                <div className="bg-primary/10 text-primary p-3 rounded-xl mb-4">
-                  <Icon className="h-6 w-6" />
+              <motion.div 
+                key={title} 
+                variants={STAGGER_ITEM}
+                className="bg-card border border-white/5 shadow-sm rounded-[24px] p-8 flex flex-col items-center text-center hover:shadow-xl transition-shadow duration-300 depth-base hover:-translate-y-1"
+              >
+                <div className="bg-primary/10 text-primary p-4 rounded-2xl mb-6 shadow-sm">
+                  <Icon className="h-7 w-7" />
                 </div>
-                <h3 className="font-bold text-lg mb-2">{title}</h3>
-                <p className="text-sm text-muted-foreground">{desc}</p>
-              </div>
+                <h3 className="font-bold text-[1.1rem] mb-3">{title}</h3>
+                <p className="text-[14px] text-muted-foreground leading-relaxed">{desc}</p>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="container mx-auto px-4 py-16 max-w-3xl">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold tracking-tight">Frequently Asked Questions</h2>
-        </div>
-        <Accordion type="single" collapsible className="space-y-3">
-          {faqs.map((faq, i) => (
-            <AccordionItem key={i} value={`faq-${i}`} className="border border-border rounded-xl px-6 bg-card">
-              <AccordionTrigger className="text-left font-semibold hover:no-underline">
-                {faq.q}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                {faq.a}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+      <section className="container mx-auto px-4 py-24 max-w-3xl">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-extrabold tracking-tight-head">Frequently Asked Questions</h2>
+        </motion.div>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          <Accordion type="single" collapsible className="space-y-4">
+            {faqs.map((faq, i) => (
+              <AccordionItem key={i} value={`faq-${i}`} className="border border-white/5 rounded-2xl px-6 py-1 bg-card shadow-sm hover:shadow-md transition-shadow">
+                <AccordionTrigger className="text-left font-bold text-[15px] hover:no-underline hover:text-primary transition-colors py-4">
+                  {faq.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground text-[14px] leading-relaxed pb-4">
+                  {faq.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.div>
       </section>
 
       {/* Newsletter */}
-      <section className="bg-primary py-16">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-primary-foreground mb-3">Stay in the Loop</h2>
-          <p className="text-primary-foreground/80 mb-8 max-w-md mx-auto">
-            Get notified when we add new tools. No spam, unsubscribe anytime.
-          </p>
-          <div className="flex max-w-md mx-auto gap-3">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-xl border-0 bg-white/20 text-primary-foreground placeholder:text-primary-foreground/60 focus:outline-none focus:ring-2 focus:ring-white/40 backdrop-blur"
-              data-testid="input-newsletter-email"
-            />
-            <Button className="bg-white text-primary hover:bg-white/90 font-semibold px-6" data-testid="button-newsletter-subscribe">
-              Subscribe
-            </Button>
-          </div>
+      <section className="bg-foreground py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent opacity-50" />
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl font-extrabold text-background mb-4 tracking-tight-head">Stay in the Loop</h2>
+            <p className="text-background/80 text-[1.1rem] mb-10 max-w-md mx-auto">
+              Get notified when we add new tools. No spam, unsubscribe anytime.
+            </p>
+            <div className="flex flex-col sm:flex-row max-w-md mx-auto gap-3">
+              <input
+                type="email"
+                placeholder="Enter your email address"
+                className="flex-1 px-5 py-4 rounded-xl border border-white/10 bg-white/5 text-background placeholder:text-background/50 focus:outline-none focus:ring-2 focus:ring-primary/50 backdrop-blur-md transition-all text-[15px]"
+                data-testid="input-newsletter-email"
+              />
+              <button className="bg-primary text-primary-foreground hover:bg-primary/90 font-bold px-8 py-4 rounded-xl transition-all shadow-lg hover:shadow-xl active:scale-[0.98] text-[15px]" data-testid="button-newsletter-subscribe">
+                Subscribe
+              </button>
+            </div>
+          </motion.div>
         </div>
       </section>
 

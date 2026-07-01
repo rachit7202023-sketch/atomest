@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import { motion } from "framer-motion";
 import { Category } from "@/data/categories";
 
 interface CategoryCardProps {
@@ -8,20 +9,39 @@ interface CategoryCardProps {
 export function CategoryCard({ category }: CategoryCardProps) {
   const Icon = category.icon;
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+  };
+
   return (
     <Link href={`/categories/${category.id}`}>
-      <div className="group bg-card hover:bg-accent/30 border border-border rounded-xl p-6 transition-all duration-300 hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] hover:border-primary/30 cursor-pointer h-full flex flex-col items-center text-center">
-        <div className={`p-4 rounded-full bg-muted/50 mb-4 group-hover:scale-110 transition-transform ${category.color}`}>
-          <Icon className="h-8 w-8" />
+      <motion.div
+        onMouseMove={handleMouseMove}
+        whileHover={{ y: -4, scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+        className="group relative bg-card border border-white/5 rounded-2xl p-7 transition-all duration-300 shadow-sm hover:shadow-2xl hover:border-primary/30 cursor-pointer h-full flex flex-col items-center text-center overflow-hidden depth-base hover:depth-floating"
+      >
+        {/* Magnetic Spotlight Glow */}
+        <div className="spotlight-overlay opacity-0 group-hover:opacity-100" />
+
+        <div className="relative z-10 w-full flex flex-col items-center h-full">
+          <div className={`p-4 rounded-[18px] bg-muted mb-5 transition-transform duration-300 ease-out-expo group-hover:scale-110 shadow-sm ${category.color}`}>
+            <Icon className="h-8 w-8 drop-shadow-sm" />
+          </div>
+          <h3 className="font-extrabold text-[1.1rem] text-foreground mb-2 tracking-tight group-hover:text-primary transition-colors duration-300">{category.name}</h3>
+          <p className="text-[14px] text-muted-foreground mb-6 line-clamp-2 leading-relaxed opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+            {category.description}
+          </p>
+          <div className="mt-auto text-[11px] font-bold bg-secondary/80 text-secondary-foreground px-4 py-1.5 rounded-full tracking-wider uppercase border border-border/50 group-hover:border-primary/20 transition-colors duration-300 shadow-sm">
+            {category.toolCount} <span className="text-muted-foreground font-semibold">tools</span>
+          </div>
         </div>
-        <h3 className="font-bold text-foreground mb-2">{category.name}</h3>
-        <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
-          {category.description}
-        </p>
-        <div className="mt-auto text-xs font-medium bg-secondary text-secondary-foreground px-3 py-1 rounded-full">
-          {category.toolCount} tools
-        </div>
-      </div>
+      </motion.div>
     </Link>
   );
 }

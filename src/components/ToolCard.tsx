@@ -27,84 +27,83 @@ export function ToolCard({ tool, popular = false }: ToolCardProps) {
   const Icon     = tool.icon;
   const [from, to] = CATEGORY_GRADIENTS[tool.category] ?? CATEGORY_GRADIENTS.default;
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    e.currentTarget.style.setProperty("--mouse-x", `${x}px`);
+    e.currentTarget.style.setProperty("--mouse-y", `${y}px`);
+  };
+
   return (
     <Link href={`/tools/${tool.slug}`}>
       <motion.div
-        whileHover={{ y: -5, transition: { duration: 0.22, ease: "easeOut" } }}
-        className="group relative flex flex-col rounded-[22px] bg-card border border-border cursor-pointer overflow-hidden"
-        style={{
-          boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-          transition: "box-shadow 0.25s ease, border-color 0.25s ease",
-        }}
-        onMouseEnter={e => {
-          (e.currentTarget as HTMLDivElement).style.boxShadow =
-            `0 8px 32px rgba(124,58,237,0.14), 0 2px 8px rgba(0,0,0,0.08)`;
-          (e.currentTarget as HTMLDivElement).style.borderColor =
-            "rgba(139,92,246,0.40)";
-        }}
-        onMouseLeave={e => {
-          (e.currentTarget as HTMLDivElement).style.boxShadow =
-            "0 2px 12px rgba(0,0,0,0.06)";
-          (e.currentTarget as HTMLDivElement).style.borderColor = "";
-        }}
+        onMouseMove={handleMouseMove}
+        whileHover={{ y: -4, scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+        className="group relative flex flex-col rounded-[24px] bg-card border border-white/5 cursor-pointer overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 depth-base hover:border-primary/30"
       >
+        {/* Magnetic Spotlight Glow */}
+        <div className="spotlight-overlay opacity-0 group-hover:opacity-100" />
+
         {/* Popular badge */}
         {popular && (
           <div
-            className="absolute top-3.5 right-3.5 z-10 flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase"
+            className="absolute top-4 right-4 z-10 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase shadow-sm"
             style={{
               background: "linear-gradient(135deg, rgba(124,58,237,0.15), rgba(167,139,250,0.10))",
               border: "1px solid rgba(139,92,246,0.30)",
               color: "rgb(167,139,250)",
+              backdropFilter: "blur(8px)",
             }}
           >
-            ✦ Popular
+            <span className="animate-pulse">✦</span> Popular
           </div>
         )}
 
-        <div className="p-6 flex flex-col h-full">
+        <div className="p-7 flex flex-col h-full relative z-10">
           {/* Icon container */}
-          <div className="mb-5 flex items-start">
+          <div className="mb-6 flex items-start">
             <motion.div
-              whileHover={{ scale: 1.08, transition: { duration: 0.2 } }}
-              className="flex items-center justify-center rounded-2xl"
+              className="flex items-center justify-center rounded-[18px]"
               style={{
-                width: 52,
-                height: 52,
+                width: 56,
+                height: 56,
                 background: `linear-gradient(135deg, ${from}, ${to})`,
-                boxShadow: `0 4px 14px ${from}40`,
+                boxShadow: `0 8px 20px -4px ${from}60`,
                 flexShrink: 0,
               }}
             >
-              <Icon className="h-6 w-6 text-white" />
+              <Icon className="h-7 w-7 text-white drop-shadow-md" />
             </motion.div>
           </div>
 
           {/* Title + description */}
-          <h3 className="text-base font-bold mb-1.5 leading-snug group-hover:text-primary transition-colors duration-200 line-clamp-1">
+          <h3 className="text-[1.1rem] font-extrabold mb-2 leading-tight group-hover:text-primary transition-colors duration-300 tracking-tight">
             {tool.name}
           </h3>
-          <p className="text-sm text-muted-foreground leading-relaxed flex-grow line-clamp-2 mb-4">
+          <p className="text-[14px] text-muted-foreground leading-relaxed flex-grow line-clamp-2 mb-6 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
             {tool.description}
           </p>
 
           {/* Footer row */}
-          <div className="flex items-center justify-between mt-auto pt-4 border-t border-border/60">
+          <div className="flex items-center justify-between mt-auto pt-5 border-t border-border/40">
             <span
-              className="text-xs font-medium px-2.5 py-1 rounded-full"
+              className="text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider"
               style={{
-                background: `linear-gradient(135deg, ${from}18, ${to}12)`,
-                border: `1px solid ${from}30`,
+                background: `linear-gradient(135deg, ${from}15, ${to}10)`,
+                border: `1px solid ${from}25`,
                 color: from,
               }}
             >
               {category?.name ?? "Tool"}
             </span>
 
-            <span className="flex items-center gap-1 text-xs font-semibold text-primary">
+            <span className="flex items-center gap-1.5 text-[13px] font-bold text-foreground group-hover:text-primary transition-colors duration-300">
               Open Tool
               <ArrowRight
-                className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1"
+                className="h-4 w-4 transition-transform duration-300 ease-out-expo group-hover:translate-x-1.5"
               />
             </span>
           </div>

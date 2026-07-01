@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { useParams } from "wouter";
 import { Share2, Link as LinkIcon } from "lucide-react";
+import { motion } from "framer-motion";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Breadcrumb } from "@/components/Breadcrumb";
@@ -13,12 +14,24 @@ import { SEO } from "@/components/seo/SEO";
 import { ToolContentLayout } from "@/components/seo/ToolContentLayout";
 import NotFound from "@/pages/not-found";
 
+const CATEGORY_GRADIENTS: Record<string, [string, string]> = {
+  text:        ["#6366f1", "#8b5cf6"],
+  developer:   ["#10b981", "#06b6d4"],
+  generators:  ["#f59e0b", "#ef4444"],
+  calculators: ["#6366f1", "#3b82f6"],
+  color:       ["#ec4899", "#f43f5e"],
+  image:       ["#f43f5e", "#fb923c"],
+  utilities:   ["#64748b", "#6366f1"],
+  ai:          ["#8b5cf6", "#6366f1"],
+  default:     ["#7c3aed", "#a78bfa"],
+};
+
 function ToolSkeleton() {
   return (
-    <div className="space-y-4">
-      <Skeleton className="h-10 w-full" />
-      <Skeleton className="h-48 w-full" />
-      <Skeleton className="h-10 w-1/3" />
+    <div className="space-y-6">
+      <Skeleton className="h-12 w-full" />
+      <Skeleton className="h-[200px] w-full" />
+      <Skeleton className="h-12 w-1/3" />
     </div>
   );
 }
@@ -49,6 +62,7 @@ export default function ToolPage() {
   };
 
   const Icon = tool.icon;
+  const [from, to] = CATEGORY_GRADIENTS[tool.category] ?? CATEGORY_GRADIENTS.default;
 
   // JSON-LD Schema Generation
   const schemas: any[] = [
@@ -109,7 +123,15 @@ export default function ToolPage() {
   });
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
+      {/* Background ambient mesh gradient based on category */}
+      <div 
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] opacity-10 pointer-events-none rounded-full blur-[120px]"
+        style={{
+          background: `radial-gradient(ellipse at center, ${from}, transparent 70%)`
+        }}
+      />
+      
       <SEO 
         title={tool.seoTitle || tool.name}
         description={tool.seoDescription || tool.metaDescription || tool.description}
@@ -118,47 +140,81 @@ export default function ToolPage() {
       />
       <Navbar />
 
-      <main className="container mx-auto px-4 py-10 flex-1 max-w-5xl">
-        <Breadcrumb items={[
-          { label: "Tools", href: "/tools" },
-          { label: tool.name }
-        ]} />
+      <main className="container mx-auto px-4 py-12 flex-1 max-w-5xl relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <Breadcrumb items={[
+            { label: "Tools", href: "/tools" },
+            { label: tool.name }
+          ]} />
+        </motion.div>
 
-        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-8">
-          <div className="flex items-start gap-4">
-            <div className="bg-primary/10 text-primary p-3 rounded-xl flex-shrink-0">
-              <Icon className="h-8 w-8" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight">{tool.name}</h1>
-              <p className="text-muted-foreground mt-1">{tool.description}</p>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+          className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 mb-12 mt-8"
+        >
+          <div className="flex items-center sm:items-start gap-5">
+            <motion.div 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="flex items-center justify-center rounded-[24px] flex-shrink-0"
+              style={{
+                width: 80,
+                height: 80,
+                background: `linear-gradient(135deg, ${from}, ${to})`,
+                boxShadow: `0 12px 32px -8px ${from}80, inset 0 2px 4px rgba(255,255,255,0.2)`,
+              }}
+            >
+              <Icon className="h-10 w-10 text-white drop-shadow-md" />
+            </motion.div>
+            <div className="flex flex-col justify-center h-[80px]">
+              <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight-head leading-tight">{tool.name}</h1>
+              <p className="text-muted-foreground text-[1.1rem] mt-1 hidden sm:block">{tool.description}</p>
             </div>
           </div>
-          <div className="flex gap-2 flex-shrink-0">
-            <Button variant="outline" size="sm" onClick={handleShare} className="gap-2" data-testid="button-share">
+          <p className="text-muted-foreground sm:hidden mb-2">{tool.description}</p>
+          
+          <div className="flex gap-2 flex-shrink-0 mt-2 sm:mt-4">
+            <Button variant="outline" size="sm" onClick={handleShare} className="gap-2 rounded-lg font-bold shadow-sm" data-testid="button-share">
               <Share2 className="h-4 w-4" /> Share
             </Button>
-            <Button variant="outline" size="sm" onClick={handleCopyLink} className="gap-2" data-testid="button-copy-link">
-              <LinkIcon className="h-4 w-4" /> Copy Link
+            <Button variant="outline" size="sm" onClick={handleCopyLink} className="gap-2 rounded-lg font-bold shadow-sm" data-testid="button-copy-link">
+              <LinkIcon className="h-4 w-4" /> Copy
             </Button>
           </div>
-        </div>
+        </motion.div>
 
-        {/* Tool Interface */}
-        <div className="bg-card border border-border rounded-2xl p-6 md:p-8 mb-12 shadow-sm">
+        {/* Tool Interface Container */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+          className="bg-card/80 backdrop-blur-xl border border-white/10 rounded-[32px] p-6 md:p-10 mb-16 shadow-2xl depth-floating"
+        >
           {ToolComponent ? (
             <Suspense fallback={<ToolSkeleton />}>
               <ToolComponent />
             </Suspense>
           ) : (
-            <div className="text-center py-12 text-muted-foreground">
+            <div className="text-center py-16 text-muted-foreground text-lg">
               Tool component not found.
             </div>
           )}
-        </div>
+        </motion.div>
 
         {/* Dynamic Semantic Content Architecture */}
-        <ToolContentLayout tool={tool} />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+        >
+          <ToolContentLayout tool={tool} />
+        </motion.div>
       </main>
 
       <Footer />
