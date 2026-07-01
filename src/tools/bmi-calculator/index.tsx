@@ -1,132 +1,271 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Share2, Printer, Download, RefreshCw, Activity } from "lucide-react";
+import { BMIGauge } from "./components/BMIGauge";
+import { CaloriePlanner } from "./components/CaloriePlanner";
+import { Roadmap } from "./components/Roadmap";
+import { HealthInsights } from "./components/HealthInsights";
+import { SEOContent } from "./components/SEOContent";
+import { 
+  calculateBMI, getBMICategory, getIdealWeightRange, calculateBMR, calculateTDEE, 
+  kgToLbs, lbsToKg, cmToFeetInches, feetInchesToCm 
+} from "./utils";
+import { useToast } from "@/hooks/use-toast";
 
 export default function BmiCalculator() {
   const [isMetric, setIsMetric] = useState(true);
+  const [gender, setGender] = useState<"male" | "female">("male");
+  const [age, setAge] = useState<string>("30");
+  const [activityLevel, setActivityLevel] = useState("sedentary");
   
-  // Metric
-  const [cm, setCm] = useState("");
-  const [kg, setKg] = useState("");
-  
-  // Imperial
-  const [feet, setFeet] = useState("");
-  const [inches, setInches] = useState("");
-  const [lbs, setLbs] = useState("");
+  // Base state is stored in Metric internally, but we expose local state for inputs to allow empty fields
+  const [cm, setCm] = useState("175");
+  const [kg, setKg] = useState("70");
+  const [feet, setFeet] = useState("5");
+  const [inches, setInches] = useState("9");
+  const [lbs, setLbs] = useState("154");
 
-  const [bmi, setBmi] = useState<number | null>(null);
+  const [bmi, setBmi] = useState<number>(0);
+  const { toast } = useToast();
+  const printRef = useRef<HTMLDivElement>(null);
+
+  // Handle unit toggling without losing data
+  const handleUnitToggle = (checked: boolean) => {
+    const newIsMetric = !checked;
+    setIsMetric(newIsMetric);
+    if (newIsMetric) {
+      // Converting Imperial to Metric
+      const totalInches = (parseFloat(feet || "0") * 12) + parseFloat(inches || "0");
+      setCm(totalInches > 0 ? (totalInches * 2.54).toFixed(1) : "");
+      setKg(lbs ? lbsToKg(parseFloat(lbs)).toFixed(1) : "");
+    } else {
+      // Converting Metric to Imperial
+      if (cm) {
+        const { feet: f, inches: i } = cmToFeetInches(parseFloat(cm));
+        setFeet(f.toString());
+        setInches(i.toString());
+      }
+      if (kg) {
+        setLbs(kgToLbs(parseFloat(kg)).toFixed(1));
+      }
+    }
+  };
 
   useEffect(() => {
+    let weightKg = 0;
+    let heightCm = 0;
+    
     if (isMetric) {
-      const h = parseFloat(cm) / 100;
-      const w = parseFloat(kg);
-      if (h > 0 && w > 0) {
-        setBmi(+(w / (h * h)).toFixed(1));
-      } else {
-        setBmi(null);
-      }
+      weightKg = parseFloat(kg || "0");
+      heightCm = parseFloat(cm || "0");
     } else {
-      const h = (parseFloat(feet || "0") * 12) + parseFloat(inches || "0");
-      const w = parseFloat(lbs);
-      if (h > 0 && w > 0) {
-        setBmi(+((w / (h * h)) * 703).toFixed(1));
-      } else {
-        setBmi(null);
-      }
+      weightKg = lbsToKg(parseFloat(lbs || "0"));
+      heightCm = feetInchesToCm(parseFloat(feet || "0"), parseFloat(inches || "0"));
+    }
+
+    if (weightKg > 0 && heightCm > 0) {
+      setBmi(calculateBMI(weightKg, heightCm));
+    } else {
+      setBmi(0);
     }
   }, [isMetric, cm, kg, feet, inches, lbs]);
 
-  const getCategory = (val: number) => {
-    if (val < 18.5) return { name: "Underweight", color: "text-blue-500", bg: "bg-blue-50 border-blue-200 dark:bg-blue-950/30" };
-    if (val >= 18.5 && val < 25) return { name: "Normal weight", color: "text-emerald-500", bg: "bg-emerald-50 border-emerald-200 dark:bg-emerald-950/30" };
-    if (val >= 25 && val < 30) return { name: "Overweight", color: "text-orange-500", bg: "bg-orange-50 border-orange-200 dark:bg-orange-950/30" };
-    return { name: "Obese", color: "text-red-500", bg: "bg-red-50 border-red-200 dark:bg-red-950/30" };
+  const heightCm = isMetric ? parseFloat(cm || "0") : feetInchesToCm(parseFloat(feet || "0"), parseFloat(inches || "0"));
+  const weightKg = isMetric ? parseFloat(kg || "0") : lbsToKg(parseFloat(lbs || "0"));
+  
+  const categoryData = bmi > 0 ? getBMICategory(bmi) : null;
+  const idealRange = heightCm > 0 ? getIdealWeightRange(heightCm) : null;
+  
+  const bmr = heightCm > 0 && weightKg > 0 && parseFloat(age) > 0 ? calculateBMR(weightKg, heightCm, parseFloat(age), gender) : 0;
+  const tdee = bmr > 0 ? calculateTDEE(bmr, activityLevel as any) : 0;
+
+  // Comparison logic
+  const targetWeightKg = idealRange ? (weightKg > idealRange.max ? idealRange.max : weightKg < idealRange.min ? idealRange.min : weightKg) : weightKg;
+  const diffKg = weightKg - targetWeightKg;
+
+  const displayWeight = (wKg: number) => isMetric ? `${wKg.toFixed(1)} kg` : `${kgToLbs(wKg).toFixed(1)} lbs`;
+
+  const handlePrint = () => {
+    window.print();
   };
 
-  const category = bmi ? getCategory(bmi) : null;
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast({ title: "Link copied to clipboard" });
+  };
 
   return (
-    <div className="max-w-xl mx-auto">
-      <div className="bg-card border rounded-2xl p-6 sm:p-8 shadow-sm space-y-8">
+    <div className="max-w-6xl mx-auto print:max-w-none print:m-0 print:bg-white print:text-black" ref={printRef}>
+      
+      {/* Dashboard Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-[400px_1fr] gap-8">
         
-        <div className="flex items-center justify-between p-4 bg-muted/50 rounded-xl border">
-          <Label className="font-semibold cursor-pointer" onClick={() => setIsMetric(true)}>Metric (cm/kg)</Label>
-          <Switch 
-            checked={!isMetric} 
-            onCheckedChange={(v) => setIsMetric(!v)} 
-          />
-          <Label className="font-semibold cursor-pointer" onClick={() => setIsMetric(false)}>Imperial (ft/lbs)</Label>
-        </div>
-
+        {/* Left Column: Inputs & Gauge */}
         <div className="space-y-6">
-          <div className="space-y-4">
-            <h3 className="font-semibold text-muted-foreground uppercase tracking-wider text-sm">Height</h3>
-            {isMetric ? (
-              <div>
-                <Input 
-                  type="number" 
-                  placeholder="Height in cm" 
-                  className="h-14 text-lg" 
-                  value={cm} 
-                  onChange={(e) => setCm(e.target.value)} 
-                />
+          <div className="bg-card border rounded-3xl p-6 sm:p-8 shadow-sm print:shadow-none print:border-none print:p-0">
+            <div className="flex items-center justify-between p-2 mb-8 bg-muted/50 rounded-xl border print:hidden">
+              <Label className="font-semibold cursor-pointer px-4 py-2 flex-1 text-center" onClick={() => handleUnitToggle(false)}>Metric</Label>
+              <Switch checked={!isMetric} onCheckedChange={handleUnitToggle} />
+              <Label className="font-semibold cursor-pointer px-4 py-2 flex-1 text-center" onClick={() => handleUnitToggle(true)}>Imperial</Label>
+            </div>
+
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-4 print:hidden">
+                <div className="space-y-2">
+                  <Label>Gender</Label>
+                  <Select value={gender} onValueChange={(v: any) => setGender(v)}>
+                    <SelectTrigger className="h-12"><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="male">Male</SelectItem>
+                      <SelectItem value="female">Female</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Age</Label>
+                  <Input type="number" value={age} onChange={(e) => setAge(e.target.value)} className="h-12" min="15" max="120" />
+                </div>
               </div>
-            ) : (
-              <div className="grid grid-cols-2 gap-4">
-                <Input 
-                  type="number" 
-                  placeholder="Feet" 
-                  className="h-14 text-lg" 
-                  value={feet} 
-                  onChange={(e) => setFeet(e.target.value)} 
-                />
-                <Input 
-                  type="number" 
-                  placeholder="Inches" 
-                  className="h-14 text-lg" 
-                  value={inches} 
-                  onChange={(e) => setInches(e.target.value)} 
-                />
+
+              <div className="space-y-3">
+                <Label>Height</Label>
+                {isMetric ? (
+                  <div className="relative">
+                    <Input type="number" value={cm} onChange={(e) => setCm(e.target.value)} className="h-14 text-lg pl-4 pr-12 font-medium" />
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold">cm</div>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="relative">
+                      <Input type="number" value={feet} onChange={(e) => setFeet(e.target.value)} className="h-14 text-lg pl-4 pr-12 font-medium" />
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold">ft</div>
+                    </div>
+                    <div className="relative">
+                      <Input type="number" value={inches} onChange={(e) => setInches(e.target.value)} className="h-14 text-lg pl-4 pr-12 font-medium" />
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold">in</div>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+
+              <div className="space-y-3">
+                <Label>Weight</Label>
+                {isMetric ? (
+                  <div className="relative">
+                    <Input type="number" value={kg} onChange={(e) => setKg(e.target.value)} className="h-14 text-lg pl-4 pr-12 font-medium" />
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold">kg</div>
+                  </div>
+                ) : (
+                  <div className="relative">
+                    <Input type="number" value={lbs} onChange={(e) => setLbs(e.target.value)} className="h-14 text-lg pl-4 pr-12 font-medium" />
+                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground font-semibold">lbs</div>
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-2 print:hidden">
+                <Label>Activity Level</Label>
+                <Select value={activityLevel} onValueChange={setActivityLevel}>
+                  <SelectTrigger className="h-12"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="sedentary">Sedentary (Little to no exercise)</SelectItem>
+                    <SelectItem value="light">Lightly Active (1-3 days/week)</SelectItem>
+                    <SelectItem value="moderate">Moderately Active (3-5 days/week)</SelectItem>
+                    <SelectItem value="active">Active (6-7 days/week)</SelectItem>
+                    <SelectItem value="veryActive">Very Active (Physical job/training)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="font-semibold text-muted-foreground uppercase tracking-wider text-sm">Weight</h3>
-            {isMetric ? (
-              <Input 
-                type="number" 
-                placeholder="Weight in kg" 
-                className="h-14 text-lg" 
-                value={kg} 
-                onChange={(e) => setKg(e.target.value)} 
-              />
+          <div className="bg-card border rounded-3xl p-6 sm:p-8 shadow-sm flex flex-col justify-center items-center overflow-hidden print:border-none print:shadow-none print:p-0">
+            {bmi > 0 && categoryData ? (
+              <>
+                <BMIGauge bmi={bmi} />
+                {idealRange && (
+                  <div className="w-full mt-10 pt-6 border-t border-muted/50 text-center text-sm text-muted-foreground">
+                    <div>Healthy weight range for your height:</div>
+                    <div className="font-bold text-foreground text-base mt-1">
+                      {displayWeight(idealRange.min)} - {displayWeight(idealRange.max)}
+                    </div>
+                  </div>
+                )}
+              </>
             ) : (
-              <Input 
-                type="number" 
-                placeholder="Weight in lbs" 
-                className="h-14 text-lg" 
-                value={lbs} 
-                onChange={(e) => setLbs(e.target.value)} 
-              />
+              <div className="py-16 text-center text-muted-foreground flex flex-col items-center">
+                <Activity className="h-12 w-12 opacity-20 mb-4" />
+                Enter your details to see your BMI dashboard
+              </div>
             )}
           </div>
         </div>
 
-        {bmi !== null && category ? (
-          <div className={`mt-8 p-6 rounded-xl border-2 text-center animate-in zoom-in-95 duration-300 ${category.bg}`}>
-            <div className="text-sm font-semibold text-muted-foreground mb-2">Your BMI is</div>
-            <div className={`text-6xl font-black mb-2 ${category.color}`}>{bmi}</div>
-            <div className={`text-xl font-bold ${category.color}`}>{category.name}</div>
-          </div>
-        ) : (
-          <div className="mt-8 p-6 rounded-xl border-2 border-dashed text-center text-muted-foreground">
-            Enter your height and weight to see your BMI
+        {/* Right Column: Insights & Planners */}
+        {bmi > 0 && categoryData && idealRange && (
+          <div className="space-y-6">
+            
+            {/* Action Bar */}
+            <div className="flex gap-2 justify-end print:hidden">
+              <Button variant="outline" size="sm" onClick={handlePrint} className="rounded-xl shadow-sm">
+                <Printer className="h-4 w-4 mr-2" /> Print Report
+              </Button>
+              <Button variant="outline" size="sm" onClick={handleCopyLink} className="rounded-xl shadow-sm">
+                <Share2 className="h-4 w-4 mr-2" /> Share
+              </Button>
+            </div>
+
+            {/* Comparison Cards */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="bg-card border rounded-2xl p-4 shadow-sm flex flex-col justify-center items-center text-center">
+                <div className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-1">Current</div>
+                <div className="text-xl font-black">{displayWeight(weightKg)}</div>
+              </div>
+              <div className="bg-card border rounded-2xl p-4 shadow-sm flex flex-col justify-center items-center text-center">
+                <div className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-1">Ideal</div>
+                <div className="text-xl font-black text-emerald-500">{displayWeight(targetWeightKg)}</div>
+              </div>
+              <div className="bg-card border rounded-2xl p-4 shadow-sm flex flex-col justify-center items-center text-center">
+                <div className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-1">Difference</div>
+                <div className={`text-xl font-black ${Math.abs(diffKg) < 0.5 ? 'text-emerald-500' : diffKg > 0 ? 'text-orange-500' : 'text-blue-500'}`}>
+                  {Math.abs(diffKg) < 0.5 ? "Perfect" : `${diffKg > 0 ? '+' : '-'}${displayWeight(Math.abs(diffKg))}`}
+                </div>
+              </div>
+              <div className="bg-card border rounded-2xl p-4 shadow-sm flex flex-col justify-center items-center text-center">
+                <div className="text-muted-foreground text-xs font-bold uppercase tracking-wider mb-1">TDEE</div>
+                <div className="text-xl font-black">{Math.round(tdee)} <span className="text-xs">kcal</span></div>
+              </div>
+            </div>
+
+            <HealthInsights category={categoryData.category} />
+
+            {Math.abs(diffKg) >= 0.5 && (
+              <>
+                <Roadmap 
+                  currentWeight={weightKg} 
+                  targetWeight={targetWeightKg} 
+                  isMetric={isMetric}
+                  weeklyChangeKg={0.5}
+                />
+                <CaloriePlanner 
+                  currentWeightKg={weightKg} 
+                  targetWeightKg={targetWeightKg} 
+                  tdee={tdee}
+                  isMetric={isMetric}
+                />
+              </>
+            )}
+
           </div>
         )}
-
       </div>
+
+      <SEOContent />
+
     </div>
   );
 }
