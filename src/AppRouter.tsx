@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Switch, Route } from "wouter";
+import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
 
 const Home = lazy(() => import("@/pages/Home"));
 const Tools = lazy(() => import("@/pages/Tools"));
@@ -29,6 +30,7 @@ export default function AppRouter() {
   return (
     <>
       {isClient && <ScrollToTop />}
+      <GoogleAnalytics />
       <Suspense fallback={<PageLoader />}>
       <Switch>
         <Route path="/" component={Home} />

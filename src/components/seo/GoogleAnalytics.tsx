@@ -11,40 +11,14 @@ declare global {
 
 export function GoogleAnalytics() {
   const [location] = useLocation();
-  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID || "G-BFJ0ZJMBTW";
   const isProduction = import.meta.env.PROD;
 
-  // Initialize Google Analytics
-  useEffect(() => {
-    if (!isProduction || !measurementId) return;
-
-    // Check if script already exists to avoid duplication
-    const scriptSrc = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
-    if (!document.querySelector(`script[src="${scriptSrc}"]`)) {
-      const script1 = document.createElement("script");
-      script1.async = true;
-      script1.src = scriptSrc;
-      document.head.appendChild(script1);
-
-      const script2 = document.createElement("script");
-      script2.innerHTML = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){window.dataLayer.push(arguments);}
-        window.gtag = gtag;
-        gtag('js', new Date());
-        gtag('config', '${measurementId}', {
-          page_path: window.location.pathname,
-        });
-      `;
-      document.head.appendChild(script2);
-    }
-  }, [isProduction, measurementId]);
-
-  // Track route changes
+  // Track route changes on client-side
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
     
-    if (isProduction && measurementId && window.gtag) {
+    if (isProduction && typeof window !== "undefined" && window.gtag) {
       // Small timeout ensures the title/meta tags have updated before tracking
       timeoutId = setTimeout(() => {
         window.gtag("config", measurementId, {
