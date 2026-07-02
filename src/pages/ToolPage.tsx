@@ -13,6 +13,8 @@ import { useToast } from "@/hooks/use-toast";
 import { SEO } from "@/components/seo/SEO";
 import { ToolContentLayout } from "@/components/seo/ToolContentLayout";
 import { ToolAnalyticsWrapper } from "@/components/seo/ToolAnalyticsWrapper";
+import { GoogleAd } from "@/components/ads/GoogleAd";
+import { AD_SLOTS } from "@/config/ads";
 import NotFound from "@/pages/not-found";
 
 const CATEGORY_GRADIENTS: Record<string, [string, string]> = {
@@ -209,6 +211,9 @@ export default function ToolPage() {
             </div>
           )}
         </motion.div>
+
+        {/* In-Tool Ad Banner */}
+        <GoogleAd adSlot={AD_SLOTS.TOOL_CONTENT} className="w-full max-w-4xl mx-auto mb-16" />
 
         {/* Dynamic Semantic Content Architecture */}
         <motion.div

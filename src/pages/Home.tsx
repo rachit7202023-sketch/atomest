@@ -11,7 +11,8 @@ import { tools } from "@/data/tools";
 import { categories } from "@/data/categories";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-
+import { GoogleAd } from "@/components/ads/GoogleAd";
+import { AD_SLOTS } from "@/config/ads";
 const popularSearches = [
   { name: "Word Counter", slug: "word-counter" },
   { name: "JSON Formatter", slug: "json-formatter" },
@@ -85,6 +86,8 @@ export default function Home() {
       <Navbar />
 
       <HeroSection />
+
+      <GoogleAd adSlot={AD_SLOTS.HOMEPAGE_TOP} className="w-full max-w-5xl mx-auto my-8" />
 
       {/* Popular Searches */}
       <section className="container mx-auto px-4 pb-16 relative z-10 -mt-6">
@@ -174,6 +177,8 @@ export default function Home() {
           </Link>
         </motion.div>
       </section>
+
+      <GoogleAd adSlot={AD_SLOTS.HOMEPAGE_MID} className="w-full max-w-5xl mx-auto my-8" />
 
       {/* Categories Grid */}
       <section className="bg-muted/20 py-24 border-y border-border/40 relative overflow-hidden">

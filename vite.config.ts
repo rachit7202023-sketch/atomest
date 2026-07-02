@@ -29,6 +29,8 @@ export default defineConfig(({ mode }) => {
         page_path: window.location.pathname,
       });
     </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1114023113121466" crossorigin="anonymous"></script>
   </head>`
             );
           }

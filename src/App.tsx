@@ -5,6 +5,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/components/theme-provider";
 import { HelmetProvider } from "react-helmet-async";
 import AppRouter from "./AppRouter";
+import { GoogleAd } from "@/components/ads/GoogleAd";
+import { AD_SLOTS } from "@/config/ads";
 
 const queryClient = new QueryClient();
 
@@ -15,7 +17,12 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-              <AppRouter />
+              <div className="pb-[50px] md:pb-0">
+                <AppRouter />
+              </div>
+              <div className="md:hidden fixed bottom-0 w-full z-50 bg-background/80 backdrop-blur-md border-t border-border/40">
+                <GoogleAd adSlot={AD_SLOTS.MOBILE_STICKY} className="w-full min-h-[50px]" />
+              </div>
             </WouterRouter>
             <Toaster />
           </TooltipProvider>

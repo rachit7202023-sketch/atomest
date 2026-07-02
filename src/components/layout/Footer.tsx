@@ -1,5 +1,7 @@
 import { Link } from "wouter";
 import { categories } from "@/data/categories";
+import { GoogleAd } from "@/components/ads/GoogleAd";
+import { AD_SLOTS } from "@/config/ads";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -14,7 +16,7 @@ export function Footer() {
       </div>
 
       <div className="container mx-auto px-4 pt-24 pb-12 relative z-10">
-        <div className="flex flex-col items-center text-center mb-24">
+        <div className="flex flex-col items-center text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight-head mb-6">
             The Internet's <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">Toolbox.</span>
           </h2>
@@ -22,6 +24,8 @@ export function Footer() {
             Free, fast, and secure utilities designed for creators, developers, and everyday problem-solvers. No registration required.
           </p>
         </div>
+
+        <GoogleAd adSlot={AD_SLOTS.FOOTER_BANNER} className="w-full max-w-4xl mx-auto mb-16" />
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-16">
           <div className="col-span-2 md:col-span-2 pr-8">
