@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { AlertCircle, CheckCircle2, Info, Activity, AlertTriangle } from "lucide-react";
 
@@ -6,11 +5,22 @@ interface BMIGaugeProps {
   bmi: number;
 }
 
+// THE SINGLE SOURCE OF TRUTH FOR ALL GEOMETRY
+function bmiToAngle(bmi: number) {
+  const normalized = Math.max(0, Math.min(1, (bmi - 10) / 30));
+  // -90 degrees is far left (BMI 10)
+  //   0 degrees is top center (BMI 25)
+  //  90 degrees is far right (BMI 40)
+  return -90 + normalized * 180;
+}
+
 export function BMIGauge({ bmi }: BMIGaugeProps) {
   const [animatedBmi, setAnimatedBmi] = useState(0);
 
+  // Animate the BMI value manually in requestAnimationFrame
+  // This completely eliminates the need for CSS/Framer transform animations
+  // on the needle, guaranteeing mathematical precision for the rotation.
   useEffect(() => {
-    // Basic counter effect for the number display
     let start = animatedBmi;
     const duration = 800; // ms
     const startTime = performance.now();
@@ -18,8 +28,7 @@ export function BMIGauge({ bmi }: BMIGaugeProps) {
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // ease out quart
-      const easeProgress = 1 - Math.pow(1 - progress, 4);
+      const easeProgress = 1 - Math.pow(1 - progress, 4); // ease out quart
       setAnimatedBmi(start + (bmi - start) * easeProgress);
       if (progress < 1) {
         requestAnimationFrame(animate);
@@ -31,17 +40,7 @@ export function BMIGauge({ bmi }: BMIGaugeProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bmi]);
 
-  // BMI Gauge Scale: 10 to 40 (span = 30)
-  const minBmi = 10;
-  const maxBmi = 40;
-  const span = maxBmi - minBmi;
-  
-  // Calculate angle (0 to 180 degrees)
-  let angle = ((bmi - minBmi) / span) * 180;
-  if (angle < 0) angle = 0;
-  if (angle > 180) angle = 180;
-
-  // Categories for ticks and colors (linearly mapped)
+  // Categories definition
   const categories = [
     { name: "Under", min: 10, max: 18.5, color: "#3b82f6", icon: Info }, // blue
     { name: "Healthy", min: 18.5, max: 25, color: "#10b981", icon: CheckCircle2 }, // emerald
@@ -53,43 +52,48 @@ export function BMIGauge({ bmi }: BMIGaugeProps) {
   const currentCategory = categories.find(c => bmi >= c.min && bmi < c.max) || (bmi >= 40 ? categories[4] : categories[0]);
   const Icon = currentCategory.icon;
 
-  const createArc = (min: number, max: number, radius: number, strokeWidth: number) => {
-    // Clamp visual arcs to min/max
-    const clampedMin = Math.max(minBmi, min);
-    const clampedMax = Math.min(maxBmi, max);
+  // Calculate the needle rotation using the exact same function as everything else
+  const needleAngle = bmiToAngle(animatedBmi);
+
+  // Helper for drawing perfectly mapped SVG arcs
+  const createArc = (min: number, max: number, radius: number) => {
+    const clampedMin = Math.max(10, min);
+    const clampedMax = Math.min(40, max);
     
-    const startAngle = ((clampedMin - minBmi) / span) * 180;
-    const endAngle = ((clampedMax - minBmi) / span) * 180;
+    const startAngle = bmiToAngle(clampedMin);
+    const endAngle = bmiToAngle(clampedMax);
     
     const startRad = (startAngle * Math.PI) / 180;
     const endRad = (endAngle * Math.PI) / 180;
     
-    const x1 = 150 - radius * Math.cos(startRad);
-    const y1 = 150 - radius * Math.sin(startRad);
-    const x2 = 150 - radius * Math.cos(endRad);
-    const y2 = 150 - radius * Math.sin(endRad);
+    const cx = 150;
+    const cy = 150;
     
-    // We add a tiny gap or just use standard arc. Since it's < 180 deg, large-arc flag is 0
+    // Geometry logic: 0 rad is pointing straight UP. -PI/2 is LEFT. PI/2 is RIGHT.
+    const x1 = cx + radius * Math.sin(startRad);
+    const y1 = cy - radius * Math.cos(startRad);
+    const x2 = cx + radius * Math.sin(endRad);
+    const y2 = cy - radius * Math.cos(endRad);
+    
     return `M ${x1} ${y1} A ${radius} ${radius} 0 0 1 ${x2} ${y2}`;
   };
 
   return (
     <div className="relative w-full max-w-[400px] mx-auto flex flex-col items-center">
-      {/* Glow effect behind gauge */}
       <div 
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full blur-[60px] opacity-20 pointer-events-none transition-colors duration-1000"
         style={{ backgroundColor: currentCategory.color }}
       />
       
       <svg viewBox="0 0 300 170" className="w-full h-auto drop-shadow-xl overflow-visible">
-        {/* Background track */}
-        <path d="M 30 150 A 120 120 0 0 1 270 150" fill="none" stroke="currentColor" strokeWidth="20" className="text-muted/20" strokeLinecap="round" />
+        {/* Background track mapped accurately */}
+        <path d={createArc(10, 40, 120)} fill="none" stroke="currentColor" strokeWidth="20" className="text-muted/20" strokeLinecap="round" />
         
         {/* Colored Segments */}
         {categories.map((cat, i) => (
           <path 
             key={i}
-            d={createArc(cat.min, cat.max, 120, 20)} 
+            d={createArc(cat.min, cat.max, 120)} 
             fill="none" 
             stroke={cat.color} 
             strokeWidth="20" 
@@ -98,16 +102,19 @@ export function BMIGauge({ bmi }: BMIGaugeProps) {
         ))}
 
         {/* Ticks & Labels */}
-        {[15, 18.5, 25, 30, 35, 40].map((tickBmi, i) => {
-          const tickAngle = ((tickBmi - minBmi) / span) * 180;
+        {[10, 18.5, 25, 30, 35, 40].map((tickBmi, i) => {
+          const tickAngle = bmiToAngle(tickBmi);
           const tickRad = (tickAngle * Math.PI) / 180;
-          const x1 = 150 - 105 * Math.cos(tickRad);
-          const y1 = 150 - 105 * Math.sin(tickRad);
-          const x2 = 150 - 135 * Math.cos(tickRad);
-          const y2 = 150 - 135 * Math.sin(tickRad);
+          const cx = 150;
+          const cy = 150;
           
-          const labelX = 150 - 148 * Math.cos(tickRad);
-          const labelY = 150 - 148 * Math.sin(tickRad);
+          const x1 = cx + 105 * Math.sin(tickRad);
+          const y1 = cy - 105 * Math.cos(tickRad);
+          const x2 = cx + 135 * Math.sin(tickRad);
+          const y2 = cy - 135 * Math.cos(tickRad);
+          
+          const labelX = cx + 148 * Math.sin(tickRad);
+          const labelY = cy - 148 * Math.cos(tickRad);
           
           return (
             <g key={i}>
@@ -119,13 +126,13 @@ export function BMIGauge({ bmi }: BMIGaugeProps) {
           );
         })}
 
-        {/* Needle Group */}
-        <motion.g
-          initial={{ rotate: 0 }}
-          animate={{ rotate: angle }}
-          transition={{ type: "spring", stiffness: 60, damping: 15, mass: 1 }}
-          style={{ transformOrigin: "150px 150px" }}
-        >
+        {/* 
+          Needle Group 
+          Pure SVG transformation around the strictly fixed pivot (150, 150).
+          Zero CSS layout animations, zero translations, zero offsets.
+          The needle base is drawn at (150,150) and points to (150,30) which is 0 degrees (UP).
+        */}
+        <g transform={`rotate(${needleAngle} 150 150)`}>
           {/* Needle shadow */}
           <polygon points="148,154 156,154 152,44" fill="rgba(0,0,0,0.2)" />
           {/* Needle body */}
@@ -133,7 +140,7 @@ export function BMIGauge({ bmi }: BMIGaugeProps) {
           {/* Center pivot */}
           <circle cx="150" cy="150" r="8" fill="currentColor" className="text-foreground" />
           <circle cx="150" cy="150" r="3" fill="var(--background)" />
-        </motion.g>
+        </g>
       </svg>
       
       <div className="text-center mt-[-10px] relative z-10 flex flex-col items-center">
