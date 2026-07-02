@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { tools } from '../src/data/tools.ts';
 import { categories } from '../src/data/categories.ts';
+import { originals } from '../src/data/originals.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -16,10 +17,14 @@ const render = (await import(pathToFileURL(toAbsolute('dist/server/entry-server.
 const routesToPrerender = [
   '/',
   '/about',
-  '/ai',
+  '/originals',
   '/tools',
   '/categories',
 ];
+
+for (const original of originals) {
+  routesToPrerender.push(`/originals/${original.slug}`);
+}
 
 for (const tool of tools) {
   routesToPrerender.push(`/tools/${tool.slug}`);

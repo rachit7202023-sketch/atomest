@@ -26,9 +26,9 @@ export function Navbar() {
             <Link href="/tools" className="text-muted-foreground hover:text-foreground transition-colors duration-200">All Tools</Link>
             <Link href="/categories" className="text-muted-foreground hover:text-foreground transition-colors duration-200">Categories</Link>
             <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors duration-200">About</Link>
-            <Link href="/ai" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5 duration-200">
+            <Link href="/originals" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5 duration-200">
               <Sparkles className="w-3.5 h-3.5 text-primary animate-pulse" />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 font-bold">Atomest AI</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 font-bold">Originals</span>
             </Link>
           </div>
         </div>
@@ -59,9 +59,9 @@ export function Navbar() {
                 <Link href="/tools" className="text-lg font-medium hover:text-primary transition-colors">All Tools</Link>
                 <Link href="/categories" className="text-lg font-medium hover:text-primary transition-colors">Categories</Link>
                 <Link href="/about" className="text-lg font-medium hover:text-primary transition-colors">About</Link>
-                <Link href="/ai" className="text-lg font-medium hover:text-primary transition-colors flex items-center gap-2">
+                <Link href="/originals" className="text-lg font-medium hover:text-primary transition-colors flex items-center gap-2">
                   <Sparkles className="w-4 h-4 text-primary" />
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">Atomest AI</span>
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">Originals</span>
                 </Link>
               </div>
             </SheetContent>

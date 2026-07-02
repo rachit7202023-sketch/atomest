@@ -9,7 +9,9 @@ const Categories = lazy(() => import("@/pages/Categories"));
 const CategoryPage = lazy(() => import("@/pages/CategoryPage"));
 const About = lazy(() => import("@/pages/About"));
 const NotFound = lazy(() => import("@/pages/not-found"));
-const AtomestAI = lazy(() => import("@/pages/AtomestAI"));
+const Originals = lazy(() => import("@/pages/Originals"));
+const Ripple = lazy(() => import("@/pages/originals/Ripple"));
+const RealityCheck = lazy(() => import("@/pages/originals/RealityCheck"));
 
 function PageLoader() {
   return (
@@ -39,7 +41,9 @@ export default function AppRouter() {
         <Route path="/categories" component={Categories} />
         <Route path="/categories/:slug" component={CategoryPage} />
         <Route path="/about" component={About} />
-        <Route path="/ai" component={AtomestAI} />
+        <Route path="/originals" component={Originals} />
+        <Route path="/originals/ripple" component={Ripple} />
+        <Route path="/originals/reality-check" component={RealityCheck} />
         <Route component={NotFound} />
       </Switch>
       </Suspense>

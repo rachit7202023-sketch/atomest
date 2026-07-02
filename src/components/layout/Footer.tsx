@@ -57,7 +57,7 @@ export function Footer() {
               <li><Link href="/tools" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">All Tools</Link></li>
               <li><Link href="/categories" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">Categories</Link></li>
               <li><Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">About Us</Link></li>
-              <li><Link href="/ai" className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200">Atomest AI</Link></li>
+              <li><Link href="/originals" className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200">Atomest Originals</Link></li>
             </ul>
           </div>
           

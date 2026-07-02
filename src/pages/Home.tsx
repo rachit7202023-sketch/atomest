@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { ArrowRight, Zap, Shield, Globe, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import { HeroSection } from "@/components/HeroSection";
+import { AtomestOriginalsSection } from "@/components/AtomestOriginalsSection";
 import { ToolCard } from "@/components/ToolCard";
 import { CategoryCard } from "@/components/CategoryCard";
 import { Navbar } from "@/components/layout/Navbar";
@@ -86,6 +87,8 @@ export default function Home() {
       <Navbar />
 
       <HeroSection />
+
+      <AtomestOriginalsSection />
 
       <GoogleAd adSlot={AD_SLOTS.HOMEPAGE_TOP} className="w-full max-w-5xl mx-auto my-8" />
 

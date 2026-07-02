@@ -32,5 +32,4 @@ export const toolComponents: Record<string, React.LazyExoticComponent<any>> = {
   "emi-calculator": lazy(() => import("@/tools/emi-calculator/index")),
   "gst-calculator": lazy(() => import("@/tools/gst-calculator")),
   "url-shortener": lazy(() => import("@/tools/url-shortener")),
-  "ai-humanizer": lazy(() => import("@/tools/ai-humanizer")),
 };

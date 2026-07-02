@@ -455,7 +455,7 @@ export function HeroSection() {
                 </Link>
 
                 {/* Secondary */}
-                <Link href="/ai">
+                <Link href="/originals">
                   <button
                     className="group inline-flex items-center gap-2 px-8 h-[52px] rounded-xl text-[15px] font-bold transition-all duration-300 ease-out-expo hover:bg-primary/10 hover:scale-[1.02] active:scale-[0.98]"
                     style={{
@@ -467,7 +467,7 @@ export function HeroSection() {
                     }}
                   >
                     <Sparkles className="h-4 w-4" />
-                    AI Workspace
+                    Atomest Originals
                     <span
                       className="ml-1 px-2 py-0.5 rounded-full text-[10px] font-bold tracking-widest uppercase"
                       style={{
