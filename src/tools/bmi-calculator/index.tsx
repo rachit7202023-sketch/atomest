@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Share2, Printer, Activity } from "lucide-react";
 import { BMIGauge } from "./components/BMIGauge";
-import { WeightGoalSimulator } from "./components/WeightGoalSimulator";
 import { HealthInsights } from "./components/HealthInsights";
 import { SEOContent } from "./components/SEOContent";
 import { 
@@ -261,16 +260,6 @@ export default function BmiCalculator() {
             </div>
 
             <HealthInsights category={categoryData.category} />
-
-            <WeightGoalSimulator 
-              currentWeightKg={weightKg}
-              heightCm={heightCm}
-              bmi={bmi}
-              gender={gender}
-              tdee={tdee}
-              isWeightMetric={weightUnit === "kg"}
-              idealRange={idealRange}
-            />
 
           </div>
         )}

@@ -124,10 +124,10 @@ export function BMIGauge({ bmi }: BMIGaugeProps) {
           initial={{ rotate: 0 }}
           animate={{ rotate: angle }}
           transition={{ type: "spring", stiffness: 60, damping: 15, mass: 1 }}
-          style={{ originX: "150px", originY: "150px" }}
+          style={{ transformOrigin: "150px 150px" }}
         >
           {/* Needle shadow */}
-          <polygon points="146,150 154,150 150,40" fill="rgba(0,0,0,0.2)" transform="translate(2, 4)" />
+          <polygon points="148,154 156,154 152,44" fill="rgba(0,0,0,0.2)" />
           {/* Needle body */}
           <polygon points="147,150 153,150 150,30" fill="currentColor" className="text-foreground" />
           {/* Center pivot */}
