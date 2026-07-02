@@ -241,6 +241,17 @@
   input[type="search"]::-webkit-search-cancel-button {
     @apply hidden;
   }
+  
+  /* Premium Native Experience (Hide Number Arrows) */
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+  }
+
   /* Depth System */
   .depth-ambient {
     z-index: -10;

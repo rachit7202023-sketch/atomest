@@ -78,6 +78,7 @@
     "zod": "^3.25.76"
   },
   "dependencies": {
+    "html-to-image": "^1.11.13",
     "marked": "^18.0.5",
     "qrcode": "^1.5.4",
     "react-helmet-async": "^3.0.0"
