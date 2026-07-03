@@ -150,8 +150,8 @@ function OrbIllustration() {
             height: s,
             left:   x,
             top:    y,
-            background: "rgba(167,139,250,0.65)",
-            boxShadow: `0 0 ${s * 3}px rgba(167,139,250,0.5)`,
+            background: "rgba(255,255,255,0.4)",
+            boxShadow: `0 0 ${s * 4}px rgba(255,255,255,0.2)`,
             animation: `particle-float ${dur} ease-in-out infinite ${delay}`,
           }}
         />
@@ -185,40 +185,30 @@ function HeroSearch() {
   }
 
   return (
-    <div ref={wrapperRef} className="relative w-full">
+    <div ref={wrapperRef} className="relative w-full max-w-2xl">
       {/* input row */}
       <div
-        className="hero-search-ring flex items-center gap-3 rounded-2xl px-5 h-[58px] transition-all"
+        className="hero-search-ring group flex items-center gap-4 rounded-3xl px-6 h-[72px] transition-all duration-500 relative overflow-hidden"
         style={{
-          background:
-            "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(139,92,246,0.04) 100%)",
-          backdropFilter: "blur(12px)",
-          border: "1px solid rgba(139,92,246,0.25)",
-          boxShadow: "0 2px 20px rgba(139,92,246,0.08)",
+          background: "rgba(255,255,255,0.02)",
+          backdropFilter: "blur(20px)",
+          border: "1px solid rgba(255,255,255,0.05)",
+          boxShadow: "0 10px 40px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)",
         }}
       >
-        <Search className="h-5 w-5 shrink-0 text-purple-400/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-transparent opacity-0 group-focus-within:opacity-100 transition-opacity duration-700 pointer-events-none" />
+        
+        <Search className="h-6 w-6 shrink-0 text-muted-foreground group-focus-within:text-primary transition-colors duration-500" />
         <input
           type="text"
-          className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground/60 text-sm outline-none"
-          placeholder="Search tools... (Word Counter, JSON Formatter, QR Generator...)"
+          className="flex-1 bg-transparent text-foreground placeholder:text-muted-foreground/40 text-lg sm:text-xl font-medium outline-none z-10"
+          placeholder="What are you looking for?"
           value={query}
           onChange={(e) => { setQuery(e.target.value); setOpen(true); }}
           onFocus={() => setOpen(true)}
           onKeyDown={(e) => e.key === "Enter" && go()}
           data-testid="input-hero-search"
         />
-        <button
-          onClick={go}
-          aria-label="Search"
-          className="shrink-0 h-9 w-9 flex items-center justify-center rounded-xl transition-all"
-          style={{
-            background: "linear-gradient(135deg, #7c3aed, #a78bfa)",
-            boxShadow: "0 2px 10px rgba(124,58,237,0.35)",
-          }}
-        >
-          <ArrowRight className="h-4 w-4 text-white" />
-        </button>
       </div>
 
       {/* dropdown results */}
@@ -366,24 +356,20 @@ export function HeroSection() {
 
               {/* Announcement badge */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs sm:text-sm font-semibold tracking-wide"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase"
                 style={{
-                  background:
-                    "linear-gradient(135deg, rgba(139,92,246,0.12) 0%, rgba(124,58,237,0.08) 100%)",
-                  border: "1px solid rgba(139,92,246,0.28)",
-                  boxShadow:
-                    "0 0 20px rgba(139,92,246,0.12), inset 0 1px 0 rgba(255,255,255,0.06)",
-                  color: "rgb(167,139,250)",
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.05)",
+                  color: "rgba(255,255,255,0.6)",
                 }}
               >
                 <Sparkles
-                  className="h-3.5 w-3.5 shrink-0 animate-pulse"
-                  style={{ color: "rgb(167,139,250)" }}
+                  className="h-3.5 w-3.5 shrink-0 animate-pulse text-primary/80"
                 />
-                31+ Browser Tools &nbsp;·&nbsp; Privacy First &nbsp;·&nbsp; Free
+                The Internet's Toolbox
               </motion.div>
 
               {/* Headline */}
@@ -391,15 +377,15 @@ export function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-                className="font-extrabold tracking-tight-head leading-[1.06] mb-6"
-                style={{ fontSize: "clamp(2.4rem, 5vw, 4.5rem)" }}
+                className="font-black tracking-tighter leading-[0.95] mb-8"
+                style={{ fontSize: "clamp(3.5rem, 8vw, 6.5rem)" }}
               >
-                <span className="text-foreground block">Your Browser—</span>
+                <span className="text-foreground block drop-shadow-sm">Your Browser</span>
                 <span
                   className="block drop-shadow-md"
                   style={{
                     background:
-                      "linear-gradient(120deg, #c4b5fd 0%, #a78bfa 30%, #7c3aed 70%, #6d28d9 100%)",
+                      "linear-gradient(180deg, #fff 0%, rgba(255,255,255,0.5) 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     backgroundClip: "text",
@@ -414,11 +400,9 @@ export function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-                className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-10 max-w-md opacity-90"
+                className="text-muted-foreground text-lg sm:text-2xl leading-relaxed mb-12 max-w-xl opacity-80 font-medium"
               >
-                A curated collection of fast, privacy-first browser tools for
-                developers, students, creators, and professionals. No downloads.
-                No accounts. Just open and get things done.
+                Thirty-one premium browser tools designed for speed, privacy, and simplicity. No accounts. No server uploads.
               </motion.p>
 
               {/* Search bar */}
@@ -426,7 +410,7 @@ export function HeroSection() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
-                className="w-full mb-8 relative z-20"
+                className="w-full mb-12 relative z-20"
               >
                 <HeroSearch />
               </motion.div>
@@ -438,22 +422,6 @@ export function HeroSection() {
                 transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
                 className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-12 relative z-10"
               >
-                {/* Primary */}
-                <Link href="/tools">
-                  <button
-                    className="group inline-flex items-center gap-2 px-8 h-[52px] rounded-xl text-[15px] font-bold text-white transition-all duration-300 ease-out-expo hover:scale-[1.02] active:scale-[0.98]"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)",
-                      boxShadow:
-                        "0 0 0 1px rgba(124,58,237,0.4), 0 8px 24px -4px rgba(124,58,237,0.5)",
-                    }}
-                  >
-                    Explore Tools
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </button>
-                </Link>
-
                 {/* Secondary */}
                 <Link href="/originals">
                   <button
