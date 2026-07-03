@@ -2,10 +2,8 @@ import { Suspense } from "react";
 import { useParams } from "wouter";
 import { Share2, Link as LinkIcon } from "lucide-react";
 import { motion } from "framer-motion";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { Breadcrumb } from "@/components/Breadcrumb";
-import { tools } from "@/data/tools";
+import { ProductLayout } from "@/components/product/ProductLayout";
+import { products } from "@/data/products";
 import { toolComponents } from "@/data/toolComponents";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -16,18 +14,6 @@ import { ToolAnalyticsWrapper } from "@/components/seo/ToolAnalyticsWrapper";
 import { GoogleAd } from "@/components/ads/GoogleAd";
 import { AD_SLOTS } from "@/config/ads";
 import NotFound from "@/pages/not-found";
-
-const CATEGORY_GRADIENTS: Record<string, [string, string]> = {
-  text:        ["#6366f1", "#8b5cf6"],
-  developer:   ["#10b981", "#06b6d4"],
-  generators:  ["#f59e0b", "#ef4444"],
-  calculators: ["#6366f1", "#3b82f6"],
-  color:       ["#ec4899", "#f43f5e"],
-  image:       ["#f43f5e", "#fb923c"],
-  utilities:   ["#64748b", "#6366f1"],
-  ai:          ["#8b5cf6", "#6366f1"],
-  default:     ["#7c3aed", "#a78bfa"],
-};
 
 function ToolSkeleton() {
   return (
@@ -43,16 +29,16 @@ export default function ToolPage() {
   const { slug } = useParams<{ slug: string }>();
   const { toast } = useToast();
 
-  const tool = tools.find(t => t.slug === slug);
+  const product = products.find(p => p.slug === slug);
 
-  if (!tool) return <NotFound />;
+  if (!product) return <NotFound />;
 
-  const ToolComponent = toolComponents[slug];
+  const ProductComponent = toolComponents[slug];
 
   const handleShare = async () => {
     const url = window.location.href;
     if (navigator.share) {
-      await navigator.share({ title: tool.name, url });
+      await navigator.share({ title: product.name, url });
     } else {
       navigator.clipboard.writeText(url);
       toast({ title: "Link copied to clipboard!" });
@@ -64,17 +50,16 @@ export default function ToolPage() {
     toast({ title: "Link copied to clipboard!" });
   };
 
-  const Icon = tool.icon;
-  const [from, to] = CATEGORY_GRADIENTS[tool.category] ?? CATEGORY_GRADIENTS.default;
+  const Icon = product.icon;
 
   // JSON-LD Schema Generation
   const schemas: any[] = [
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": tool.name,
+      "name": product.name,
       "url": `https://atomest.com/tools/${slug}`,
-      "description": tool.metaDescription || tool.description,
+      "description": product.metaDescription || product.description,
       "applicationCategory": "BrowserApplication",
       "operatingSystem": "All",
       "offers": {
@@ -85,11 +70,11 @@ export default function ToolPage() {
     }
   ];
 
-  if (tool.faqs && tool.faqs.length > 0) {
+  if (product.faqs && product.faqs.length > 0) {
     schemas.push({
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      "mainEntity": tool.faqs.map(faq => ({
+      "mainEntity": product.faqs.map(faq => ({
         "@type": "Question",
         "name": faq.question,
         "acceptedAnswer": {
@@ -119,68 +104,39 @@ export default function ToolPage() {
       {
         "@type": "ListItem",
         "position": 3,
-        "name": tool.name,
+        "name": product.name,
         "item": `https://atomest.com/tools/${slug}`
       }
     ]
   });
 
   return (
-    <div className="min-h-screen bg-background flex flex-col relative overflow-hidden">
-      {/* Background ambient mesh gradient based on category */}
-      <div 
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] opacity-10 pointer-events-none rounded-full blur-[120px]"
-        style={{
-          background: `radial-gradient(ellipse at center, ${from}, transparent 70%)`
-        }}
-      />
-      
+    <ProductLayout product={product}>
       <SEO 
-        title={tool.seoTitle || tool.name}
-        description={tool.seoDescription || tool.metaDescription || tool.description}
+        title={`${product.name} - Free Online Tool by Atomest`}
+        description={product.seoDescription || product.metaDescription || product.description}
         canonicalPath={`/tools/${slug}`}
         schema={schemas}
+        templateTitle={false}
       />
-      <Navbar />
 
-      <main className="container mx-auto px-4 py-12 flex-1 max-w-5xl relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <Breadcrumb items={[
-            { label: "Tools", href: "/tools" },
-            { label: tool.name }
-          ]} />
-        </motion.div>
-
+      <div className="container mx-auto px-4 py-12 flex-1 max-w-5xl relative z-10">
+        {/* Product Hero Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 mb-12 mt-8"
         >
-          <div className="flex items-center sm:items-start gap-5">
-            <motion.div 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center justify-center rounded-[24px] flex-shrink-0"
-              style={{
-                width: 80,
-                height: 80,
-                background: `linear-gradient(135deg, ${from}, ${to})`,
-                boxShadow: `0 12px 32px -8px ${from}80, inset 0 2px 4px rgba(255,255,255,0.2)`,
-              }}
-            >
-              <Icon className="h-10 w-10 text-white drop-shadow-md" />
-            </motion.div>
-            <div className="flex flex-col justify-center h-[80px]">
-              <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight-head leading-tight">{tool.name}</h1>
-              <p className="text-muted-foreground text-[1.1rem] mt-1 hidden sm:block">{tool.description}</p>
-            </div>
+          <div className="flex flex-col justify-center max-w-2xl">
+            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight-head leading-tight">{product.name}</h1>
+            <p className="text-xl font-medium text-foreground/80 mt-3 hidden sm:block">{product.tagline}</p>
+            <p className="text-muted-foreground text-[1.1rem] mt-2 hidden sm:block">{product.description}</p>
           </div>
-          <p className="text-muted-foreground sm:hidden mb-2">{tool.description}</p>
+          <div className="flex flex-col sm:hidden">
+            <p className="text-xl font-medium text-foreground/80 mt-1 mb-2">{product.tagline}</p>
+            <p className="text-muted-foreground mb-2">{product.description}</p>
+          </div>
           
           <div className="flex gap-2 flex-shrink-0 mt-2 sm:mt-4">
             <Button variant="outline" size="sm" onClick={handleShare} className="gap-2 rounded-lg font-bold shadow-sm" data-testid="button-share">
@@ -192,17 +148,17 @@ export default function ToolPage() {
           </div>
         </motion.div>
 
-        {/* Tool Interface Container */}
+        {/* Product Core Utility */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
           className="bg-card/80 backdrop-blur-xl border border-white/10 rounded-[32px] p-6 md:p-10 mb-16 shadow-2xl depth-floating"
         >
-          {ToolComponent ? (
-            <ToolAnalyticsWrapper toolName={tool.slug} category={tool.category}>
+          {ProductComponent ? (
+            <ToolAnalyticsWrapper toolName={product.slug} category={product.category}>
               <Suspense fallback={<ToolSkeleton />}>
-                <ToolComponent />
+                <ProductComponent />
               </Suspense>
             </ToolAnalyticsWrapper>
           ) : (
@@ -212,20 +168,16 @@ export default function ToolPage() {
           )}
         </motion.div>
 
-        {/* In-Tool Ad Banner */}
         <GoogleAd adSlot={AD_SLOTS.TOOL_CONTENT} className="w-full max-w-4xl mx-auto mb-16" />
 
-        {/* Dynamic Semantic Content Architecture */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
         >
-          <ToolContentLayout tool={tool} />
+          <ToolContentLayout tool={product} />
         </motion.div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </ProductLayout>
   );
 }

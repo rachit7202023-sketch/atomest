@@ -2,7 +2,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CategoryCard } from "@/components/CategoryCard";
 import { categories } from "@/data/categories";
-import { tools } from "@/data/tools";
+import { products as tools } from "@/data/products";
 
 export default function Categories() {
   const categoriesWithCount = categories

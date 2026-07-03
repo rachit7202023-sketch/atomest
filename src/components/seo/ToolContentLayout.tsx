@@ -1,5 +1,5 @@
 import React from "react";
-import { Tool } from "@/data/tools";
+import { Product as Tool } from "@/data/products";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { RelatedTools } from "@/components/RelatedTools";
 
@@ -94,7 +94,7 @@ export function ToolContentLayout({ tool }: ToolContentLayoutProps) {
       {/* Related Tools (Topic Cluster) */}
       <section>
         <h2 className="text-3xl font-extrabold tracking-tight-head mb-8">Related Tools</h2>
-        <RelatedTools currentTool={tool} explicitSlugs={tool.relatedToolSlugs} />
+        <RelatedTools currentTool={tool} explicitSlugs={tool.relatedProductSlugs} />
       </section>
     </article>
   );

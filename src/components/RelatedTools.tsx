@@ -1,4 +1,4 @@
-import { Tool, tools } from "@/data/tools";
+import { Product as Tool, products as tools } from "@/data/products";
 import { ToolCard } from "@/components/ToolCard";
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";

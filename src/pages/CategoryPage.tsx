@@ -4,7 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { ToolCard } from "@/components/ToolCard";
 import { categories } from "@/data/categories";
-import { tools } from "@/data/tools";
+import { products as tools } from "@/data/products";
 import NotFound from "@/pages/not-found";
 
 export default function CategoryPage() {

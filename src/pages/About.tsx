@@ -3,7 +3,7 @@ import { Zap, Shield, Globe, Heart, ArrowRight } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { tools } from "@/data/tools";
+import { products as tools } from "@/data/products";
 import { categories } from "@/data/categories";
 
 export default function About() {

@@ -7,7 +7,7 @@ import { ToolCard } from "@/components/ToolCard";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { SEO } from "@/components/seo/SEO";
-import { tools } from "@/data/tools";
+import { products as tools } from "@/data/products";
 import { categories } from "@/data/categories";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { GoogleAd } from "@/components/ads/GoogleAd";

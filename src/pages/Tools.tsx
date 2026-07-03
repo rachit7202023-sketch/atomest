@@ -4,7 +4,7 @@ import { Search, SlidersHorizontal, X } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { ToolCard } from "@/components/ToolCard";
-import { tools } from "@/data/tools";
+import { products as tools } from "@/data/products";
 import { categories } from "@/data/categories";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";

@@ -1,9 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { tools } from '../src/data/tools.ts';
+import { products } from '../src/data/products.ts';
 import { categories } from '../src/data/categories.ts';
-import { originals } from '../src/data/originals.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -22,12 +21,12 @@ const routesToPrerender = [
   '/categories',
 ];
 
-for (const original of originals) {
-  routesToPrerender.push(`/originals/${original.slug}`);
-}
-
-for (const tool of tools) {
-  routesToPrerender.push(`/tools/${tool.slug}`);
+for (const product of products) {
+  if (product.type === "original") {
+    routesToPrerender.push(`/originals/${product.slug}`);
+  } else {
+    routesToPrerender.push(`/tools/${product.slug}`);
+  }
 }
 
 for (const cat of categories) {

@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
-import { Tool } from "@/data/tools";
+import { Product as Tool } from "@/data/products";
 import { categories } from "@/data/categories";
 
 interface ToolCardProps {

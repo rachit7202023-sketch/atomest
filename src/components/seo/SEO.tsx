@@ -7,6 +7,7 @@ interface SEOProps {
   image?: string;
   type?: string;
   schema?: Record<string, any> | Record<string, any>[];
+  templateTitle?: boolean;
 }
 
 const SITE_NAME = "Atomest";
@@ -19,9 +20,10 @@ export function SEO({
   canonicalPath, 
   image = DEFAULT_IMAGE,
   type = "website",
-  schema 
+  schema,
+  templateTitle = true
 }: SEOProps) {
-  const fullTitle = `${title} — ${SITE_NAME}`;
+  const fullTitle = templateTitle ? `${title} — ${SITE_NAME}` : title;
   const canonicalUrl = `${BASE_URL}${canonicalPath}`;
 
   return (

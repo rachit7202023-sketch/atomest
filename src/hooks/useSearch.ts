@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { tools } from "../data/tools";
+import { products as tools } from "../data/products";
 import { categories } from "../data/categories";
 
 export function useSearch(initialQuery = "") {
