@@ -117,58 +117,61 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-b from-primary via-purple-500 to-transparent blur-[120px] rounded-full mix-blend-screen" />
         </div>
 
-        <div className="container mx-auto max-w-5xl text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-semibold mb-8 backdrop-blur-md"
-          >
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-white/80">30+ Free Browser Tools Included</span>
-          </motion.div>
+        <div className="container mx-auto max-w-6xl relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
+          <div className="flex-1 text-center lg:text-left pt-10">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-semibold mb-8 backdrop-blur-md"
+            >
+              <Sparkles className="w-4 h-4 text-primary" />
+              <span className="text-white/80">30+ Free Browser Tools Included</span>
+            </motion.div>
 
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-6xl sm:text-8xl font-black tracking-tighter mb-8 leading-[1.05]"
-          >
-            Build Less.<br className="hidden sm:block" />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-400 to-blue-400">Automate More.</span>
-          </motion.h1>
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tighter mb-8 leading-[1.05]"
+            >
+              Build Less.<br className="hidden sm:block" />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary via-purple-400 to-blue-400">Automate More.</span>
+            </motion.h1>
 
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto mb-12 font-medium"
-          >
-            Premium AI products that eliminate repetitive work and help teams move faster.
-          </motion.p>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="text-xl sm:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0 mb-12 font-medium"
+            >
+              Premium AI products that eliminate repetitive work and help teams move faster.
+            </motion.p>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
-          >
-            <Link href="/products">
-              <Button className="h-14 px-8 text-base font-bold bg-white text-black hover:bg-gray-200 w-full sm:w-auto shadow-lg shadow-white/10">
-                Explore AI Products
-              </Button>
-            </Link>
-            <Link href="/tools">
-              <Button variant="outline" className="h-14 px-8 text-base font-bold bg-white/5 border-white/10 hover:bg-white/10 text-white w-full sm:w-auto backdrop-blur-md">
-                Browse Free Tools
-              </Button>
-            </Link>
-          </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8"
+            >
+              <Link href="/products">
+                <Button className="h-14 px-8 text-base font-bold bg-white text-black hover:bg-gray-200 w-full sm:w-auto shadow-lg shadow-white/10">
+                  Explore AI Products
+                </Button>
+              </Link>
+              <Link href="/tools">
+                <Button variant="outline" className="h-14 px-8 text-base font-bold bg-white/5 border-white/10 hover:bg-white/10 text-white w-full sm:w-auto backdrop-blur-md">
+                  Browse Free Tools
+                </Button>
+              </Link>
+            </motion.div>
+          </div>
 
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.4 }}
+            className="flex-1 w-full max-w-[450px] lg:max-w-[500px] flex justify-center lg:justify-end"
           >
             <OrbIllustration />
           </motion.div>
