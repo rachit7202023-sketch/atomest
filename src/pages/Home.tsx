@@ -9,6 +9,7 @@ import { products as tools } from "@/data/products";
 import { categories } from "@/data/categories";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
+import { OrbIllustration } from "@/components/OrbIllustration";
 
 const featuredSlugs = [
   "word-counter", "json-formatter", "password-generator", "qr-code-generator",
@@ -150,7 +151,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
           >
             <Link href="/products">
               <Button className="h-14 px-8 text-base font-bold bg-white text-black hover:bg-gray-200 w-full sm:w-auto shadow-lg shadow-white/10">
@@ -162,6 +163,14 @@ export default function Home() {
                 Browse Free Tools
               </Button>
             </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
+          >
+            <OrbIllustration />
           </motion.div>
         </div>
       </section>
