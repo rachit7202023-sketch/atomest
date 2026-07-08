@@ -12,6 +12,8 @@ const NotFound = lazy(() => import("@/pages/not-found"));
 const Originals = lazy(() => import("@/pages/Originals"));
 const Ripple = lazy(() => import("@/pages/originals/Ripple"));
 const RealityCheck = lazy(() => import("@/pages/originals/RealityCheck"));
+const AiProducts = lazy(() => import("@/pages/AiProducts"));
+const RecruiterAi = lazy(() => import("@/pages/RecruiterAi"));
 
 function PageLoader() {
   return (
@@ -44,6 +46,8 @@ export default function AppRouter() {
         <Route path="/originals" component={Originals} />
         <Route path="/originals/ripple" component={Ripple} />
         <Route path="/originals/reality-check" component={RealityCheck} />
+        <Route path="/products" component={AiProducts} />
+        <Route path="/products/recruiter-ai" component={RecruiterAi} />
         <Route component={NotFound} />
       </Switch>
       </Suspense>

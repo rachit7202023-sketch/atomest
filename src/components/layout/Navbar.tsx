@@ -23,13 +23,13 @@ export function Navbar() {
           </Link>
           <div className="hidden md:flex items-center gap-7 text-[14px] font-medium tracking-tight">
             <Link href="/" className="text-muted-foreground hover:text-foreground transition-colors duration-200">Home</Link>
-            <Link href="/tools" className="text-muted-foreground hover:text-foreground transition-colors duration-200">All Tools</Link>
-            <Link href="/categories" className="text-muted-foreground hover:text-foreground transition-colors duration-200">Categories</Link>
-            <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors duration-200">About</Link>
-            <Link href="/originals" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5 duration-200">
+            <Link href="/products" className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1.5 duration-200">
               <Sparkles className="w-3.5 h-3.5 text-primary animate-pulse" />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 font-bold">Originals</span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 font-bold">AI Products</span>
             </Link>
+            <Link href="/tools" className="text-muted-foreground hover:text-foreground transition-colors duration-200">Free Tools</Link>
+            <Link href="/#pricing" className="text-muted-foreground hover:text-foreground transition-colors duration-200">Pricing</Link>
+            <Link href="/about" className="text-muted-foreground hover:text-foreground transition-colors duration-200">About</Link>
           </div>
         </div>
 
@@ -56,13 +56,13 @@ export function Navbar() {
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <div className="flex flex-col gap-6 mt-8">
                 <Link href="/" className="text-lg font-medium hover:text-primary transition-colors">Home</Link>
-                <Link href="/tools" className="text-lg font-medium hover:text-primary transition-colors">All Tools</Link>
-                <Link href="/categories" className="text-lg font-medium hover:text-primary transition-colors">Categories</Link>
-                <Link href="/about" className="text-lg font-medium hover:text-primary transition-colors">About</Link>
-                <Link href="/originals" className="text-lg font-medium hover:text-primary transition-colors flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-primary" />
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/70">Originals</span>
+                <Link href="/products" className="text-lg font-medium hover:text-primary transition-colors flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-primary animate-pulse" />
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 font-bold">AI Products</span>
                 </Link>
+                <Link href="/tools" className="text-lg font-medium hover:text-primary transition-colors">Free Tools</Link>
+                <Link href="/#pricing" className="text-lg font-medium hover:text-primary transition-colors">Pricing</Link>
+                <Link href="/about" className="text-lg font-medium hover:text-primary transition-colors">About</Link>
               </div>
             </SheetContent>
           </Sheet>
