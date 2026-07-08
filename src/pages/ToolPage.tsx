@@ -113,7 +113,7 @@ export default function ToolPage() {
   return (
     <ProductLayout product={product}>
       <SEO 
-        title={`${product.name} - Free Online Tool by Atomest`}
+        title={product.seoTitle || `${product.name} - Free Online Tool by Atomest`}
         description={product.seoDescription || product.metaDescription || product.description}
         canonicalPath={`/tools/${slug}`}
         schema={schemas}

@@ -272,63 +272,19 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            className="mb-16 text-center sm:text-left flex flex-col sm:flex-row justify-between items-end"
+            className="text-center flex flex-col items-center justify-center max-w-3xl mx-auto"
           >
-            <div className="max-w-2xl">
-              <h2 className="text-4xl sm:text-5xl font-black tracking-tighter mb-4 leading-[1.1]">
-                Free Browser Tools
-              </h2>
-              <p className="text-muted-foreground text-xl leading-relaxed font-medium">
-                The internet's fastest toolbox. Blazing fast, strictly private, and beautifully crafted. Over 30 tools included entirely for free.
-              </p>
-            </div>
+            <h2 className="text-4xl sm:text-5xl font-black tracking-tighter mb-6 leading-[1.1]">
+              Over 30+ Free Browser Tools.
+            </h2>
+            <p className="text-muted-foreground text-xl leading-relaxed font-medium mb-10">
+              The internet's fastest toolbox. Blazing fast, strictly private, and beautifully crafted. We've included over 30 utilities designed to speed up your day-to-day workflow.
+            </p>
             <Link href="/tools">
-              <Button variant="outline" className="hidden sm:inline-flex mt-6 sm:mt-0 h-12 rounded-full border-white/10 bg-white/5 text-white hover:bg-white/10">
-                Explore All Tools <ArrowRight className="h-4 w-4 ml-2" />
+              <Button className="h-14 px-8 text-lg font-bold rounded-full bg-white text-black hover:bg-gray-200 shadow-lg shadow-white/5">
+                Explore All Free Tools <ArrowRight className="h-5 w-5 ml-2" />
               </Button>
             </Link>
-          </motion.div>
-
-          {/* Symmetrical Grid for Tools */}
-          <motion.div 
-            variants={STAGGER_CONTAINER}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10"
-          >
-            {featuredTools.slice(0, 8).map((tool) => (
-              <motion.div key={tool.id} variants={STAGGER_ITEM}>
-                 <div className="h-full group hover:-translate-y-1 transition-transform duration-500">
-                  <ToolCard tool={tool} popular={false} />
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* Mobile CTA */}
-          <div className="mt-10 text-center sm:hidden">
-            <Link href="/tools">
-              <Button variant="outline" className="w-full h-12 rounded-full border-white/10 bg-white/5 text-white">
-                Explore All Tools <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
-            </Link>
-          </div>
-
-          {/* Categories Minimal List */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="mt-16 flex flex-wrap justify-center gap-3 max-w-4xl mx-auto"
-          >
-            {categories.filter(cat => !cat.isWorkspace).map(cat => (
-              <Link key={cat.id} href={`/categories/${cat.id}`}>
-                <button className="px-5 py-3 rounded-full border border-white/5 bg-white/5 hover:bg-white/10 hover:scale-105 transition-all duration-300 flex items-center gap-2 font-bold text-sm">
-                  <cat.icon className="h-4 w-4 text-primary" /> {cat.name}
-                </button>
-              </Link>
-            ))}
           </motion.div>
         </div>
       </section>
