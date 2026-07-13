@@ -284,8 +284,67 @@
 
   /* Shimmer Loading Animation */
   @keyframes shimmer {
+    0% {
+      transform: translateX(-100%);
+    }
     100% {
       transform: translateX(100%);
+    }
+  }
+
+  .skeleton-shimmer {
+    position: relative;
+    overflow: hidden;
+    background: hsl(var(--muted));
+    border-radius: var(--radius-md);
+  }
+  .skeleton-shimmer::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--foreground) / 0.04),
+      transparent
+    );
+    animation: shimmer 1.8s ease-in-out infinite;
+  }
+
+  /* Card Skeleton Variant */
+  .skeleton-card {
+    border-radius: var(--radius-lg);
+    border: 1px solid hsl(var(--border));
+    background: hsl(var(--card));
+    padding: 1.5rem;
+  }
+
+  /* Print Stylesheet */
+  @media print {
+    body {
+      background: white !important;
+      color: black !important;
+      font-size: 12pt;
+      line-height: 1.5;
+    }
+    .print\\:hidden,
+    nav, footer, .no-print {
+      display: none !important;
+    }
+    .print\\:block {
+      display: block !important;
+    }
+    * {
+      color: black !important;
+      border-color: #ddd !important;
+      background: transparent !important;
+    }
+    @page {
+      margin: 1.5cm;
+    }
+    .break-inside-avoid {
+      break-inside: avoid;
     }
   }
 

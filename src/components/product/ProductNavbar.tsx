@@ -17,7 +17,7 @@ export function ProductNavbar({ product }: { product: Product }) {
         }} 
       />
       <div className="container mx-auto px-4 h-16 flex items-center justify-between max-w-6xl">
-        <Link href={product.type === 'original' ? `/originals/${product.slug}` : `/tools/${product.slug}`} className="flex items-center gap-3 group">
+        <Link href={`/tools/${product.slug}`} className="flex items-center gap-3 group">
           <div 
             className="flex items-center justify-center w-8 h-8 rounded-lg shadow-sm"
             style={{

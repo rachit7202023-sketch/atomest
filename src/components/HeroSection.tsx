@@ -422,32 +422,7 @@ export function HeroSection() {
                 transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
                 className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-12 relative z-10"
               >
-                {/* Secondary */}
-                <Link href="/originals">
-                  <button
-                    className="group inline-flex items-center gap-2 px-8 h-[52px] rounded-xl text-[15px] font-bold transition-all duration-300 ease-out-expo hover:bg-primary/10 hover:scale-[1.02] active:scale-[0.98]"
-                    style={{
-                      background:
-                        "linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(139,92,246,0.04) 100%)",
-                      border: "1px solid rgba(139,92,246,0.22)",
-                      color: "rgba(167,139,250,0.95)",
-                      backdropFilter: "blur(8px)",
-                    }}
-                  >
-                    <Sparkles className="h-4 w-4" />
-                    Atomest Originals
-                    <span
-                      className="ml-1 px-2 py-0.5 rounded-full text-[10px] font-bold tracking-widest uppercase"
-                      style={{
-                        background: "rgba(139,92,246,0.15)",
-                        border: "1px solid rgba(139,92,246,0.28)",
-                        color: "rgb(196,181,253)",
-                      }}
-                    >
-                      New
-                    </span>
-                  </button>
-                </Link>
+                {/* Removed Secondary Button */}
               </motion.div>
 
               {/* Trust indicators */}

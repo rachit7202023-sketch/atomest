@@ -9,18 +9,22 @@ const Categories = lazy(() => import("@/pages/Categories"));
 const CategoryPage = lazy(() => import("@/pages/CategoryPage"));
 const About = lazy(() => import("@/pages/About"));
 const NotFound = lazy(() => import("@/pages/not-found"));
-const Originals = lazy(() => import("@/pages/Originals"));
-const Ripple = lazy(() => import("@/pages/originals/Ripple"));
-const RealityCheck = lazy(() => import("@/pages/originals/RealityCheck"));
 const AiProducts = lazy(() => import("@/pages/AiProducts"));
-const RecruiterAi = lazy(() => import("@/pages/RecruiterAi"));
+const Products = lazy(() => import("@/pages/Products"));
+const Login = lazy(() => import("@/pages/auth/Login"));
+const Signup = lazy(() => import("@/pages/auth/Signup"));
+const Account = lazy(() => import("@/pages/auth/Account"));
+const Dashboard = lazy(() => import("@/pages/Dashboard"));
+const RecruiterAiLanding = lazy(() => import("@/modules/recruiter-ai/pages/LandingPage"));
+const RecruiterAiDashboard = lazy(() => import("@/modules/recruiter-ai/pages/DashboardPage"));
+const RecruiterAiApp = lazy(() => import("@/modules/recruiter-ai/pages/AppPage"));
 
 function PageLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="flex flex-col items-center gap-4">
-        <div className="w-8 h-8 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
-        <p className="text-sm text-muted-foreground">Loading...</p>
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-7 h-7 border-[3px] border-primary/20 border-t-primary rounded-full animate-spin" />
+        <p className="text-xs text-muted-foreground animate-pulse">Loading...</p>
       </div>
     </div>
   );
@@ -43,11 +47,16 @@ export default function AppRouter() {
         <Route path="/categories" component={Categories} />
         <Route path="/categories/:slug" component={CategoryPage} />
         <Route path="/about" component={About} />
-        <Route path="/originals" component={Originals} />
-        <Route path="/originals/ripple" component={Ripple} />
-        <Route path="/originals/reality-check" component={RealityCheck} />
-        <Route path="/products" component={AiProducts} />
-        <Route path="/products/recruiter-ai" component={RecruiterAi} />
+        <Route path="/products" component={Products} />
+        <Route path="/ai-products" component={AiProducts} />
+        <Route path="/ai-products/recruiter-ai" component={RecruiterAiLanding} />
+        <Route path="/ai-products/recruiter-ai/dashboard" component={RecruiterAiDashboard} />
+        <Route path="/ai-products/recruiter-ai/app" component={RecruiterAiApp} />
+        <Route path="/ai-products/recruiter-ai/app/:id" component={RecruiterAiApp} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
+        <Route path="/account" component={Account} />
+        <Route path="/dashboard" component={Dashboard} />
         <Route component={NotFound} />
       </Switch>
       </Suspense>

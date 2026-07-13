@@ -57,7 +57,6 @@ export function Footer() {
               <li><Link href="/tools" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">All Tools</Link></li>
               <li><Link href="/categories" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">Categories</Link></li>
               <li><Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">About Us</Link></li>
-              <li><Link href="/originals" className="text-sm text-muted-foreground hover:text-primary transition-colors duration-200">Atomest Originals</Link></li>
             </ul>
           </div>
           
@@ -101,7 +100,7 @@ export function Footer() {
 function Heart(props: any) {
   return (
     <svg
-      xmlns="http://www.0000/svg"
+      xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       fill="currentColor"
       stroke="currentColor"

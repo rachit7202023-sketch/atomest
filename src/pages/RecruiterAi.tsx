@@ -1,3 +1,4 @@
+import React from "react";
 import { motion } from "framer-motion";
 import { 
   Briefcase, 
@@ -189,12 +190,11 @@ export default function RecruiterAi() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <div className="flex w-full max-w-sm items-center space-x-2">
-              <Input type="email" placeholder="Enter your email address" className="h-12 bg-white/5 border-white/10 focus-visible:ring-blue-500" />
-              <Button className="h-12 px-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg shadow-blue-500/20">
-                Notify Me
+            <Link href="/signup">
+              <Button className="h-14 px-8 text-lg bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-lg shadow-blue-500/20 rounded-full">
+                Get Started Free
               </Button>
-            </div>
+            </Link>
           </motion.div>
 
           <DashboardMockup />
@@ -319,12 +319,8 @@ export default function RecruiterAi() {
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">Ready to scale your hiring?</h2>
           <p className="text-xl text-muted-foreground mb-10">Join the waitlist today to get early access to RecruiterAI before it launches to the public.</p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
-            <Input type="email" placeholder="name@company.com" className="h-12 bg-black/50 border-white/10 focus-visible:ring-blue-500" />
-            <Button className="h-12 px-8 bg-white text-black hover:bg-gray-200 font-bold w-full sm:w-auto">
-              Join Waitlist
-            </Button>
-          </div>
+          <WaitlistForm />
+          
           <p className="text-sm text-muted-foreground mt-6 flex items-center justify-center gap-2">
             <ShieldCheck className="w-4 h-4" />
             No credit card required. Cancel anytime.
@@ -332,5 +328,62 @@ export default function RecruiterAi() {
         </div>
       </section>
     </div>
+  );
+}
+
+function WaitlistForm() {
+  const [email, setEmail] = React.useState("");
+  const [status, setStatus] = React.useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, product: "recruiter-ai" })
+      });
+      if (res.ok) {
+        setStatus("success");
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  if (status === "success") {
+    return (
+      <div className="flex flex-col items-center justify-center gap-2 text-green-400 p-4 border border-green-500/20 rounded-xl bg-green-500/10 max-w-md mx-auto">
+        <CheckCircle2 className="w-6 h-6" />
+        <p className="font-semibold">You're on the list!</p>
+        <p className="text-sm text-green-400/80">We'll notify you when RecruiterAI opens up.</p>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center justify-center gap-4 max-w-md mx-auto">
+      <Input 
+        type="email" 
+        placeholder="name@company.com" 
+        required
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        disabled={status === "loading"}
+        className="h-12 bg-black/50 border-white/10 focus-visible:ring-blue-500" 
+      />
+      <Button 
+        type="submit" 
+        disabled={status === "loading" || !email}
+        className="h-12 px-8 bg-white text-black hover:bg-gray-200 font-bold w-full sm:w-auto"
+      >
+        {status === "loading" ? "Joining..." : "Join Waitlist"}
+      </Button>
+      {status === "error" && <p className="text-red-400 text-sm absolute -bottom-6">Something went wrong. Please try again.</p>}
+    </form>
   );
 }
