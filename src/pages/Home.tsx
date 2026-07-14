@@ -28,42 +28,6 @@ const aiProducts = [
     colorTo: "to-indigo-500/5",
     accent: "text-blue-400",
     href: "/products/recruiter-ai",
-  },
-  {
-    id: "sales-ai",
-    name: "SalesAI",
-    status: "Coming Soon",
-    statusColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    description: "Automate outreach. Analyze calls. Close more deals with AI-driven insights.",
-    icon: TrendingUp,
-    colorFrom: "from-emerald-500/20",
-    colorTo: "to-teal-500/5",
-    accent: "text-emerald-400",
-    href: "/products",
-  },
-  {
-    id: "research-ai",
-    name: "ResearchAI",
-    status: "Coming Soon",
-    statusColor: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-    description: "Synthesize thousands of documents into actionable intelligence instantly.",
-    icon: Search,
-    colorFrom: "from-purple-500/20",
-    colorTo: "to-fuchsia-500/5",
-    accent: "text-purple-400",
-    href: "/products",
-  },
-  {
-    id: "support-ai",
-    name: "SupportAI",
-    status: "Coming Soon",
-    statusColor: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-    description: "Resolve tickets automatically with context-aware AI support agents.",
-    icon: HeadphonesIcon,
-    colorFrom: "from-amber-500/20",
-    colorTo: "to-orange-500/5",
-    accent: "text-amber-400",
-    href: "/products",
   }
 ];
 
@@ -154,13 +118,11 @@ export default function Home() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8"
             >
-              {/* 
               <Link href="/products">
                 <Button className="h-14 px-8 text-base font-bold bg-white text-black hover:bg-gray-200 w-full sm:w-auto shadow-lg shadow-white/10">
                   Explore AI Products
                 </Button>
               </Link>
-              */}
               <Link href="/tools">
                 <Button variant="outline" className="h-14 px-8 text-base font-bold bg-white/5 border-white/10 hover:bg-white/10 text-white w-full sm:w-auto backdrop-blur-md">
                   Browse Free Tools
@@ -180,7 +142,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 2: Featured AI Products (HIDDEN FOR NOW) 
+      {/* SECTION 2: Featured AI Products */}
       <section className="py-24 relative border-t border-white/5 bg-black/50">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="mb-16">
@@ -231,7 +193,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      */}
 
       {/* SECTION 3: Why Atomest */}
       <section className="py-24 relative border-t border-white/5">
@@ -329,86 +290,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SECTION 6: Pricing Preview */}
-      <section id="pricing" className="py-24 relative border-t border-white/5 bg-black/50">
-        <div className="container mx-auto px-4 max-w-5xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-black tracking-tighter mb-4">Simple, Transparent Pricing</h2>
-            <p className="text-muted-foreground text-xl max-w-2xl mx-auto">Start with what you need and scale as you grow. No hidden fees or complex enterprise negotiations.</p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Pay Per Project */}
-            <div className="relative p-8 sm:p-10 rounded-[32px] border border-white/10 bg-white/5 backdrop-blur-xl flex flex-col hover:border-blue-500/30 transition-all duration-300">
-              <h3 className="text-2xl font-bold mb-2">Pay Per Project</h3>
-              <p className="text-muted-foreground mb-6">Perfect for occasional hiring needs.</p>
-              <div className="mb-8 flex items-baseline gap-2">
-                <span className="text-5xl font-black">$49</span>
-                <span className="text-muted-foreground font-medium">/ project</span>
-              </div>
-              
-              <ul className="space-y-4 mb-8 flex-grow font-medium">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-                  <span>Generate complete Hiring Kits (12 artifacts)</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-                  <span>Up to 100 resumes per upload limit</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-                  <span>AI Semantic Resume Matching</span>
-                </li>
-              </ul>
-              
-              <Link href="/signup">
-                <Button className="w-full h-12 bg-white/10 hover:bg-white/20 text-white font-bold text-base mt-auto rounded-full">
-                  Get Started
-                </Button>
-              </Link>
-            </div>
-
-            {/* Monthly Subscription */}
-            <div className="relative p-8 sm:p-10 rounded-[32px] border border-blue-500/50 bg-blue-900/10 backdrop-blur-xl flex flex-col hover:border-blue-500 transition-all duration-300 transform md:-translate-y-4 shadow-2xl shadow-blue-900/20">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg shadow-blue-500/30">
-                Most Popular
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Monthly Subscription</h3>
-              <p className="text-blue-200/60 mb-6">For teams actively growing their headcount.</p>
-              <div className="mb-8 flex items-baseline gap-2">
-                <span className="text-5xl font-black">$199</span>
-                <span className="text-blue-200/60 font-medium">/ user / month</span>
-              </div>
-              
-              <ul className="space-y-4 mb-8 flex-grow font-medium text-white/90">
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-                  <span className="font-bold text-white">Unlimited Hiring Projects</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-                  <span>Up to 100 resumes per upload limit</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-                  <span>Team collaboration & sharing</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-                  <span>Priority API processing speed</span>
-                </li>
-              </ul>
-              
-              <Link href="/signup">
-                <Button className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-bold text-base mt-auto shadow-lg shadow-blue-600/20 rounded-full">
-                  Subscribe Now
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* SECTION 7: FAQ */}
       <section className="container mx-auto px-4 py-24 max-w-3xl">

@@ -7,8 +7,8 @@ const products = [
   {
     id: "recruiter-ai",
     name: "RecruiterAI",
-    status: "Launching Soon",
-    statusColor: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    status: "Available Now",
+    statusColor: "bg-green-500/10 text-green-400 border-green-500/20",
     description: "Upload resumes. Match candidates. Generate interview insights. Hire faster.",
     icon: Briefcase,
     colorFrom: "from-blue-500/20",
@@ -16,45 +16,6 @@ const products = [
     accent: "text-blue-400",
     href: "/products/recruiter-ai",
     featured: true
-  },
-  {
-    id: "sales-ai",
-    name: "SalesAI",
-    status: "Coming Soon",
-    statusColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
-    description: "Automate outreach. Analyze calls. Close more deals with AI-driven insights.",
-    icon: TrendingUp,
-    colorFrom: "from-emerald-500/20",
-    colorTo: "to-teal-500/5",
-    accent: "text-emerald-400",
-    href: "#",
-    featured: false
-  },
-  {
-    id: "research-ai",
-    name: "ResearchAI",
-    status: "Coming Soon",
-    statusColor: "bg-purple-500/10 text-purple-400 border-purple-500/20",
-    description: "Synthesize thousands of documents into actionable intelligence instantly.",
-    icon: Search,
-    colorFrom: "from-purple-500/20",
-    colorTo: "to-fuchsia-500/5",
-    accent: "text-purple-400",
-    href: "#",
-    featured: false
-  },
-  {
-    id: "support-ai",
-    name: "SupportAI",
-    status: "Coming Soon",
-    statusColor: "bg-amber-500/10 text-amber-400 border-amber-500/20",
-    description: "Resolve tickets automatically with context-aware AI support agents.",
-    icon: HeadphonesIcon,
-    colorFrom: "from-amber-500/20",
-    colorTo: "to-orange-500/5",
-    accent: "text-amber-400",
-    href: "#",
-    featured: false
   }
 ];
 
@@ -103,7 +64,7 @@ export default function AiProducts() {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 gap-8 max-w-5xl mx-auto relative z-10">
           {products.map((product, i) => (
             <motion.div
               key={product.id}
@@ -135,7 +96,7 @@ export default function AiProducts() {
                     </p>
 
                     <div className="flex items-center gap-2 text-sm font-semibold text-white/70 group-hover:text-white transition-colors mt-auto">
-                      {product.featured ? 'View Product' : 'Join Waitlist'} 
+                      Open Application
                       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>

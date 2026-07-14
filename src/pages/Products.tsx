@@ -27,14 +27,21 @@ export default function Products() {
             <p className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
               Purpose-built AI employees that automate recruiting, sales and operations.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Button size="lg" className="h-14 px-8 text-lg w-full sm:w-auto shadow-xl shadow-primary/25 hover:scale-105 transition-all duration-300">
-                Get Early Access
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-              <Button size="lg" variant="outline" className="h-14 px-8 text-lg w-full sm:w-auto hover:bg-primary/5 transition-all duration-300" onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}>
-                View Products
-              </Button>
+            <div className="mx-auto max-w-sm mt-12 p-[1px] rounded-3xl bg-gradient-to-br from-primary/50 via-purple-500/30 to-blue-500/50 shadow-[0_0_40px_-10px_rgba(var(--primary),0.3)] relative group overflow-hidden">
+              <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out mix-blend-overlay blur-md" />
+              <div className="relative bg-background/40 dark:bg-black/40 backdrop-blur-2xl rounded-[23px] p-6 flex flex-col items-center justify-center text-center gap-3 border border-white/10 dark:border-white/5">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-primary to-purple-600 flex items-center justify-center shadow-inner shadow-white/20 mb-1 border border-white/20">
+                  <Sparkles className="w-7 h-7 text-white drop-shadow-md" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70 dark:from-white dark:to-white/70">
+                    Atomest AI Suite
+                  </h3>
+                  <p className="text-sm text-muted-foreground font-semibold mt-1 uppercase tracking-wider">
+                    Enterprise Automation
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -47,7 +54,7 @@ export default function Products() {
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Discover specialized AI copilots designed to supercharge every department in your organization.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-8 max-w-3xl mx-auto">
               {/* Recruiter AI */}
               <div className="group relative bg-card border border-border/50 rounded-3xl p-8 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -64,60 +71,12 @@ export default function Products() {
                   <p className="text-muted-foreground leading-relaxed flex-grow mb-8">
                     An AI recruiting employee that automatically screens resumes, ranks candidates, answers applicant questions and helps recruiters hire faster.
                   </p>
-                  <a href="/ai-products/recruiter-ai/dashboard" className="w-full sm:w-auto">
+                  <a href="/ai-products/recruiter-ai" className="w-full sm:w-auto">
                     <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white transition-all">
                       Open Application
                     </Button>
                   </a>
                 </div>
-              </div>
-
-              {/* Sales Copilot */}
-              <div className="group relative bg-card/50 border border-border/30 rounded-3xl p-8 hover:bg-card hover:border-border/50 transition-all duration-500">
-                <div className="flex items-center justify-between mb-6 opacity-60">
-                  <div className="w-14 h-14 rounded-2xl bg-green-500/10 flex items-center justify-center text-green-600 dark:text-green-400">
-                    <Zap className="w-7 h-7" />
-                  </div>
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-muted text-muted-foreground">
-                    Coming Soon
-                  </span>
-                </div>
-                <h3 className="text-2xl font-bold mb-3 opacity-60">Sales Copilot</h3>
-                <p className="text-muted-foreground leading-relaxed flex-grow opacity-60">
-                  Automate outreach, qualify leads 24/7, and generate hyper-personalized sales collateral to close deals faster.
-                </p>
-              </div>
-
-              {/* Support Copilot */}
-              <div className="group relative bg-card/50 border border-border/30 rounded-3xl p-8 hover:bg-card hover:border-border/50 transition-all duration-500">
-                <div className="flex items-center justify-between mb-6 opacity-60">
-                  <div className="w-14 h-14 rounded-2xl bg-purple-500/10 flex items-center justify-center text-purple-600 dark:text-purple-400">
-                    <Headset className="w-7 h-7" />
-                  </div>
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-muted text-muted-foreground">
-                    Coming Soon
-                  </span>
-                </div>
-                <h3 className="text-2xl font-bold mb-3 opacity-60">Support Copilot</h3>
-                <p className="text-muted-foreground leading-relaxed flex-grow opacity-60">
-                  Resolve customer queries instantly, draft empathetic responses, and seamlessly escalate complex issues.
-                </p>
-              </div>
-
-              {/* Operations Copilot */}
-              <div className="group relative bg-card/50 border border-border/30 rounded-3xl p-8 hover:bg-card hover:border-border/50 transition-all duration-500">
-                <div className="flex items-center justify-between mb-6 opacity-60">
-                  <div className="w-14 h-14 rounded-2xl bg-orange-500/10 flex items-center justify-center text-orange-600 dark:text-orange-400">
-                    <Briefcase className="w-7 h-7" />
-                  </div>
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-muted text-muted-foreground">
-                    Coming Soon
-                  </span>
-                </div>
-                <h3 className="text-2xl font-bold mb-3 opacity-60">Operations Copilot</h3>
-                <p className="text-muted-foreground leading-relaxed flex-grow opacity-60">
-                  Streamline internal workflows, automate data entry, and orchestrate cross-departmental processes effortlessly.
-                </p>
               </div>
             </div>
           </div>

@@ -47,12 +47,10 @@ export function Navbar() {
           </Link>
           <div className="hidden md:flex items-center gap-6">
             <Link href="/" className={isActive("/") && location === "/" ? NAV_LINK_ACTIVE : NAV_LINK_DEFAULT}>Home</Link>
-            {/* 
             <Link href="/products" className={`${isActive("/products") ? NAV_LINK_ACTIVE : NAV_LINK_DEFAULT} flex items-center gap-1.5`}>
               <Sparkles className="w-3.5 h-3.5 text-primary" />
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 font-semibold">AI Products</span>
-            </Link> 
-            */}
+            </Link>
             <Link href="/tools" className={isActive("/tools") ? NAV_LINK_ACTIVE : NAV_LINK_DEFAULT}>Free Tools</Link>
             <Link href="/#pricing" className={NAV_LINK_DEFAULT}>Pricing</Link>
             <Link href="/about" className={isActive("/about") ? NAV_LINK_ACTIVE : NAV_LINK_DEFAULT}>About</Link>
@@ -110,12 +108,10 @@ export function Navbar() {
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <div className="flex flex-col gap-5 mt-8">
                 <Link href="/" className={MOBILE_LINK_DEFAULT}>Home</Link>
-                {/* 
                 <Link href="/products" className={`${MOBILE_LINK_DEFAULT} flex items-center gap-2`}>
                   <Sparkles className="w-4 h-4 text-primary" />
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 font-semibold">AI Products</span>
-                </Link> 
-                */}
+                </Link>
                 <Link href="/tools" className={MOBILE_LINK_DEFAULT}>Free Tools</Link>
                 <Link href="/#pricing" className={MOBILE_LINK_DEFAULT}>Pricing</Link>
                 <Link href="/about" className={MOBILE_LINK_DEFAULT}>About</Link>
