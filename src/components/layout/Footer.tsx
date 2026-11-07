@@ -1,114 +1,127 @@
 import { Link } from "wouter";
-import { categories } from "@/data/categories";
+import { Globe, GitFork, Bot, Layers, ArrowRight, ShieldCheck } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
-  const topCategories = categories.slice(0, 5);
 
   return (
     <footer className="relative bg-[#08090D] overflow-hidden border-t border-[#252938]">
-      {/* Premium Ambient Background */}
+      {/* Subtle Background Glow */}
       <div className="absolute inset-0 pointer-events-none" aria-hidden>
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(139,92,246,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(139,92,246,0.03)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-        <div className="absolute top-0 inset-x-0 h-[240px] bg-gradient-to-b from-primary/10 via-primary/5 to-transparent" />
+        <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-[#8B5CF6]/5 to-transparent" />
       </div>
 
-      <div className="container mx-auto px-4 pt-20 pb-12 relative z-10">
-        <div className="flex flex-col items-center text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-4">
-            ATOMEST V2
-          </div>
-          <h2 className="text-3xl md:text-5xl font-extrabold font-display tracking-tight mb-4 text-[#F5F6FA]">
-            Next-Generation <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#A78BFA] to-[#3B82F6]">AI Solutions.</span>
-          </h2>
-          <p className="text-[#A0A5B5] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-            Architecting autonomous AI agents, intelligent web solutions, and automated workflows for ambitious organizations.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-16">
-          <div className="col-span-2 md:col-span-2 pr-8">
-            <Link href="/" className="flex items-center gap-2.5 mb-6 group inline-flex">
-              <img src="/logo.svg" width="32" height="32" alt="Atomest" className="rounded-xl flex-shrink-0 group-hover:scale-105 transition-transform duration-300" />
-              <span className="font-extrabold text-xl font-display tracking-tight text-[#F5F6FA]">Atomest</span>
+      <div className="atomest-container pt-16 pb-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
+          {/* Brand Column */}
+          <div className="md:col-span-5 space-y-4">
+            <Link href="/" className="flex items-center gap-2.5 group inline-flex" aria-label="Atomest Home">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#8B5CF6] to-[#3B82F6] flex items-center justify-center font-bold text-white text-base shadow-md shadow-[#8B5CF6]/30 group-hover:scale-105 transition-transform">
+                A
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="font-extrabold text-xl font-display tracking-tight text-[#F5F6FA]">
+                  ATOMEST
+                </span>
+                <span className="text-[9px] font-mono text-[#8B5CF6] uppercase tracking-wider font-semibold">
+                  AI Solutions
+                </span>
+              </div>
             </Link>
-            <p className="text-[#A0A5B5] text-sm mb-8 max-w-xs leading-relaxed">
-              Premium AI systems engineered for precision, speed, and real enterprise impact.
+
+            <p className="text-xs sm:text-sm text-[#A0A5B5] max-w-sm leading-relaxed">
+              We build intelligent websites, powerful automations and AI systems that help ambitious businesses operate smarter and grow faster.
             </p>
-            <div className="flex gap-4">
-              {/* Social links */}
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5 duration-200" aria-label="Twitter">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.008 4.15H5.078z" />
-                </svg>
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5 duration-200" aria-label="GitHub">
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-                  <path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
-                </svg>
-              </a>
+
+            <div className="pt-2 flex items-center gap-2 text-xs text-[#C4B5FD]">
+              <ShieldCheck className="w-4 h-4 text-[#8B5CF6]" />
+              <span>Production-grade engineering & zero data retention standard</span>
             </div>
           </div>
-          
-          <div>
-            <h3 className="font-semibold text-foreground mb-6 text-sm tracking-wide">Quick Links</h3>
-            <ul className="space-y-4">
-              <li><Link href="/tools" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">All Tools</Link></li>
-              <li><Link href="/categories" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">Categories</Link></li>
-              <li><Link href="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">About Us</Link></li>
+
+          {/* Solutions Column */}
+          <div className="md:col-span-3 space-y-3">
+            <h4 className="font-display font-bold text-sm text-[#F5F6FA] uppercase tracking-wider text-xs">
+              Solutions
+            </h4>
+            <ul className="space-y-2 text-xs text-[#A0A5B5]">
+              <li>
+                <Link href="/solutions/websites" className="hover:text-white transition-colors">
+                  AI Website Solutions
+                </Link>
+              </li>
+              <li>
+                <Link href="/solutions/automation" className="hover:text-white transition-colors">
+                  AI Automation Solutions
+                </Link>
+              </li>
+              <li>
+                <Link href="/solutions/agents" className="hover:text-white transition-colors">
+                  AI Agents
+                </Link>
+              </li>
+              <li>
+                <Link href="/solutions/products" className="hover:text-white transition-colors">
+                  AI Products & Roadmap
+                </Link>
+              </li>
             </ul>
           </div>
-          
-          <div>
-            <h3 className="font-semibold text-foreground mb-6 text-sm tracking-wide">Top Categories</h3>
-            <ul className="space-y-4">
-              {topCategories.map(cat => (
-                <li key={cat.id}>
-                  <Link href={`/categories/${cat.id}`} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">
-                    {cat.name}
-                  </Link>
-                </li>
-              ))}
+
+          {/* Company Column */}
+          <div className="md:col-span-2 space-y-3">
+            <h4 className="font-display font-bold text-sm text-[#F5F6FA] uppercase tracking-wider text-xs">
+              Company
+            </h4>
+            <ul className="space-y-2 text-xs text-[#A0A5B5]">
+              <li>
+                <Link href="/about" className="hover:text-white transition-colors">
+                  About Atomest
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-white transition-colors">
+                  Start a Project
+                </Link>
+              </li>
+              <li>
+                <a href="mailto:hello@atomest.com" className="hover:text-white transition-colors">
+                  hello@atomest.com
+                </a>
+              </li>
             </ul>
           </div>
-          
-          <div>
-            <h3 className="font-semibold text-foreground mb-6 text-sm tracking-wide">Legal</h3>
-            <ul className="space-y-4">
-              <li><a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">Privacy Policy</a></li>
-              <li><a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">Terms of Service</a></li>
-              <li><a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">Cookie Policy</a></li>
-              <li><a href="#" className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200">Contact</a></li>
+
+          {/* Legal Column */}
+          <div className="md:col-span-2 space-y-3">
+            <h4 className="font-display font-bold text-sm text-[#F5F6FA] uppercase tracking-wider text-xs">
+              Governance
+            </h4>
+            <ul className="space-y-2 text-xs text-[#A0A5B5]">
+              <li>
+                <span className="cursor-default">Zero-Data Retention</span>
+              </li>
+              <li>
+                <span className="cursor-default">SOC2 Ready Architecture</span>
+              </li>
+              <li>
+                <span className="cursor-default">Confidentiality & Mutual NDA</span>
+              </li>
             </ul>
           </div>
         </div>
-        
-        <div className="pt-8 border-t border-border/40 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-muted-foreground">
-            &copy; {currentYear} Atomest. All rights reserved.
+
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-[#1C1F2B] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#A0A5B5]">
+          <p>
+            &copy; {currentYear} Atomest Technologies. All rights reserved.
           </p>
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            Built with <Heart className="h-3.5 w-3.5 text-primary fill-current animate-pulse" /> for the open web
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500" />
+            <span className="font-mono text-[11px]">Systems Operational</span>
           </div>
         </div>
       </div>
     </footer>
-  );
-}
-
-function Heart(props: any) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-    </svg>
   );
 }

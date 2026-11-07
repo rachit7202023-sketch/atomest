@@ -43,7 +43,7 @@ export default defineConfig(({ mode }) => {
     dedupe: ["react", "react-dom"],
   },
   build: {
-    outDir: "dist",
+    outDir: "dist/client",
     emptyOutDir: true,
   },
   server: {

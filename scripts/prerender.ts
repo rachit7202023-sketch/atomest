@@ -19,6 +19,11 @@ const routesToPrerender = [
   '/originals',
   '/tools',
   '/categories',
+  '/solutions/websites',
+  '/solutions/automation',
+  '/solutions/agents',
+  '/solutions/products',
+  '/contact',
 ];
 
 for (const product of products) {

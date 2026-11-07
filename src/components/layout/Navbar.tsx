@@ -1,135 +1,239 @@
-import { Link } from "wouter";
-import { Search, Moon, Sun, Menu, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useTheme } from "@/components/theme-provider";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
+import { Link, useLocation } from "wouter";
+import { ChevronDown, Globe, GitFork, Bot, Layers, Sparkles, Menu, X, ArrowRight } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/lib/supabase";
-import { useLocation } from "wouter";
-
-// Unified nav link styles
-const NAV_LINK_BASE = "text-[0.8125rem] font-medium tracking-[-0.01em] leading-none transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:rounded-sm py-1";
-const NAV_LINK_DEFAULT = `${NAV_LINK_BASE} text-muted-foreground hover:text-foreground`;
-const NAV_LINK_ACTIVE = `${NAV_LINK_BASE} text-foreground`;
-
-// Mobile nav link styles
-const MOBILE_LINK_BASE = "text-[0.9375rem] font-medium tracking-[-0.01em] transition-colors duration-150 py-1";
-const MOBILE_LINK_DEFAULT = `${MOBILE_LINK_BASE} text-muted-foreground hover:text-foreground`;
 
 export function Navbar() {
-  const { theme, setTheme } = useTheme();
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const { user } = useAuth();
-  const [location, setLocation] = useLocation();
+  const [location] = useLocation();
+  const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setLocation("/");
-  };
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsSolutionsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Close dropdown on route change
+  useEffect(() => {
+    setIsSolutionsOpen(false);
+  }, [location]);
 
   const isActive = (path: string) => {
     if (path === "/") return location === "/";
     return location.startsWith(path);
   };
 
+  const solutions = [
+    {
+      title: "AI Website Solutions",
+      description: "High-performance digital flagships & lead funnels",
+      href: "/solutions/websites",
+      icon: Globe,
+    },
+    {
+      title: "AI Automation Solutions",
+      description: "Autonomous data, CRM & communication pipelines",
+      href: "/solutions/automation",
+      icon: GitFork,
+    },
+    {
+      title: "AI Agents",
+      description: "Grounded business assistants & copilots",
+      href: "/solutions/agents",
+      icon: Bot,
+    },
+    {
+      title: "AI Products",
+      description: "Proprietary software pipeline & waitlist",
+      href: "/solutions/products",
+      icon: Layers,
+    },
+  ];
+
   return (
-    <nav className="sticky top-0 z-50 w-full bg-[#08090D]/80 backdrop-blur-2xl border-b border-[#252938] transition-all duration-300" role="navigation" aria-label="Main navigation">
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-      <div className="container mx-auto px-4 h-14 flex items-center justify-between">
+    <nav className="fixed top-0 inset-x-0 z-50 bg-[#08090D]/85 backdrop-blur-xl border-b border-[#252938]" role="navigation" aria-label="Main navigation">
+      <div className="atomest-container h-16 flex items-center justify-between">
+        {/* Brand Logo */}
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2.5 group" aria-label="Atomest Home">
-            <img src="/logo.svg" width="32" height="32" alt="Atomest" className="rounded-xl group-hover:scale-105 transition-transform duration-500 ease-out flex-shrink-0 shadow-sm" />
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#8B5CF6] to-[#3B82F6] flex items-center justify-center font-bold text-white text-base shadow-md shadow-[#8B5CF6]/30 group-hover:scale-105 transition-transform">
+              A
+            </div>
             <div className="flex flex-col leading-none">
-              <span className="font-extrabold text-[1.05rem] font-display tracking-tight text-[#F5F6FA]">Atomest</span>
-              <span className="text-[9px] text-primary font-semibold uppercase tracking-wider mt-[1px]">AI Solutions</span>
+              <span className="font-extrabold text-[1.1rem] font-display tracking-tight text-[#F5F6FA]">
+                ATOMEST
+              </span>
+              <span className="text-[9px] font-mono text-[#8B5CF6] tracking-wider uppercase font-semibold">
+                AI Solutions
+              </span>
             </div>
           </Link>
-          <div className="hidden md:flex items-center gap-6">
-            <Link href="/" className={isActive("/") && location === "/" ? NAV_LINK_ACTIVE : NAV_LINK_DEFAULT}>Home</Link>
-            <Link href="/products" className={`${isActive("/products") ? NAV_LINK_ACTIVE : NAV_LINK_DEFAULT} flex items-center gap-1.5`}>
-              <Sparkles className="w-3.5 h-3.5 text-primary" />
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 font-semibold">AI Products</span>
+
+          {/* Desktop Navigation Links */}
+          <div className="hidden md:flex items-center gap-6 text-xs font-medium">
+            <Link
+              href="/"
+              className={`transition-colors py-1 ${
+                isActive("/") && location === "/" ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
+              }`}
+            >
+              Home
             </Link>
-            <Link href="/tools" className={isActive("/tools") ? NAV_LINK_ACTIVE : NAV_LINK_DEFAULT}>Free Tools</Link>
-            <Link href="/#pricing" className={NAV_LINK_DEFAULT}>Pricing</Link>
-            <Link href="/about" className={isActive("/about") ? NAV_LINK_ACTIVE : NAV_LINK_DEFAULT}>About</Link>
+
+            {/* Solutions Dropdown Menu */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                type="button"
+                onClick={() => setIsSolutionsOpen(!isSolutionsOpen)}
+                className={`flex items-center gap-1 transition-colors py-1 ${
+                  isActive("/solutions") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
+                }`}
+              >
+                <span>Solutions</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isSolutionsOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {isSolutionsOpen && (
+                <div className="absolute top-full left-0 mt-2 w-80 rounded-2xl bg-[#10121A] border border-[#252938] shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="px-3 py-2 text-[10px] font-mono text-[#8B5CF6] uppercase tracking-wider border-b border-[#1C1F2B] mb-1">
+                    Technology Divisions
+                  </div>
+                  <div className="space-y-1">
+                    {solutions.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#151824] transition-colors group text-left"
+                        >
+                          <div className="w-8 h-8 rounded-lg bg-[#151824] border border-[#252938] flex items-center justify-center text-[#8B5CF6] group-hover:bg-[#8B5CF6] group-hover:text-white shrink-0 transition-colors mt-0.5">
+                            <Icon className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <div className="text-xs font-bold text-[#F5F6FA] group-hover:text-white transition-colors">
+                              {item.title}
+                            </div>
+                            <div className="text-[11px] text-[#A0A5B5] leading-snug">
+                              {item.description}
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <Link
+              href="/solutions/products"
+              className={`transition-colors py-1 ${
+                isActive("/solutions/products") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
+              }`}
+            >
+              Products
+            </Link>
+
+            <Link
+              href="/about"
+              className={`transition-colors py-1 ${
+                isActive("/about") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
+              }`}
+            >
+              About
+            </Link>
+
+            <Link
+              href="/contact"
+              className={`transition-colors py-1 ${
+                isActive("/contact") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
+              }`}
+            >
+              Contact
+            </Link>
           </div>
         </div>
 
-        <div className="flex items-center gap-1.5">
-          {user ? (
-            <div className="hidden md:flex items-center gap-1 mr-2">
-              <Link href="/dashboard">
-                <Button variant="ghost" size="sm" className={`${NAV_LINK_BASE} px-3 h-8 ${isActive("/dashboard") ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
-                  Dashboard
-                </Button>
-              </Link>
-              <Link href="/account">
-                <Button variant="ghost" size="sm" className={`${NAV_LINK_BASE} px-3 h-8 ${isActive("/account") ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}>
-                  Account
-                </Button>
-              </Link>
-              <Button variant="ghost" size="sm" className={`${NAV_LINK_BASE} px-3 h-8 text-muted-foreground hover:text-foreground`} onClick={handleLogout}>
-                Logout
-              </Button>
-            </div>
-          ) : (
-            <div className="hidden md:flex items-center gap-1.5 mr-2">
-              <Link href="/login">
-                <Button variant="ghost" size="sm" className="h-8 text-[0.8125rem] font-medium">Log in</Button>
-              </Link>
-              <Link href="/signup">
-                <Button size="sm" className="h-8 text-[0.8125rem] font-medium bg-primary hover:bg-primary/90">Sign Up</Button>
-              </Link>
-            </div>
-          )}
-
-          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setIsSearchOpen(true)} aria-label="Search" data-testid="button-search">
-            <Search className="h-4 w-4" />
-          </Button>
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="h-8 w-8"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")} 
-            aria-label="Toggle theme"
-            data-testid="button-theme-toggle"
+        {/* Right Action: Let's Talk CTA */}
+        <div className="flex items-center gap-3">
+          <Link
+            href="/contact"
+            className="hidden sm:inline-flex atomest-btn-primary items-center gap-2 text-xs py-2 px-4"
           >
-            {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-          </Button>
+            <span>Let's Talk</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
 
+          {/* Mobile Navigation Drawer */}
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden h-8 w-8" aria-label="Menu" data-testid="button-menu">
-                <Menu className="h-4 w-4" />
-              </Button>
+              <button
+                className="md:hidden p-2 rounded-xl bg-[#151824] border border-[#252938] text-[#F5F6FA] hover:text-white transition-colors"
+                aria-label="Toggle menu"
+              >
+                <Menu className="w-5 h-5" />
+              </button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <div className="flex flex-col gap-5 mt-8">
-                <Link href="/" className={MOBILE_LINK_DEFAULT}>Home</Link>
-                <Link href="/products" className={`${MOBILE_LINK_DEFAULT} flex items-center gap-2`}>
-                  <Sparkles className="w-4 h-4 text-primary" />
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/80 font-semibold">AI Products</span>
-                </Link>
-                <Link href="/tools" className={MOBILE_LINK_DEFAULT}>Free Tools</Link>
-                <Link href="/#pricing" className={MOBILE_LINK_DEFAULT}>Pricing</Link>
-                <Link href="/about" className={MOBILE_LINK_DEFAULT}>About</Link>
-                
-                <div className="h-px bg-border/40 my-2" />
-                
-                {user ? (
-                  <>
-                    <Link href="/dashboard" className={MOBILE_LINK_DEFAULT}>Dashboard</Link>
-                    <Link href="/account" className={MOBILE_LINK_DEFAULT}>Account</Link>
-                    <button onClick={handleLogout} className={`text-left ${MOBILE_LINK_BASE} text-red-400 hover:text-red-300`}>Logout</button>
-                  </>
-                ) : (
-                  <>
-                    <Link href="/login" className={MOBILE_LINK_DEFAULT}>Log In</Link>
-                    <Link href="/signup" className={`${MOBILE_LINK_BASE} text-primary hover:text-primary/80`}>Sign Up</Link>
-                  </>
-                )}
+            <SheetContent side="right" className="w-[300px] sm:w-[360px] bg-[#08090D] border-l border-[#252938] p-6 text-[#F5F6FA]">
+              <div className="flex flex-col gap-6 mt-6">
+                <div className="flex items-center gap-2 pb-4 border-b border-[#252938]">
+                  <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#8B5CF6] to-[#3B82F6] flex items-center justify-center font-bold text-white text-xs">
+                    A
+                  </div>
+                  <span className="font-display font-bold text-base text-[#F5F6FA]">ATOMEST</span>
+                </div>
+
+                <div className="space-y-3">
+                  <div className="text-[11px] font-mono uppercase text-[#8B5CF6] tracking-wider">
+                    Navigation
+                  </div>
+                  <div className="flex flex-col space-y-2 text-sm">
+                    <Link href="/" className="py-1 text-[#A0A5B5] hover:text-white transition-colors">
+                      Home
+                    </Link>
+                    <Link href="/about" className="py-1 text-[#A0A5B5] hover:text-white transition-colors">
+                      About Us
+                    </Link>
+                    <Link href="/contact" className="py-1 text-[#A0A5B5] hover:text-white transition-colors">
+                      Contact & Consultation
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="space-y-3 pt-4 border-t border-[#1C1F2B]">
+                  <div className="text-[11px] font-mono uppercase text-[#8B5CF6] tracking-wider">
+                    Solutions
+                  </div>
+                  <div className="space-y-2">
+                    {solutions.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="flex items-center gap-2.5 py-1.5 text-xs text-[#A0A5B5] hover:text-white transition-colors"
+                      >
+                        <item.icon className="w-4 h-4 text-[#8B5CF6]" />
+                        <span>{item.title}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-6 mt-auto">
+                  <Link
+                    href="/contact"
+                    className="atomest-btn-primary flex items-center justify-center gap-2 w-full text-xs py-3"
+                  >
+                    <span>Let's Talk</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
               </div>
             </SheetContent>
           </Sheet>

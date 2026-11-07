@@ -3,6 +3,7 @@ import cors from 'cors';
 import generateKitHandler from '../api/generate-kit.js';
 import waitlistHandler from '../api/waitlist.js';
 import processCandidatesHandler from '../api/process-candidates.js';
+import contactHandler from '../api/contact.js';
 
 const app = express();
 
@@ -33,6 +34,9 @@ app.options('/api/waitlist', createVercelAdapter(waitlistHandler));
 
 app.post('/api/process-candidates', createVercelAdapter(processCandidatesHandler));
 app.options('/api/process-candidates', createVercelAdapter(processCandidatesHandler));
+
+app.post('/api/contact', createVercelAdapter(contactHandler));
+app.options('/api/contact', createVercelAdapter(contactHandler));
 
 const PORT = 3001;
 app.listen(PORT, () => {

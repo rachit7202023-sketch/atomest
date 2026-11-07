@@ -1,488 +1,531 @@
 import { Link } from "wouter";
-import { ArrowRight, Sparkles, Clock, ShieldCheck, Download, CheckCircle2, Zap, BarChart3, FileText, Users, Search, MessageSquare, Calendar, PenLine, Star, ChevronDown } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowRight, Sparkles, Globe, GitFork, Bot, Layers, CheckCircle2, ShieldCheck, Zap, Compass, Palette, Code2, Rocket, ExternalLink, Cpu } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { SEO } from "@/components/seo/SEO";
-import { Button } from "@/components/ui/button";
-import { useModules } from "@/hooks/use-modules";
-
-// ── Animation Variants ──────────────────────────────────────────────────────
-const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' as const } },
-};
-const stagger = {
-  hidden: {},
-  show:   { transition: { staggerChildren: 0.08 } },
-};
-
-// ── Status Badge Config ────────────────────────────────────────────────────
-const statusConfig = {
-  live:         { label: 'Live',           cls: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' },
-  beta:         { label: 'Beta',           cls: 'bg-blue-500/10 text-blue-400 border-blue-500/20' },
-  coming_soon:  { label: 'Coming Soon',    cls: 'bg-white/5 text-muted-foreground border-white/10' },
-  disabled:     { label: 'Unavailable',    cls: 'bg-white/5 text-muted-foreground border-white/10' },
-};
-
-// ── Upcoming AI Employees (registry supplements these with "live" ones) ────
-const upcomingEmployees = [
-  { id: 'website-audit',       name: 'AI Website Auditor',     icon: Search,       category: 'Marketing',  timeSaved: '4–6 hrs',  status: 'coming_soon' as const },
-  { id: 'proposal-writer',     name: 'AI Proposal Writer',     icon: FileText,     category: 'Sales',      timeSaved: '3–5 hrs',  status: 'coming_soon' as const },
-  { id: 'meeting-assistant',   name: 'AI Meeting Assistant',   icon: Calendar,     category: 'Operations', timeSaved: '2–3 hrs',  status: 'coming_soon' as const },
-  { id: 'lead-researcher',     name: 'AI Lead Researcher',     icon: BarChart3,    category: 'Sales',      timeSaved: '5–8 hrs',  status: 'coming_soon' as const },
-  { id: 'content-assistant',   name: 'AI Content Assistant',   icon: PenLine,      category: 'Marketing',  timeSaved: '3–4 hrs',  status: 'coming_soon' as const },
-  { id: 'review-reply',        name: 'AI Review Reply Agent',  icon: MessageSquare,category: 'Support',    timeSaved: '2–4 hrs',  status: 'coming_soon' as const },
-  { id: 'report-generator',    name: 'AI Report Generator',    icon: BarChart3,    category: 'Operations', timeSaved: '4–6 hrs',  status: 'coming_soon' as const },
-  { id: 'invoice-followup',    name: 'AI Invoice Follow-up',   icon: Star,         category: 'Finance',    timeSaved: '2–3 hrs',  status: 'coming_soon' as const },
-];
-
-const features = [
-  { icon: Zap,          title: 'No prompt engineering',   desc: 'Just fill in the brief. The AI Employee handles the rest — professionally.' },
-  { icon: Download,     title: 'Exportable outputs',      desc: 'Every result is downloadable as PDF, Markdown, or CSV — ready to share.' },
-  { icon: Clock,        title: 'Hours back, every week',  desc: 'Each AI Employee replaces hours of manual work per task, per person.' },
-  { icon: ShieldCheck,  title: 'Secure by design',        desc: 'Your data never trains public models. Enterprise-grade processing standards.' },
-  { icon: CheckCircle2, title: 'Professional results',    desc: 'Output quality is designed to go directly to clients, not just into notes.' },
-  { icon: Users,        title: 'Specialists, not generic tools', desc: 'Each AI Employee is purpose-built for one job. Deep, not broad.' },
-];
-
-const steps = [
-  { n: '01', title: 'Choose a specialist', desc: 'Pick the AI Employee that matches the task.' },
-  { n: '02', title: 'Provide context',     desc: 'Upload a file or fill in a short brief. No prompting required.' },
-  { n: '03', title: 'Receive the output',  desc: 'Get a professional, structured result — ready to use or export.' },
-];
-
-const faqs = [
-  { q: 'Do I need to write prompts?', a: 'No. Our AI Employees are pre-configured. You just fill out a simple brief, like you would for a human employee, and the AI handles the complex prompting behind the scenes.' },
-  { q: 'Is my data used for training?', a: 'Never. We use enterprise APIs with zero data retention for training. Your data remains private and secure.' },
-  { q: 'Can I export the results?', a: 'Yes. Every output can be copied to your clipboard, or downloaded as a PDF, Markdown, or JSON file to share with your team.' },
-  { q: 'How much does it cost?', a: 'You get 100 free credits when you sign up. After that, you pay as you go. Most tasks cost between 10-20 credits (~$0.10 - $0.20).' },
-];
+import { InteractiveShowcase } from "@/components/showcase/InteractiveShowcase";
 
 export default function Home() {
-  const liveModules = useModules().filter(m => m.status === 'live' || m.status === 'beta');
+  const valueProps = [
+    {
+      step: "01",
+      title: "Build better digital experiences",
+      description: "Fast, modern, conversion-focused websites and web platforms that turn casual visitors into high-intent business opportunities.",
+      icon: Globe,
+      color: "text-[#3B82F6]",
+      bg: "bg-[#3B82F6]/10",
+      border: "border-[#3B82F6]/20",
+    },
+    {
+      step: "02",
+      title: "Eliminate repetitive workflows",
+      description: "Resilient autonomous pipelines that connect your tools, qualify incoming leads, sync data across systems, and eliminate manual friction.",
+      icon: GitFork,
+      color: "text-[#8B5CF6]",
+      bg: "bg-[#8B5CF6]/10",
+      border: "border-[#8B5CF6]/20",
+    },
+    {
+      step: "03",
+      title: "Put intelligent systems to work",
+      description: "Grounded AI agents and task assistants that handle customer inquiries, support internal operations, and automate complex decisions.",
+      icon: Bot,
+      color: "text-emerald-400",
+      bg: "bg-emerald-500/10",
+      border: "border-emerald-500/20",
+    },
+  ];
 
-  // Merge live modules into the display grid
-  const liveCards = liveModules.map(m => ({
-    id: m.id,
-    name: m.name,
-    icon: m.icon,
-    category: m.category,
-    timeSaved: m.estimatedTimeSaved,
-    status: m.status,
-    href: `/employees/${m.id}`,
-  }));
+  const solutionPillars = [
+    {
+      title: "AI Website Solutions",
+      tagline: "High-Performance Digital Flagships",
+      description: "Modern, search-optimized business websites, landing pages, and web applications engineered for speed, technical authority, and conversion.",
+      icon: Globe,
+      route: "/solutions/websites",
+      badge: "Commercial Focus",
+      deliverables: ["Business & corporate websites", "High-conversion landing pages", "Lead generation funnels", "Full redesigns & modernization"],
+    },
+    {
+      title: "AI Automation Solutions",
+      tagline: "Autonomous Event & Data Pipelines",
+      description: "Stop doing manually what technology can handle. Connect forms, CRMs, messaging, and databases into deterministic, self-healing workflows.",
+      icon: GitFork,
+      route: "/solutions/automation",
+      badge: "Commercial Focus",
+      deliverables: ["Inbound lead triage & routing", "Multi-system CRM synchronization", "Appointment & booking automation", "Custom operational event logic"],
+    },
+    {
+      title: "AI Agents",
+      tagline: "Grounded Business Assistants",
+      description: "Intelligent conversational and task-oriented agents with deterministic tool integrations, private data grounding, and strict human fallbacks.",
+      icon: Bot,
+      route: "/solutions/agents",
+      badge: "Intelligent Systems",
+      deliverables: ["24/7 customer support agents", "Inbound sales qualification assistants", "Internal knowledge & SOP copilots", "Domain-specific AI copilots"],
+    },
+    {
+      title: "AI Products",
+      tagline: "Proprietary Software Pipeline",
+      description: "Translating proven enterprise AI patterns into developer-grade software products and lightweight workflow orchestration tools.",
+      icon: Layers,
+      route: "/solutions/products",
+      badge: "Active R&D",
+      deliverables: ["FlowEngine (Autonomous Orchestrator)", "Grounding Studio (Private RAG)", "LeadPulse (Intent Scoring)", "Early Access Waitlist"],
+    },
+  ];
 
-  const allCards = [
-    ...liveCards,
-    ...upcomingEmployees.filter(u => !liveCards.find(l => l.id === u.id)),
-  ].slice(0, 8);
+  const howWeWorkSteps = [
+    {
+      number: "01",
+      title: "Discover",
+      icon: Compass,
+      description: "We audit your existing systems, conversion bottlenecks, and manual operations to determine where intelligent software delivers real ROI.",
+    },
+    {
+      number: "02",
+      title: "Design",
+      icon: Palette,
+      description: "We architect system workflows, data schemas, and interactive interfaces before writing code, ensuring clarity and stakeholder alignment.",
+    },
+    {
+      number: "03",
+      title: "Build",
+      icon: Code2,
+      description: "Our engineers build using modern, battle-tested frameworks (React, TypeScript, Supabase, serverless compute) with rigorous type safety.",
+    },
+    {
+      number: "04",
+      title: "Deploy",
+      icon: Rocket,
+      description: "We handle production provisioning, observability telemetry, edge routing, and ongoing maintenance so your systems run without interruption.",
+    },
+  ];
+
+  const conceptCapabilities = [
+    {
+      title: "OmniFlow Lead Triage Architecture",
+      division: "AI Automation",
+      description: "Captures inbound consultation inquiries, parses intent via Gemini models, validates business domains, and triggers synchronous deal writes in HubSpot and Slack.",
+      specs: ["Sub-400ms end-to-end execution", "Zero-loss dead-letter queue", "Idempotent event routing"],
+    },
+    {
+      title: "Atlas Sovereign Knowledge Agent",
+      division: "AI Agents",
+      description: "A private, zero-retention internal assistant designed to answer compliance, legal, and operational inquiries by querying vector-indexed internal SOP documents.",
+      specs: ["SOC2-ready VPC isolation", "Grounded inline citations", "Deterministic human escalation"],
+    },
+    {
+      title: "Veloce High-Authority Web Platform",
+      division: "AI Websites",
+      description: "A next-generation corporate website architecture featuring edge rendering, fluid dark aesthetic, sub-second First Contentful Paint, and dynamic lead qualification.",
+      specs: ["99+ Core Web Vitals score", "Full mobile responsiveness", "Dynamic lead form routing"],
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col overflow-x-hidden" style={{ fontFamily: 'var(--font-text)' }}>
-      <SEO
-        title="Atomest — Hire AI Employees"
-        description="Hire specialized AI Employees that handle reporting, recruiting, audits, proposals, research, content, and repetitive workflows in minutes."
-        canonicalPath="/"
-      />
-      <Navbar />
-
-      {/* ── HERO ──────────────────────────────────────────────────────────── */}
-      <section className="relative flex flex-col items-center justify-center text-center pt-36 pb-28 px-6 overflow-hidden">
-        {/* Single restrained glow — one, centered, subtle */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-[640px] h-[420px] opacity-[0.15] blur-[100px] rounded-full"
-          style={{ background: 'hsl(var(--primary))' }}
+    <>
+      <Helmet>
+        <title>Atomest | Intelligent Websites, Automations & AI Solutions</title>
+        <meta
+          name="description"
+          content="Your business deserves an unfair advantage. Atomest builds intelligent websites, powerful automations, and AI systems that help ambitious businesses operate smarter."
         />
+      </Helmet>
 
-        <div className="relative z-10 max-w-[var(--sp-max-w)] mx-auto">
-          <motion.div
-            variants={fadeUp} initial="hidden" animate="show"
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-sm text-muted-foreground mb-8"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-primary" />
-            Specialized AI Employees for every role
-          </motion.div>
+      <div className="min-h-screen bg-[#08090D] flex flex-col justify-between">
+        <Navbar />
 
-          <motion.h1
-            variants={fadeUp} initial="hidden" animate="show"
-            transition={{ delay: 0.08 }}
-            className="font-semibold text-foreground mb-6 tracking-tight"
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2.5rem, 6vw, var(--type-hero))',
-              lineHeight: 'var(--type-hero-lh)',
-              letterSpacing: 'var(--type-hero-ls)',
-            }}
-          >
-            Your Team's Next Hire<br className="hidden sm:block" />
-            <span className="text-primary"> Isn't Human.</span>
-          </motion.h1>
+        {/* ========================================================================= */}
+        {/* SECTION A: HERO                                                          */}
+        {/* ========================================================================= */}
+        <section className="relative overflow-hidden pt-24 sm:pt-28 pb-20 sm:pb-28 border-b border-[#252938]">
+          {/* Subtle Ambient Glows */}
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-gradient-to-tr from-[#8B5CF6]/15 via-[#3B82F6]/10 to-transparent rounded-full blur-[120px] pointer-events-none" />
+          
+          <div className="atomest-container relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              {/* Left Column: Headlines & CTA */}
+              <div className="lg:col-span-7 text-left space-y-6">
+                <div className="atomest-badge-violet inline-flex items-center gap-2">
+                  <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                  <span>Next-Generation AI Technology Solutions</span>
+                </div>
 
-          <motion.p
-            variants={fadeUp} initial="hidden" animate="show"
-            transition={{ delay: 0.16 }}
-            className="text-muted-foreground max-w-2xl mx-auto mb-10"
-            style={{
-              fontSize: 'var(--type-sub)',
-              lineHeight: 'var(--type-sub-lh)',
-              letterSpacing: 'var(--type-sub-ls)',
-            }}
-          >
-            Deploy specialized AI Employees that handle recruiting, audits, proposals,
-            research, content, and repetitive workflows — in minutes.
-          </motion.p>
+                <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display tracking-tight text-[#F5F6FA] leading-[1.08]">
+                  Your business deserves an{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#A78BFA] to-[#3B82F6]">
+                    unfair advantage.
+                  </span>
+                </h1>
 
-          <motion.div
-            variants={fadeUp} initial="hidden" animate="show"
-            transition={{ delay: 0.24 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3"
-          >
-            <Link href="/employees">
-              <Button
-                id="hero-cta-primary"
-                className="h-12 px-7 font-semibold text-base"
-                style={{ borderRadius: 'var(--radius-pill)' }}
-              >
-                Meet Your AI Employees
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
-            <Link href="#how-it-works">
-              <Button
-                id="hero-cta-secondary"
-                variant="outline"
-                className="h-12 px-7 font-semibold text-base bg-transparent border-white/15 hover:bg-white/5"
-                style={{ borderRadius: 'var(--radius-pill)' }}
-              >
-                See How It Works
-              </Button>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+                <p className="text-base sm:text-xl text-[#A0A5B5] leading-relaxed max-w-xl">
+                  We build intelligent websites, powerful automations and AI systems that help ambitious businesses operate smarter and grow faster.
+                </p>
 
-      {/* ── SOCIAL PROOF (Placeholder) ────────────────────────────────────── */}
-      <section className="border-t border-white/8 py-16 px-[var(--sp-content-h)] bg-white/[0.01]">
-        <div className="max-w-[var(--sp-max-w)] mx-auto text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-8">
-            Trusted by teams at
-          </p>
-          <div className="flex flex-wrap justify-center gap-12 opacity-50 grayscale">
-            {/* Replace these with actual logos later */}
-            <div className="text-xl font-bold font-serif">Acme Corp</div>
-            <div className="text-xl font-bold font-sans">GlobalTech</div>
-            <div className="text-xl font-bold font-mono">Innovate.io</div>
-            <div className="text-xl font-bold tracking-tighter">Nexus</div>
+                <div className="flex flex-wrap items-center gap-4 pt-2">
+                  <a href="#solutions" className="atomest-btn-primary inline-flex items-center gap-2">
+                    <span>Explore Solutions</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+
+                  <Link to="/contact" className="atomest-btn-secondary inline-flex items-center gap-2">
+                    <span>Start a Project</span>
+                  </Link>
+                </div>
+
+                {/* Trust / Positioning Badges */}
+                <div className="pt-6 border-t border-[#1C1F2B] grid grid-cols-3 gap-4 max-w-lg">
+                  <div>
+                    <div className="text-xs font-mono uppercase text-[#A0A5B5]">Architecture</div>
+                    <div className="text-sm font-semibold text-[#F5F6FA] mt-0.5">Production-Ready</div>
+                  </div>
+                  <div>
+                    <div className="text-xs font-mono uppercase text-[#A0A5B5]">Focus</div>
+                    <div className="text-sm font-semibold text-[#8B5CF6] mt-0.5">Commercial ROI</div>
+                  </div>
+                  <div>
+                    <div className="text-xs font-mono uppercase text-[#A0A5B5]">Delivery</div>
+                    <div className="text-sm font-semibold text-[#3B82F6] mt-0.5">Direct Engineers</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Original CSS/SVG Abstract AI Visual Centerpiece */}
+              <div className="lg:col-span-5 flex justify-center">
+                <div className="relative w-full max-w-[420px] aspect-square rounded-3xl bg-[#10121A] border border-[#252938] p-6 shadow-2xl flex flex-col justify-between overflow-hidden">
+                  {/* Decorative background grid */}
+                  <div className="absolute inset-0 bg-[radial-gradient(#252938_1px,transparent_1px)] [background-size:16px_16px] opacity-40 pointer-events-none" />
+
+                  {/* Top Bar of abstract console */}
+                  <div className="flex items-center justify-between pb-3 border-b border-[#252938] relative z-10">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <span className="text-xs font-mono text-[#F5F6FA]">ATOMEST_CORE :: v2.0</span>
+                    </div>
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#151824] text-[#8B5CF6] border border-[#8B5CF6]/30">
+                      TELEMETRY ACTIVE
+                    </span>
+                  </div>
+
+                  {/* Central Orbital Centerpiece */}
+                  <div className="relative flex-1 flex items-center justify-center my-6">
+                    {/* Outer Orbital Ring */}
+                    <div className="absolute w-56 h-56 rounded-full border border-[#8B5CF6]/20 border-dashed animate-[spin_30s_linear_infinite]" />
+                    
+                    {/* Middle Orbital Ring */}
+                    <div className="absolute w-40 h-40 rounded-full border border-[#3B82F6]/30 animate-[spin_20s_linear_infinite_reverse]" />
+
+                    {/* Glowing Core */}
+                    <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-tr from-[#8B5CF6] to-[#3B82F6] flex items-center justify-center shadow-[0_0_40px_rgba(139,92,246,0.5)]">
+                      <Cpu className="w-9 h-9 text-white animate-pulse" />
+                    </div>
+
+                    {/* Floating Satellite Nodes */}
+                    <div className="absolute -top-1 left-8 px-2.5 py-1 rounded-lg bg-[#151824]/90 border border-[#252938] text-[10px] font-mono text-[#C4B5FD] shadow-lg backdrop-blur-sm">
+                      ⚡ Inbound Latency: 14ms
+                    </div>
+                    <div className="absolute -bottom-1 right-8 px-2.5 py-1 rounded-lg bg-[#151824]/90 border border-[#252938] text-[10px] font-mono text-emerald-400 shadow-lg backdrop-blur-sm">
+                      ✓ Pipeline Synced
+                    </div>
+                  </div>
+
+                  {/* Bottom Console Status */}
+                  <div className="pt-3 border-t border-[#252938] relative z-10 grid grid-cols-2 gap-2 text-[11px] font-mono">
+                    <div className="text-[#A0A5B5]">
+                      System: <span className="text-[#F5F6FA]">Operational</span>
+                    </div>
+                    <div className="text-right text-[#8B5CF6]">
+                      99.9% Uptime SLA
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── AI EMPLOYEES GRID ─────────────────────────────────────────────── */}
-      <section className="border-t border-white/8 py-[var(--sp-section-v)] px-[var(--sp-content-h)]">
-        <div className="max-w-[var(--sp-max-w)] mx-auto">
-          <motion.div
-            variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="mb-12"
-          >
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-              The Roster
-            </p>
-            <h2
-              className="font-semibold text-foreground"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'var(--type-section)',
-                lineHeight: 'var(--type-section-lh)',
-              }}
-            >
-              Meet Your New Hires.
-            </h2>
-          </motion.div>
+        {/* ========================================================================= */}
+        {/* SECTION B: VALUE PROPOSITION                                             */}
+        {/* ========================================================================= */}
+        <section className="atomest-section bg-[#0B0D14] border-b border-[#252938]">
+          <div className="atomest-container">
+            <div className="max-w-3xl mb-12">
+              <div className="atomest-badge-blue mb-3">
+                <Zap className="w-3.5 h-3.5 text-[#3B82F6]" />
+                <span>Value Proposition</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-[#F5F6FA] mb-4">
+                Less manual work. More meaningful growth.
+              </h2>
+              <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
+                Most companies waste hundreds of hours every month wrestling with disconnected software, manual data handoffs, and outdated websites. We solve this by engineering purposeful intelligent systems.
+              </p>
+            </div>
 
-          <motion.div
-            variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true, margin: '-60px' }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"
-          >
-            {allCards.map(card => {
-              const sc = statusConfig[card.status];
-              const Icon = card.icon;
-              const isLive = card.status === 'live' || card.status === 'beta';
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {valueProps.map((prop, idx) => {
+                const Icon = prop.icon;
+                return (
+                  <div
+                    key={idx}
+                    className="p-6 sm:p-8 rounded-2xl bg-[#10121A] border border-[#252938] hover:border-[#8B5CF6]/40 transition-all flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-6">
+                        <div className={`w-12 h-12 rounded-xl ${prop.bg} border ${prop.border} flex items-center justify-center ${prop.color}`}>
+                          <Icon className="w-6 h-6" />
+                        </div>
+                        <span className="text-xs font-mono text-[#A0A5B5]">{prop.step}</span>
+                      </div>
 
-              return (
-                <motion.div key={card.id} variants={fadeUp}>
-                  {isLive ? (
-                    <Link href={(card as { href?: string }).href ?? '#'}>
-                      <EmployeeCard card={card} sc={sc} Icon={Icon} />
+                      <h3 className="font-display font-bold text-xl text-[#F5F6FA] mb-3">
+                        {prop.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#A0A5B5] leading-relaxed">
+                        {prop.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-6 mt-6 border-t border-[#1C1F2B] flex items-center gap-2 text-xs font-medium text-[#8B5CF6]">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>Engineered for measurable ROI</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* SECTION C: FOUR SOLUTION PILLARS                                         */}
+        {/* ========================================================================= */}
+        <section id="solutions" className="atomest-section border-b border-[#252938]">
+          <div className="atomest-container">
+            <div className="max-w-3xl mb-12">
+              <div className="atomest-badge-violet mb-3">
+                <Layers className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                <span>Four Divisions</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-[#F5F6FA] mb-4">
+                Practical technology solutions for real businesses.
+              </h2>
+              <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
+                We engineer practical, outcome-driven systems designed around your operational bottlenecks and growth objectives.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {solutionPillars.map((pillar, idx) => {
+                const Icon = pillar.icon;
+                return (
+                  <div
+                    key={idx}
+                    className="p-6 sm:p-8 rounded-2xl bg-[#10121A] border border-[#252938] hover:border-[#8B5CF6]/50 transition-all flex flex-col justify-between group"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-12 h-12 rounded-xl bg-[#151824] border border-[#252938] flex items-center justify-center text-[#8B5CF6] group-hover:bg-[#8B5CF6] group-hover:text-white transition-colors">
+                          <Icon className="w-6 h-6" />
+                        </div>
+                        <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-[#151824] text-[#C4B5FD] border border-[#252938]">
+                          {pillar.badge}
+                        </span>
+                      </div>
+
+                      <div className="text-xs font-mono uppercase text-[#8B5CF6] tracking-wider mb-1">
+                        {pillar.tagline}
+                      </div>
+
+                      <h3 className="font-display font-bold text-2xl text-[#F5F6FA] mb-3">
+                        {pillar.title}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm text-[#A0A5B5] leading-relaxed mb-6">
+                        {pillar.description}
+                      </p>
+
+                      <div className="space-y-2 pt-4 border-t border-[#1C1F2B] mb-6">
+                        {pillar.deliverables.map((item, dIdx) => (
+                          <div key={dIdx} className="flex items-center gap-2 text-xs text-[#C4B5FD]">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#8B5CF6] shrink-0" />
+                            <span>{item}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <Link
+                      to={pillar.route}
+                      className="atomest-btn-secondary flex items-center justify-center gap-2 w-full text-xs font-semibold group-hover:border-[#8B5CF6] transition-colors"
+                    >
+                      <span>Explore {pillar.title}</span>
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </Link>
-                  ) : (
-                    <EmployeeCard card={card} sc={sc} Icon={Icon} />
-                  )}
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </div>
-      </section>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
-      {/* ── HOW IT WORKS ──────────────────────────────────────────────────── */}
-      <section id="how-it-works" className="border-t border-white/8 py-[var(--sp-section-v)] px-[var(--sp-content-h)]">
-        <div className="max-w-[var(--sp-max-w)] mx-auto">
-          <motion.div
-            variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-              The Process
-            </p>
-            <h2
-              className="font-semibold text-foreground"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'var(--type-section)',
-                lineHeight: 'var(--type-section-lh)',
-              }}
-            >
-              Three steps to a new hire.
-            </h2>
-          </motion.div>
+        {/* ========================================================================= */}
+        {/* SECTION D: INTERACTIVE CAPABILITY SHOWCASE                               */}
+        {/* ========================================================================= */}
+        <InteractiveShowcase />
 
-          <motion.div
-            variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 relative"
-          >
-            {/* Connector line (desktop only) */}
-            <div className="hidden md:block absolute top-7 left-[20%] right-[20%] h-px bg-white/8" />
+        {/* ========================================================================= */}
+        {/* SECTION E: HOW WE WORK                                                   */}
+        {/* ========================================================================= */}
+        <section className="atomest-section bg-[#0B0D14] border-y border-[#252938]">
+          <div className="atomest-container">
+            <div className="max-w-3xl mb-12">
+              <div className="atomest-badge-violet mb-3">
+                <Rocket className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                <span>Engagement Process</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-[#F5F6FA] mb-4">
+                How we work.
+              </h2>
+              <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
+                A disciplined four-phase delivery framework designed for engineering clarity, velocity, and zero surprises.
+              </p>
+            </div>
 
-            {steps.map((step, i) => (
-              <motion.div key={i} variants={fadeUp} className="flex flex-col items-center text-center relative z-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {howWeWorkSteps.map((step, idx) => {
+                const Icon = step.icon;
+                return (
+                  <div
+                    key={idx}
+                    className="p-6 rounded-2xl bg-[#10121A] border border-[#252938] flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="w-10 h-10 rounded-xl bg-[#151824] border border-[#252938] flex items-center justify-center text-[#8B5CF6]">
+                          <Icon className="w-5 h-5" />
+                        </div>
+                        <span className="text-2xl font-extrabold font-mono text-[#8B5CF6]/30">
+                          {step.number}
+                        </span>
+                      </div>
+
+                      <h3 className="font-display font-bold text-lg text-[#F5F6FA] mb-2">
+                        {step.title}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm text-[#A0A5B5] leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* SECTION F: WORK / CAPABILITIES SHOWCASE (CONCEPT DEMONSTRATIONS)          */}
+        {/* ========================================================================= */}
+        <section className="atomest-section border-b border-[#252938]">
+          <div className="atomest-container">
+            <div className="max-w-3xl mb-12">
+              <div className="atomest-badge-blue mb-3">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#3B82F6]" />
+                <span>Concept Demonstrations</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-[#F5F6FA] mb-4">
+                Architectural systems we build.
+              </h2>
+              <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
+                Transparent demonstrations of our architectural patterns across high-impact business domains.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {conceptCapabilities.map((item, idx) => (
                 <div
-                  className="w-14 h-14 rounded-full bg-white/5 border border-white/12 flex items-center justify-center mb-5"
+                  key={idx}
+                  className="p-6 rounded-2xl bg-[#10121A] border border-[#252938] flex flex-col justify-between"
                 >
-                  <span className="text-xl font-black text-primary">{step.n}</span>
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-[11px] font-mono text-[#8B5CF6] uppercase tracking-wider">
+                        {item.division}
+                      </span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#151824] text-[#A0A5B5] border border-[#252938]">
+                        Concept demonstration
+                      </span>
+                    </div>
+
+                    <h3 className="font-display font-bold text-lg text-[#F5F6FA] mb-2.5">
+                      {item.title}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-[#A0A5B5] leading-relaxed mb-6">
+                      {item.description}
+                    </p>
+                  </div>
+
+                  <div className="space-y-1.5 pt-4 border-t border-[#1C1F2B]">
+                    {item.specs.map((spec, sIdx) => (
+                      <div key={sIdx} className="flex items-center gap-2 text-xs text-[#C4B5FD]">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#8B5CF6] shrink-0" />
+                        <span>{spec}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <h3
-                  className="font-semibold text-foreground mb-2"
-                  style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--type-tile)', lineHeight: 'var(--type-tile-lh)' }}
-                >
-                  {step.title}
-                </h3>
-                <p className="text-muted-foreground" style={{ fontSize: 'var(--type-small)', lineHeight: '1.6' }}>
-                  {step.desc}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+              ))}
+            </div>
 
-      {/* ── WHY ATOMEST ───────────────────────────────────────────────────── */}
-      <section className="border-t border-white/8 py-[var(--sp-section-v)] px-[var(--sp-content-h)]">
-        <div className="max-w-[var(--sp-max-w)] mx-auto">
-          <motion.div
-            variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="mb-12"
-          >
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-              Why Atomest
-            </p>
-            <h2
-              className="font-semibold text-foreground"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'var(--type-section)',
-                lineHeight: 'var(--type-section-lh)',
-              }}
-            >
-              Built for outcomes,<br />not experiments.
-            </h2>
-          </motion.div>
+            {/* Integrity Notice */}
+            <div className="mt-8 p-4 rounded-xl bg-[#0B0D14] border border-[#252938] text-center text-xs text-[#A0A5B5]">
+              Atomest maintains strict integrity: we never fabricate client logos, fake case studies, or simulated testimonials. Genuine client references are provided during formal enterprise scoping.
+            </div>
+          </div>
+        </section>
 
-          <motion.div
-            variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
-          >
-            {features.map((f, i) => (
-              <motion.div
-                key={i} variants={fadeUp}
-                className="p-6 rounded-[var(--radius-card)] bg-white/[0.03] border border-white/8 hover:bg-white/[0.06] transition-colors duration-300"
-              >
-                <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-4">
-                  <f.icon className="w-5 h-5 text-primary" />
+        {/* ========================================================================= */}
+        {/* SECTION G: FINAL CTA                                                     */}
+        {/* ========================================================================= */}
+        <section className="atomest-section py-20 sm:py-28">
+          <div className="atomest-container">
+            <div className="p-8 sm:p-16 rounded-3xl bg-gradient-to-b from-[#151824] to-[#10121A] border border-[#252938] relative overflow-hidden text-center shadow-2xl">
+              <div className="absolute top-0 right-1/2 translate-x-1/2 w-96 h-96 bg-[#8B5CF6]/15 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="max-w-2xl mx-auto relative z-10 space-y-6">
+                <div className="atomest-badge-violet inline-flex items-center gap-2">
+                  <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                  <span>Start Your Transformation</span>
                 </div>
-                <h3
-                  className="font-semibold text-foreground mb-2"
-                  style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--type-tile)', lineHeight: 'var(--type-tile-lh)', letterSpacing: 'var(--type-tile-ls)' }}
-                >
-                  {f.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed" style={{ fontSize: 'var(--type-small)' }}>
-                  {f.desc}
+
+                <h2 className="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-[#F5F6FA]">
+                  Ready to make your business work smarter?
+                </h2>
+
+                <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
+                  Schedule a preliminary architecture discovery call. We'll assess your current workflows and deliver a tangible engineering proposal.
                 </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
 
-      {/* ── PRICING TEASER ────────────────────────────────────────────────── */}
-      <section className="border-t border-white/8 py-[var(--sp-section-v)] px-[var(--sp-content-h)] bg-white/[0.01]">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="mb-12"
-          >
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-3">
-              Pricing
-            </p>
-            <h2
-              className="font-semibold text-foreground mb-4"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'var(--type-section)',
-                lineHeight: 'var(--type-section-lh)',
-              }}
-            >
-              Pay only for what you use.
-            </h2>
-            <p className="text-muted-foreground max-w-lg mx-auto" style={{ fontSize: 'var(--type-body)', lineHeight: '1.6' }}>
-              No expensive monthly subscriptions. Get 100 free credits on sign up, then buy credits as you need them.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="inline-flex items-center gap-6 p-6 rounded-2xl border border-primary/20 bg-primary/5"
-          >
-            <div className="text-left">
-              <div className="text-sm text-primary font-medium mb-1">Starter Pack</div>
-              <div className="text-3xl font-bold text-foreground">$10</div>
-              <div className="text-xs text-muted-foreground mt-1">For 1,000 credits</div>
+                <div className="pt-2">
+                  <Link
+                    to="/contact"
+                    className="atomest-btn-primary inline-flex items-center gap-2 text-base px-8 py-3.5 shadow-lg shadow-[#8B5CF6]/25"
+                  >
+                    <span>Start a Project</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </div>
             </div>
-            <div className="w-px h-16 bg-white/10 mx-4" />
-            <div className="text-left space-y-2 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> ~100 AI tasks</div>
-              <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Never expire</div>
-              <div className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-primary" /> Full platform access</div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      {/* ── FAQ ───────────────────────────────────────────────────────────── */}
-      <section className="border-t border-white/8 py-[var(--sp-section-v)] px-[var(--sp-content-h)]">
-        <div className="max-w-3xl mx-auto">
-          <motion.div
-            variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2
-              className="font-semibold text-foreground"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'var(--type-section)',
-                lineHeight: 'var(--type-section-lh)',
-              }}
-            >
-              Frequently asked questions
-            </h2>
-          </motion.div>
-
-          <motion.div
-            variants={stagger} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="space-y-4"
-          >
-            {faqs.map((faq, i) => (
-              <motion.div key={i} variants={fadeUp} className="p-6 rounded-[var(--radius-card)] bg-white/[0.02] border border-white/8">
-                <h3 className="font-medium text-foreground mb-2 text-lg">{faq.q}</h3>
-                <p className="text-muted-foreground leading-relaxed text-sm">{faq.a}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── FINAL CTA ─────────────────────────────────────────────────────── */}
-      <section className="border-t border-white/8 py-[var(--sp-section-v)] px-[var(--sp-content-h)]">
-        <div className="max-w-[var(--sp-max-w)] mx-auto">
-          <motion.div
-            variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="text-center"
-          >
-            <h2
-              className="font-semibold text-foreground mb-4"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2rem, 4vw, var(--type-section))',
-                lineHeight: 'var(--type-section-lh)',
-              }}
-            >
-              Ready to meet your team?
-            </h2>
-            <p className="text-muted-foreground mb-8 max-w-md mx-auto" style={{ fontSize: 'var(--type-body)', lineHeight: 'var(--type-body-lh)' }}>
-              Your first AI Employee is free. No prompt engineering. No learning curve.
-            </p>
-            <Link href="/signup">
-              <Button
-                id="bottom-cta"
-                className="h-12 px-8 font-semibold text-base"
-                style={{ borderRadius: 'var(--radius-pill)' }}
-              >
-                Hire Your First AI Employee
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
-
-      <Footer />
-    </div>
-  );
-}
-
-// ── Sub-component ──────────────────────────────────────────────────────────
-
-interface CardData {
-  id: string;
-  name: string;
-  category: string;
-  timeSaved: string;
-  status: string;
-  icon: React.ComponentType<{ className?: string }>;
-}
-
-function EmployeeCard({ card, sc, Icon }: { card: CardData; sc: { label: string; cls: string }; Icon: React.ComponentType<{ className?: string }> }) {
-  const isLive = card.status === 'live' || card.status === 'beta';
-  return (
-    <div className={`group h-full p-5 rounded-[var(--radius-card)] border border-white/8 bg-white/[0.03] transition-colors duration-300 ${isLive ? 'hover:bg-white/[0.07] cursor-pointer' : 'cursor-default'}`}>
-      <div className="flex items-start justify-between mb-4">
-        <div className="w-10 h-10 rounded-xl bg-white/8 border border-white/10 flex items-center justify-center">
-          <Icon className="w-5 h-5 text-foreground/70" />
-        </div>
-        <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border ${sc.cls}`}>
-          {sc.label}
-        </span>
+        <Footer />
       </div>
-      <h3
-        className="font-semibold text-foreground mb-1"
-        style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--type-tile)', lineHeight: 'var(--type-tile-lh)', letterSpacing: 'var(--type-tile-ls)' }}
-      >
-        {card.name}
-      </h3>
-      <p className="text-muted-foreground mb-3" style={{ fontSize: 'var(--type-caption)' }}>
-        {card.category}
-      </p>
-      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-        <Clock className="w-3 h-3" />
-        <span>Saves {card.timeSaved} / task</span>
-      </div>
-      {isLive && (
-        <div className="flex items-center gap-1 text-xs text-primary mt-3 opacity-0 group-hover:opacity-100 transition-opacity">
-          Hire now <ArrowRight className="w-3 h-3" />
-        </div>
-      )}
-    </div>
+    </>
   );
 }

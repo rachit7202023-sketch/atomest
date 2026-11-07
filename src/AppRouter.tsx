@@ -17,6 +17,13 @@ const Signup = lazy(() => import("@/pages/auth/Signup"));
 const Account = lazy(() => import("@/pages/auth/Account"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 
+// ── Atomest V2: Solution & Consultation Routes ──
+const SolutionWebsites = lazy(() => import("@/pages/solutions/Websites"));
+const SolutionAutomation = lazy(() => import("@/pages/solutions/Automation"));
+const SolutionAgents = lazy(() => import("@/pages/solutions/Agents"));
+const SolutionProducts = lazy(() => import("@/pages/solutions/Products"));
+const Contact = lazy(() => import("@/pages/Contact"));
+
 // ── New: Dynamic AI Employee page (auto-populated from module registry) ──
 const EmployeePage = lazy(() => import("@/pages/employee/EmployeePage"));
 
@@ -38,6 +45,9 @@ function PageLoader() {
 
 export default function AppRouter() {
   const isClient = typeof window !== "undefined";
+  if (isClient) {
+    console.log("AppRouter current pathname:", window.location.pathname);
+  }
   
   return (
     <>
@@ -46,6 +56,14 @@ export default function AppRouter() {
       <Suspense fallback={<PageLoader />}>
         <Switch>
           <Route path="/" component={Home} />
+
+          {/* ── Atomest V2 Primary Routes ── */}
+          <Route path="/solutions/websites" component={SolutionWebsites} />
+          <Route path="/solutions/automation" component={SolutionAutomation} />
+          <Route path="/solutions/agents" component={SolutionAgents} />
+          <Route path="/solutions/products" component={SolutionProducts} />
+          <Route path="/contact" component={Contact} />
+
           <Route path="/tools" component={Tools} />
           <Route path="/tools/:slug" component={ToolPage} />
           <Route path="/categories" component={Categories} />
