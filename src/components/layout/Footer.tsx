@@ -1,40 +1,39 @@
 import { Link } from "wouter";
 import { categories } from "@/data/categories";
-import { GoogleAd } from "@/components/ads/GoogleAd";
-import { AD_SLOTS } from "@/config/ads";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
   const topCategories = categories.slice(0, 5);
 
   return (
-    <footer className="relative bg-background overflow-hidden border-t border-border/40">
+    <footer className="relative bg-[#08090D] overflow-hidden border-t border-[#252938]">
       {/* Premium Ambient Background */}
-      <div className="absolute inset-0 pointer-events-none depth-ambient" aria-hidden>
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
-        <div className="absolute top-0 inset-x-0 h-[300px] bg-gradient-to-b from-primary/5 to-transparent" />
+      <div className="absolute inset-0 pointer-events-none" aria-hidden>
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(139,92,246,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(139,92,246,0.03)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]" />
+        <div className="absolute top-0 inset-x-0 h-[240px] bg-gradient-to-b from-primary/10 via-primary/5 to-transparent" />
       </div>
 
-      <div className="container mx-auto px-4 pt-24 pb-12 relative z-10">
-        <div className="flex flex-col items-center text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight-head mb-6">
-            The Internet's <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">Toolbox.</span>
+      <div className="container mx-auto px-4 pt-20 pb-12 relative z-10">
+        <div className="flex flex-col items-center text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold uppercase tracking-wider mb-4">
+            ATOMEST V2
+          </div>
+          <h2 className="text-3xl md:text-5xl font-extrabold font-display tracking-tight mb-4 text-[#F5F6FA]">
+            Next-Generation <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#A78BFA] to-[#3B82F6]">AI Solutions.</span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-xl mx-auto">
-            Free, fast, and secure utilities designed for creators, developers, and everyday problem-solvers. No registration required.
+          <p className="text-[#A0A5B5] text-base md:text-lg max-w-xl mx-auto leading-relaxed">
+            Architecting autonomous AI agents, intelligent web solutions, and automated workflows for ambitious organizations.
           </p>
         </div>
-
-        <GoogleAd adSlot={AD_SLOTS.FOOTER_BANNER} className="w-full max-w-4xl mx-auto mb-16" />
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-16">
           <div className="col-span-2 md:col-span-2 pr-8">
             <Link href="/" className="flex items-center gap-2.5 mb-6 group inline-flex">
               <img src="/logo.svg" width="32" height="32" alt="Atomest" className="rounded-xl flex-shrink-0 group-hover:scale-105 transition-transform duration-300" />
-              <span className="font-extrabold text-xl tracking-tight-head">Atomest</span>
+              <span className="font-extrabold text-xl font-display tracking-tight text-[#F5F6FA]">Atomest</span>
             </Link>
-            <p className="text-muted-foreground text-sm mb-8 max-w-xs leading-relaxed">
-              We build tools that run entirely in your browser. Lightning fast, completely private, and free forever.
+            <p className="text-[#A0A5B5] text-sm mb-8 max-w-xs leading-relaxed">
+              Premium AI systems engineered for precision, speed, and real enterprise impact.
             </p>
             <div className="flex gap-4">
               {/* Social links */}

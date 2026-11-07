@@ -34,15 +34,15 @@ export function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-background/65 backdrop-blur-2xl border-b border-white/5 dark:border-white/5 transition-all duration-300" role="navigation" aria-label="Main navigation">
-      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+    <nav className="sticky top-0 z-50 w-full bg-[#08090D]/80 backdrop-blur-2xl border-b border-[#252938] transition-all duration-300" role="navigation" aria-label="Main navigation">
+      <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
       <div className="container mx-auto px-4 h-14 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2.5 group" aria-label="Atomest Home">
             <img src="/logo.svg" width="32" height="32" alt="Atomest" className="rounded-xl group-hover:scale-105 transition-transform duration-500 ease-out flex-shrink-0 shadow-sm" />
             <div className="flex flex-col leading-none">
-              <span className="font-extrabold text-[1.05rem] tracking-tight-head">Atomest</span>
-              <span className="text-[9px] text-muted-foreground font-semibold uppercase tracking-micro mt-[1px]">The Internet's Toolbox</span>
+              <span className="font-extrabold text-[1.05rem] font-display tracking-tight text-[#F5F6FA]">Atomest</span>
+              <span className="text-[9px] text-primary font-semibold uppercase tracking-wider mt-[1px]">AI Solutions</span>
             </div>
           </Link>
           <div className="hidden md:flex items-center gap-6">
