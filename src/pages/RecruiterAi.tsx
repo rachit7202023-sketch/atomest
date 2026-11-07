@@ -82,16 +82,16 @@ function DashboardMockup() {
         initial={{ rotateX: 20, y: 50, opacity: 0 }}
         animate={{ rotateX: 0, y: 0, opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-        className="relative rounded-xl overflow-hidden border border-white/10 bg-black/50 backdrop-blur-2xl shadow-2xl"
+        className="relative rounded-xl overflow-hidden border border-border/40 bg-card shadow-2xl shadow-2xl"
       >
         {/* Mockup Header */}
-        <div className="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/5">
+        <div className="flex items-center gap-2 px-4 py-3 border-b border-border/40 bg-muted/40">
           <div className="flex gap-1.5">
             <div className="w-3 h-3 rounded-full bg-red-500/80" />
             <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
             <div className="w-3 h-3 rounded-full bg-green-500/80" />
           </div>
-          <div className="mx-auto px-24 py-1 text-xs text-white/40 bg-white/5 rounded-md font-mono">
+          <div className="mx-auto px-24 py-1 text-xs text-white/40 bg-muted/40 rounded-md font-mono">
             app.atomest.com/recruiter-ai
           </div>
         </div>
@@ -99,27 +99,27 @@ function DashboardMockup() {
         {/* Mockup Body */}
         <div className="p-6 grid grid-cols-12 gap-6 h-[400px] sm:h-[500px]">
           {/* Sidebar */}
-          <div className="col-span-3 hidden sm:flex flex-col gap-3 border-r border-white/5 pr-6">
-            <div className="h-8 bg-white/5 rounded w-full mb-4" />
+          <div className="col-span-3 hidden sm:flex flex-col gap-3 border-r border-border/40 pr-6">
+            <div className="h-8 bg-muted/40 rounded w-full mb-4" />
             {[1,2,3,4,5].map(i => (
-              <div key={i} className="h-6 bg-white/5 rounded w-3/4" />
+              <div key={i} className="h-6 bg-muted/40 rounded w-3/4" />
             ))}
           </div>
           
           {/* Main Content */}
           <div className="col-span-12 sm:col-span-9 flex flex-col gap-4">
             <div className="flex justify-between items-center mb-4">
-              <div className="h-8 bg-white/10 rounded w-1/3" />
-              <div className="h-8 bg-blue-500/20 rounded w-1/4" />
+              <div className="h-8 bg-muted/60 rounded w-1/3" />
+              <div className="h-8 bg-primary/10 rounded w-1/4" />
             </div>
 
             {/* Candidate Cards */}
             {[1,2,3].map(i => (
-              <div key={i} className="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-white/5">
+              <div key={i} className="flex items-center gap-4 p-4 rounded-lg bg-muted/40 border border-border/40">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex-shrink-0" />
                 <div className="flex-grow flex flex-col gap-2">
-                  <div className="h-4 bg-white/20 rounded w-1/4" />
-                  <div className="h-3 bg-white/10 rounded w-1/2" />
+                  <div className="h-4 bg-muted/80 rounded w-1/4" />
+                  <div className="h-3 bg-muted/60 rounded w-1/2" />
                 </div>
                 <div className="w-16 h-8 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center">
                   <div className="h-2 bg-green-500/50 rounded w-8" />
@@ -130,8 +130,8 @@ function DashboardMockup() {
         </div>
 
         {/* Gradients to make it look premium */}
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent pointer-events-none" />
-        <div className="absolute top-0 left-1/4 w-1/2 h-px bg-gradient-to-r from-transparent via-blue-500/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-50 pointer-events-none" />
+        <div className="absolute top-0 left-1/4 w-1/2 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
       </motion.div>
     </div>
   );
@@ -139,7 +139,7 @@ function DashboardMockup() {
 
 export default function RecruiterAi() {
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-hidden selection:bg-blue-500/30">
+    <div className="min-h-screen bg-background text-foreground overflow-hidden selection:bg-primary/30">
       <SEO 
         title="RecruiterAI by Atomest | Hire Faster With AI" 
         description="Upload resumes and discover your strongest candidates in minutes. The ultimate AI-powered recruitment platform."
@@ -149,21 +149,19 @@ export default function RecruiterAi() {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-4">
         {/* Glow Effects */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] opacity-20 pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-500 to-indigo-600 blur-[120px] rounded-full mix-blend-screen" />
-        </div>
+        
 
         <div className="container mx-auto max-w-5xl text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold mb-8"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border-primary/20 text-primary text-sm font-semibold mb-8"
           >
             <Briefcase className="w-4 h-4" />
             <span>RecruiterAI</span>
             <span className="w-1 h-1 rounded-full bg-blue-400 mx-1" />
-            <span className="text-blue-400/70">Launching Soon</span>
+            <span className="text-primary/70">Launching Soon</span>
           </motion.div>
 
           <motion.h1 
@@ -172,7 +170,7 @@ export default function RecruiterAi() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-5xl sm:text-7xl font-extrabold tracking-tight mb-8 leading-[1.1]"
           >
-            Hire <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400">faster</span> with AI.
+            Hire <span className="text-primary">faster</span> with AI.
           </motion.h1>
 
           <motion.p 
@@ -202,7 +200,7 @@ export default function RecruiterAi() {
       </section>
 
       {/* Feature Highlights */}
-      <section className="py-24 relative border-t border-white/5">
+      <section className="py-24 relative border-t border-border/40">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Eliminate the manual screening process.</h2>
@@ -217,10 +215,10 @@ export default function RecruiterAi() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="p-8 rounded-2xl bg-white/5 border border-white/5 hover:border-blue-500/30 transition-colors"
+                className="p-8 rounded-2xl bg-muted/40 border border-border/40 hover:border-primary/30 transition-colors"
               >
-                <div className="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-6">
-                  <feature.icon className="w-6 h-6 text-blue-400" />
+                <div className="w-12 h-12 rounded-xl bg-primary/10 border-primary/20 flex items-center justify-center mb-6">
+                  <feature.icon className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
@@ -240,7 +238,7 @@ export default function RecruiterAi() {
                 {workflowSteps.map((step, i) => (
                   <div key={i} className="flex gap-4">
                     <div className="flex-shrink-0 mt-1">
-                      <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-500/30 text-blue-400 font-bold text-sm">
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 text-primary font-bold text-sm">
                         {i + 1}
                       </div>
                     </div>
@@ -254,12 +252,12 @@ export default function RecruiterAi() {
             </div>
             
             {/* Visual Abstract Representation of Workflow */}
-            <div className="relative h-[400px] rounded-2xl bg-gradient-to-br from-blue-900/20 to-indigo-900/20 border border-blue-500/10 flex items-center justify-center overflow-hidden">
+            <div className="relative h-[400px] rounded-2xl bg-gradient-to-br bg-muted/30 border border-border/40 flex items-center justify-center overflow-hidden">
                <div className="absolute inset-0 flex items-center justify-center">
-                 <div className="w-64 h-64 border border-blue-500/20 rounded-full animate-[spin_10s_linear_infinite]" />
-                 <div className="absolute w-48 h-48 border border-indigo-500/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
-                 <div className="absolute w-16 h-16 bg-blue-500/20 rounded-full blur-xl" />
-                 <Briefcase className="absolute w-8 h-8 text-blue-400" />
+                 <div className="w-64 h-64 border border-primary/20 rounded-full animate-[spin_10s_linear_infinite]" />
+                 <div className="absolute w-48 h-48 border border-primary/10 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
+                 <div className="absolute w-16 h-16 bg-primary/10 rounded-full blur-xl" />
+                 <Briefcase className="absolute w-8 h-8 text-primary" />
                </div>
             </div>
           </div>
@@ -267,7 +265,7 @@ export default function RecruiterAi() {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-24 relative border-t border-white/5">
+      <section className="py-24 relative border-t border-border/40">
         <div className="container mx-auto px-4 max-w-4xl text-center">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-12">The ROI of AI Automation</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
@@ -279,8 +277,8 @@ export default function RecruiterAi() {
               "Process 10,000+ resumes in minutes",
               "Enterprise-grade security and compliance"
             ].map((benefit, i) => (
-              <div key={i} className="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/5">
-                <CheckCircle2 className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
+              <div key={i} className="flex items-start gap-3 p-4 rounded-xl bg-muted/40 border border-border/40">
+                <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
                 <span className="font-medium">{benefit}</span>
               </div>
             ))}
@@ -289,7 +287,7 @@ export default function RecruiterAi() {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-24 bg-black/30 border-t border-white/5">
+      <section className="py-24 bg-black/30 border-t border-border/40">
         <div className="container mx-auto px-4 max-w-3xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold tracking-tight mb-4">Frequently Asked Questions</h2>
@@ -297,7 +295,7 @@ export default function RecruiterAi() {
           
           <Accordion type="single" collapsible className="w-full space-y-4">
             {faqs.map((faq, i) => (
-              <AccordionItem key={i} value={`faq-${i}`} className="bg-white/5 border border-white/10 rounded-xl px-6 data-[state=open]:border-blue-500/30 transition-colors">
+              <AccordionItem key={i} value={`faq-${i}`} className="bg-muted/40 border border-white/10 rounded-xl px-6 data-[state=open]:border-primary/20 transition-colors">
                 <AccordionTrigger className="text-left font-semibold hover:no-underline py-6">
                   {faq.q}
                 </AccordionTrigger>
@@ -311,9 +309,9 @@ export default function RecruiterAi() {
       </section>
 
       {/* CTA / Waitlist Section */}
-      <section className="py-32 relative border-t border-white/5 overflow-hidden">
+      <section className="py-32 relative border-t border-border/40 overflow-hidden">
         <div className="absolute inset-0 bg-blue-900/10" />
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-500/20 blur-[120px] rounded-full pointer-events-none" />
+        
         
         <div className="container mx-auto px-4 max-w-3xl text-center relative z-10">
           <h2 className="text-4xl sm:text-5xl font-bold tracking-tight mb-6">Ready to scale your hiring?</h2>
@@ -374,7 +372,7 @@ function WaitlistForm() {
         value={email}
         onChange={e => setEmail(e.target.value)}
         disabled={status === "loading"}
-        className="h-12 bg-black/50 border-white/10 focus-visible:ring-blue-500" 
+        className="h-12 bg-black/50 border-white/10 focus-visible:ring-primary" 
       />
       <Button 
         type="submit" 

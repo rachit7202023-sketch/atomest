@@ -94,11 +94,59 @@
 }
 
 :root {
-  /* Unified Motion Language */
+  /* ── Motion ─────────────────────────────────────────────────────────── */
   --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
   --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ── Apple-discipline Typography Scale ──────────────────────────────── */
+  /* SF Pro falls back to system-ui on non-Apple, Helvetica Neue elsewhere */
+  --font-display: "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-text: "SF Pro Text", -apple-system, BlinkMacSystemFont,
+    "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  /* Size tokens matching Apple's documented scale */
+  --type-hero:        3.5rem;   /* 56px  — hero headline */
+  --type-hero-lh:     3.75rem;  /* 60px */
+  --type-hero-ls:     -0.02em;  /* -0.28px @ 56px */
+
+  --type-section:     2.5rem;   /* 40px  — section headline */
+  --type-section-lh:  2.75rem;  /* 44px */
+
+  --type-tile:        1.5rem;   /* 24px  — card/tile headline */
+  --type-tile-lh:     1.75rem;  /* 28px */
+  --type-tile-ls:     0.009em;  /* +0.216px @ 24px */
+
+  --type-sub:         1.3125rem; /* 21px  — subheadline */
+  --type-sub-lh:      1.5625rem; /* 25px */
+  --type-sub-ls:      0.011em;   /* +0.231px */
+
+  --type-body:        1.0625rem; /* 17px  — body copy */
+  --type-body-lh:     1.5625rem; /* 25px */
+  --type-body-ls:     -0.022em;  /* -0.374px */
+
+  --type-small:       0.875rem;  /* 14px  — secondary text */
+  --type-small-lh:    1.125rem;  /* 18px */
+  --type-small-ls:    -0.016em;  /* -0.224px */
+
+  --type-caption:     0.75rem;   /* 12px  — captions / metadata */
+  --type-caption-lh:  1rem;      /* 16px */
+  --type-caption-ls:  -0.008em;  /* -0.12px */
+
+  /* ── Apple-discipline Geometry ──────────────────────────────────────── */
+  --radius-pill:  980px;   /* Primary CTA buttons */
+  --radius-card:  18px;    /* Cards / modules */
+  --radius-ctrl:  8px;     /* Inputs, selects, badges */
+  --radius-chip:  999px;   /* Status chips */
+
+  /* ── Apple-discipline Spacing ───────────────────────────────────────── */
+  /* Used for section padding, content gutters */
+  --sp-section-v:  5rem;      /* 80px  — section vertical padding */
+  --sp-content-h:  1.5rem;    /* 24px  — content horizontal padding */
+  --sp-max-w:      61.25rem;  /* 980px — max content column width */
+  --sp-nav-h:      44px;      /* Nav bar height */
 }
 
 /* LIGHT MODE */
@@ -107,56 +155,74 @@
   --badge-outline: rgba(0,0,0, .05);
   --opaque-button-border-intensity: -8;
   --elevate-1: rgba(0,0,0, .03);
-  --elevate-2: rgba(0,0,0, .08);
+  --elevate-2: rgba(0,0,0, .06);
 
-  --background: 240 5% 98%;
-  --foreground: 240 10% 4%;
-  --border: 240 6% 90%;
+  --background: 0 0% 99%;
+  --foreground: 0 0% 9%;
+  --border: 0 0% 90%;
   --card: 0 0% 100%;
-  --card-foreground: 240 10% 4%;
-  --card-border: 240 6% 92%;
-  --sidebar: 240 5% 97%;
-  --sidebar-foreground: 240 6% 10%;
-  --sidebar-border: 240 6% 90%;
-  --sidebar-primary: 243 75% 59%;
+  --card-foreground: 0 0% 9%;
+  --card-border: 0 0% 92%;
+  
+  --sidebar: 0 0% 98%;
+  --sidebar-foreground: 0 0% 15%;
+  --sidebar-border: 0 0% 90%;
+  --sidebar-primary: 212 100% 48%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 240 5% 94%;
-  --sidebar-accent-foreground: 240 6% 10%;
-  --sidebar-ring: 243 75% 59%;
+  --sidebar-accent: 0 0% 94%;
+  --sidebar-accent-foreground: 0 0% 9%;
+  --sidebar-ring: 212 100% 48%;
+  
   --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 4%;
-  --popover-border: 240 6% 90%;
-  --primary: 243 75% 59%;
+  --popover-foreground: 0 0% 9%;
+  --popover-border: 0 0% 90%;
+  
+  --primary: 212 100% 48%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 240 5% 96%;
-  --secondary-foreground: 240 6% 10%;
-  --muted: 240 5% 96%;
-  --muted-foreground: 240 4% 46%;
-  --accent: 240 5% 96%;
-  --accent-foreground: 240 6% 10%;
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 98%;
-  --input: 240 6% 90%;
-  --ring: 243 75% 59%;
-  --chart-1: 243 75% 59%;
-  --chart-2: 160 60% 45%;
-  --chart-3: 30 80% 55%;
+  
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 0 0% 9%;
+  
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 45%;
+  
+  --accent: 0 0% 96%;
+  --accent-foreground: 0 0% 9%;
+  
+  --destructive: 350 89% 60%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --success: 152 69% 45%;
+  --success-foreground: 0 0% 100%;
+  
+  --warning: 45 93% 47%;
+  --warning-foreground: 0 0% 9%;
+  
+  --pending: 215 16% 47%;
+  --pending-foreground: 0 0% 100%;
+
+  --input: 0 0% 90%;
+  --ring: 212 100% 48%;
+  
+  --chart-1: 212 100% 48%;
+  --chart-2: 152 69% 45%;
+  --chart-3: 45 93% 47%;
   --chart-4: 280 65% 60%;
-  --chart-5: 340 75% 55%;
+  --chart-5: 350 89% 60%;
 
-  --app-font-sans: 'Inter', sans-serif;
-  --app-font-serif: Georgia, serif;
-  --app-font-mono: Menlo, monospace;
-  --radius: .625rem;
+  --app-font-sans: 'Inter', system-ui, sans-serif;
+  --app-font-serif: 'Georgia', serif;
+  --app-font-mono: 'Menlo', monospace;
+  --radius: .5rem;
 
-  --shadow-2xs: 0px 1px 2px 0px rgba(0,0,0,0.06);
-  --shadow-xs: 0px 1px 3px 0px rgba(0,0,0,0.08);
-  --shadow-sm: 0px 1px 3px 0px rgba(0,0,0,0.08), 0px 1px 2px -1px rgba(0,0,0,0.06);
-  --shadow: 0px 2px 4px 0px rgba(0,0,0,0.08), 0px 1px 2px -1px rgba(0,0,0,0.06);
-  --shadow-md: 0px 4px 6px -1px rgba(0,0,0,0.08), 0px 2px 4px -2px rgba(0,0,0,0.06);
-  --shadow-lg: 0px 10px 15px -3px rgba(0,0,0,0.08), 0px 4px 6px -4px rgba(0,0,0,0.06);
-  --shadow-xl: 0px 20px 25px -5px rgba(0,0,0,0.10), 0px 8px 10px -6px rgba(0,0,0,0.06);
-  --shadow-2xl: 0px 25px 50px -12px rgba(0,0,0,0.15);
+  --shadow-2xs: 0px 1px 2px 0px rgba(0,0,0,0.03);
+  --shadow-xs: 0px 1px 3px 0px rgba(0,0,0,0.04);
+  --shadow-sm: 0px 1px 3px 0px rgba(0,0,0,0.04), 0px 1px 2px -1px rgba(0,0,0,0.02);
+  --shadow: 0px 2px 4px 0px rgba(0,0,0,0.04), 0px 1px 2px -1px rgba(0,0,0,0.02);
+  --shadow-md: 0px 4px 6px -1px rgba(0,0,0,0.04), 0px 2px 4px -2px rgba(0,0,0,0.02);
+  --shadow-lg: 0px 10px 15px -3px rgba(0,0,0,0.04), 0px 4px 6px -4px rgba(0,0,0,0.02);
+  --shadow-xl: 0px 20px 25px -5px rgba(0,0,0,0.05), 0px 8px 10px -6px rgba(0,0,0,0.02);
+  --shadow-2xl: 0px 25px 50px -12px rgba(0,0,0,0.1);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 
@@ -183,40 +249,58 @@
   --elevate-1: rgba(255,255,255, .04);
   --elevate-2: rgba(255,255,255, .09);
 
-  --background: 240 10% 4%;
+  --background: 0 0% 9%;
   --foreground: 0 0% 98%;
-  --border: 240 4% 16%;
-  --card: 240 10% 6%;
+  --border: 0 0% 18%;
+  --card: 0 0% 12%;
   --card-foreground: 0 0% 98%;
-  --card-border: 240 6% 14%;
-  --sidebar: 240 10% 5%;
+  --card-border: 0 0% 18%;
+  
+  --sidebar: 0 0% 12%;
   --sidebar-foreground: 0 0% 98%;
-  --sidebar-border: 240 6% 14%;
-  --sidebar-primary: 243 75% 65%;
+  --sidebar-border: 0 0% 18%;
+  --sidebar-primary: 212 100% 55%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 240 4% 14%;
+  --sidebar-accent: 0 0% 18%;
   --sidebar-accent-foreground: 0 0% 98%;
-  --sidebar-ring: 243 75% 65%;
-  --popover: 240 10% 6%;
+  --sidebar-ring: 212 100% 55%;
+  
+  --popover: 0 0% 12%;
   --popover-foreground: 0 0% 98%;
-  --popover-border: 240 6% 14%;
-  --primary: 243 75% 65%;
+  --popover-border: 0 0% 18%;
+  
+  --primary: 212 100% 55%;
   --primary-foreground: 0 0% 100%;
-  --secondary: 240 4% 16%;
+  
+  --secondary: 0 0% 18%;
   --secondary-foreground: 0 0% 98%;
-  --muted: 240 4% 16%;
-  --muted-foreground: 240 5% 65%;
-  --accent: 240 4% 16%;
+  
+  --muted: 0 0% 18%;
+  --muted-foreground: 0 0% 65%;
+  
+  --accent: 0 0% 18%;
   --accent-foreground: 0 0% 98%;
-  --destructive: 0 72% 51%;
-  --destructive-foreground: 0 0% 98%;
-  --input: 240 4% 20%;
-  --ring: 243 75% 65%;
-  --chart-1: 243 75% 65%;
-  --chart-2: 160 60% 45%;
-  --chart-3: 30 80% 55%;
+  
+  --destructive: 350 89% 60%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --success: 152 69% 45%;
+  --success-foreground: 0 0% 100%;
+  
+  --warning: 45 93% 47%;
+  --warning-foreground: 0 0% 9%;
+  
+  --pending: 215 16% 47%;
+  --pending-foreground: 0 0% 100%;
+
+  --input: 0 0% 18%;
+  --ring: 212 100% 55%;
+  
+  --chart-1: 212 100% 55%;
+  --chart-2: 152 69% 45%;
+  --chart-3: 45 93% 47%;
   --chart-4: 280 65% 60%;
-  --chart-5: 340 75% 55%;
+  --chart-5: 350 89% 60%;
 
   --shadow-2xs: 0px 1px 2px 0px rgba(0,0,0,0.4);
   --shadow-xs: 0px 1px 3px 0px rgba(0,0,0,0.45);
@@ -424,6 +508,47 @@
   .tool-card-hover:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
+  }
+
+  /* Document Preview Styles */
+  .document-preview {
+    background: #fff;
+    color: #111;
+    padding: 2.5rem;
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    font-family: var(--app-font-serif);
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .dark .document-preview {
+    background: #151515;
+    color: #eaeaea;
+    border-color: #333;
+  }
+
+  .document-preview h1, 
+  .document-preview h2, 
+  .document-preview h3,
+  .document-preview h4 {
+    font-family: var(--app-font-sans);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: inherit;
+    letter-spacing: -0.01em;
+  }
+  
+  .document-preview p,
+  .document-preview ul,
+  .document-preview ol {
+    margin-bottom: 1rem;
+  }
+  
+  .document-preview li {
+    margin-bottom: 0.25rem;
   }
 }
 

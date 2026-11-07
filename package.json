@@ -89,6 +89,7 @@
     "@google/genai": "^2.11.0",
     "@supabase/supabase-js": "^2.110.2",
     "html-to-image": "^1.11.13",
+    "jspdf": "^4.2.1",
     "marked": "^18.0.5",
     "pdf-parse": "^2.4.5",
     "pdfjs-dist": "^6.1.200",

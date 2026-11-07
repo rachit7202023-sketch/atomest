@@ -1,6 +1,7 @@
 import { Suspense, lazy } from "react";
 import { Switch, Route } from "wouter";
 import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 const Home = lazy(() => import("@/pages/Home"));
 const Tools = lazy(() => import("@/pages/Tools"));
@@ -15,6 +16,11 @@ const Login = lazy(() => import("@/pages/auth/Login"));
 const Signup = lazy(() => import("@/pages/auth/Signup"));
 const Account = lazy(() => import("@/pages/auth/Account"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
+
+// ── New: Dynamic AI Employee page (auto-populated from module registry) ──
+const EmployeePage = lazy(() => import("@/pages/employee/EmployeePage"));
+
+// ── Legacy: kept for backwards compat during migration ──
 const RecruiterAiLanding = lazy(() => import("@/modules/recruiter-ai/pages/LandingPage"));
 const RecruiterAiDashboard = lazy(() => import("@/modules/recruiter-ai/pages/DashboardPage"));
 const RecruiterAiApp = lazy(() => import("@/modules/recruiter-ai/pages/AppPage"));
@@ -30,8 +36,6 @@ function PageLoader() {
   );
 }
 
-import { ScrollToTop } from "@/components/ScrollToTop";
-
 export default function AppRouter() {
   const isClient = typeof window !== "undefined";
   
@@ -40,25 +44,31 @@ export default function AppRouter() {
       {isClient && <ScrollToTop />}
       <GoogleAnalytics />
       <Suspense fallback={<PageLoader />}>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/tools" component={Tools} />
-        <Route path="/tools/:slug" component={ToolPage} />
-        <Route path="/categories" component={Categories} />
-        <Route path="/categories/:slug" component={CategoryPage} />
-        <Route path="/about" component={About} />
-        <Route path="/products" component={Products} />
-        <Route path="/ai-products" component={AiProducts} />
-        <Route path="/ai-products/recruiter-ai" component={RecruiterAiLanding} />
-        <Route path="/ai-products/recruiter-ai/dashboard" component={RecruiterAiDashboard} />
-        <Route path="/ai-products/recruiter-ai/app" component={RecruiterAiApp} />
-        <Route path="/ai-products/recruiter-ai/app/:id" component={RecruiterAiApp} />
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route path="/account" component={Account} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route component={NotFound} />
-      </Switch>
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/tools" component={Tools} />
+          <Route path="/tools/:slug" component={ToolPage} />
+          <Route path="/categories" component={Categories} />
+          <Route path="/categories/:slug" component={CategoryPage} />
+          <Route path="/about" component={About} />
+          <Route path="/products" component={Products} />
+          <Route path="/ai-products" component={AiProducts} />
+
+          {/* ── New platform routes (module registry driven) ── */}
+          <Route path="/employees/:id" component={EmployeePage} />
+
+          {/* ── Legacy routes (preserved during migration) ── */}
+          <Route path="/ai-products/recruiter-ai" component={RecruiterAiLanding} />
+          <Route path="/ai-products/recruiter-ai/dashboard" component={RecruiterAiDashboard} />
+          <Route path="/ai-products/recruiter-ai/app" component={RecruiterAiApp} />
+          <Route path="/ai-products/recruiter-ai/app/:id" component={RecruiterAiApp} />
+
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/account" component={Account} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route component={NotFound} />
+        </Switch>
       </Suspense>
     </>
   );

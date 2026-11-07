@@ -192,7 +192,20 @@ export default function AppPage() {
   const [candidateSearch, setCandidateSearch] = useState("");
   const [candidateSort, setCandidateSort] = useState<"score" | "name">("score");
   const [viewingDetails, setViewingDetails] = useState(false);
-  const [processingTimeStr, setProcessingTimeStr] = useState("1m 12s");
+  const [processingTimeStr, setProcessingTimeStr] = useState("0s");
+  const [processingStartTime, setProcessingStartTime] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!isGenerating || !processingStartTime) {
+      return undefined;
+    }
+    const interval = setInterval(() => {
+      const seconds = Math.floor((Date.now() - processingStartTime) / 1000);
+      if (seconds < 60) setProcessingTimeStr(`${seconds}s`);
+      else setProcessingTimeStr(`${Math.floor(seconds / 60)}m ${seconds % 60}s`);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isGenerating, processingStartTime]);
 
   // Fetch Existing Project Data
   const { isLoading: isLoadingProject } = useQuery({
@@ -278,6 +291,7 @@ export default function AppPage() {
 
   const handleProcessCandidates = async () => {
     setIsGenerating(true);
+    setProcessingStartTime(Date.now());
     setProcessStatus("Initializing pipeline...");
     setDbCandidates([]);
     setStep(5); // Show generating screen
@@ -370,7 +384,8 @@ export default function AppPage() {
       setArtifacts(prev => ({ ...prev, [sectionToRegenerate]: undefined }));
     } else {
       setIsGenerating(true);
-      setProcessingTimeStr("1m 12s");
+      setProcessingStartTime(Date.now());
+      setProcessingTimeStr("0s");
       setArtifacts({});
       setErrors({});
       setGenerationDone(false);
@@ -550,7 +565,7 @@ export default function AppPage() {
     const isExpanded = expandedCards[artifactKey] ?? true;
 
     return (
-      <Card id={id} className="border-border/50 bg-card/50 backdrop-blur-sm relative overflow-hidden flex flex-col h-full break-inside-avoid">
+      <Card id={id} className="border-border/50 bg-card/50 backdrop-blur-sm relative overflow-hidden flex flex-col h-full break-inside-avoid tool-card-hover transition-all duration-300">
         <CardHeader className="pb-3 border-b border-border/30 flex flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2.5 min-w-0">
             {Icon && (
@@ -1038,11 +1053,16 @@ export default function AppPage() {
                                   <div className="font-semibold">{c.name}</div>
                                   {c.parsed_data?.currentRole && <div className="text-xs text-muted-foreground truncate max-w-[200px]">{c.parsed_data.currentRole}</div>}
                                 </td>
-                                <td className="px-4 py-3 text-center">
-                                  <div className={`font-bold tabular-nums ${(c.match_score) >= 80 ? 'text-emerald-400' : (c.match_score) >= 60 ? 'text-amber-400' : 'text-red-400'}`}>
-                                    {c.match_score || 0}%
-                                  </div>
-                                </td>
+                                  <td className="px-4 py-3 text-center align-middle">
+                                    <div className="flex flex-col items-center justify-center gap-1.5 w-full">
+                                      <div className={`font-bold tabular-nums text-sm leading-none ${(c.match_score) >= 80 ? 'text-emerald-500' : (c.match_score) >= 60 ? 'text-amber-500' : 'text-red-500'}`}>
+                                        {c.match_score || 0}%
+                                      </div>
+                                      <div className="w-12 h-1.5 bg-muted/40 rounded-full overflow-hidden">
+                                        <div className={`h-full rounded-full transition-all duration-700 ease-out ${(c.match_score) >= 80 ? 'bg-emerald-500' : (c.match_score) >= 60 ? 'bg-amber-500' : 'bg-red-500'}`} style={{ width: `${c.match_score || 0}%` }} />
+                                      </div>
+                                    </div>
+                                  </td>
                                 <td className="px-4 py-3">
                                   <RecommendationBadge recommendation={c.recommendation || "Needs Review"} />
                                 </td>
@@ -1081,10 +1101,19 @@ export default function AppPage() {
                 )}
 
                 {viewingDetails && (
-                  <div className="space-y-10 animate-in fade-in duration-500">
+                  <div className="flex flex-col lg:flex-row gap-8 items-start animate-in fade-in duration-500 relative">
+                    {/* Sidebar Nav */}
+                    <div className="lg:w-64 shrink-0 lg:sticky lg:top-24 space-y-1 print:hidden border-r border-border/40 pr-4 pb-8">
+                      <div className="font-semibold text-xs mb-4 px-3 uppercase tracking-wider text-muted-foreground">Hiring Kit</div>
+                      <a href="#artifact-ranking" className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-muted/50 text-foreground transition-colors">Candidate Ranking</a>
+                      <a href="#artifact-plan" className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-muted/50 text-foreground transition-colors">Interview Plan & Eval</a>
+                      <a href="#artifact-summary" className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-muted/50 text-foreground transition-colors">Executive Overview</a>
+                      <a href="#artifact-outreach" className="block px-3 py-2 rounded-md text-sm font-medium hover:bg-muted/50 text-foreground transition-colors">Outreach & Comms</a>
+                    </div>
+                    <div className="flex-1 space-y-12 min-w-0">
 
                 {/* ─── Section: Candidate Ranking ─────────────────────────── */}
-                <section className="space-y-4">
+                <section className="space-y-8" id="artifact-ranking">
                   <h2 className="text-lg font-semibold border-b border-border/30 pb-2">Candidate Comparison & Ranking</h2>
                   
                   {renderCard("Candidate Comparison", "artifact-ranking", "candidateRanking", (data, isEditing) => (
@@ -1224,8 +1253,161 @@ export default function AppPage() {
                   ), { icon: Users, accentColor: "bg-primary/10 text-primary" })}
                 </section>
 
+                {/* ─── Section: Interview Process ─────────────────────────── */}
+                <section className="space-y-8" id="artifact-plan">
+                  <h2 className="text-lg font-semibold border-b border-border/30 pb-2">Interview Process & Evaluation</h2>
+                  
+                  {renderCard("Round-by-Round Interview Plan", "artifact-plan", "interviewPlan", (data, isEditing) => (
+                    isEditing ? (
+                      <Textarea className="min-h-[200px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("interviewPlan", JSON.parse(e.target.value)); } catch(e){} }} />
+                    ) : (
+                      <div className="space-y-3">
+                        {data.rounds?.map((r: any, i: number) => (
+                          <div key={i} className="bg-muted/20 p-4 rounded-xl border border-border/20 relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-1 h-full bg-primary/40" />
+                            <div className="flex justify-between items-start mb-2 ml-2">
+                              <h4 className="font-semibold text-sm">{r.roundName}</h4>
+                              <span className="px-2 py-0.5 rounded-full bg-muted/50 text-[10px] font-medium text-muted-foreground shrink-0">{r.duration}</span>
+                            </div>
+                            <p className="text-xs text-primary mb-1 ml-2"><span className="text-foreground font-medium">Interviewer:</span> {r.interviewer}</p>
+                            <p className="text-xs text-muted-foreground mb-3 ml-2">{r.goal}</p>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3 pt-3 border-t border-border/15 ml-2">
+                              <div>
+                                <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold block mb-1.5">Evaluation Criteria</span>
+                                <ul className="text-xs space-y-0.5 list-disc pl-3.5 text-muted-foreground">
+                                  {r.evaluationCriteria?.map((c: string, idx: number) => <li key={idx}>{c}</li>)}
+                                </ul>
+                              </div>
+                              <div>
+                                <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold block mb-1.5">Sample Questions</span>
+                                <ul className="text-xs space-y-0.5 list-disc pl-3.5 text-muted-foreground">
+                                  {r.sampleQuestions?.map((q: string, idx: number) => <li key={idx}>{q}</li>)}
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )
+                  ), { icon: Target, accentColor: "bg-indigo-500/10 text-indigo-400" })}
+
+                  {renderCard("Candidate Evaluation Scorecard", "artifact-scorecard", "scorecard", (data, isEditing) => (
+                    isEditing ? (
+                      <Textarea className="min-h-[200px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("scorecard", JSON.parse(e.target.value)); } catch(e){} }} />
+                    ) : (
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-xs text-left border-collapse">
+                          <thead>
+                            <tr className="bg-muted/30">
+                              <th className="p-3 border border-border/30 font-semibold">Category</th>
+                              <th className="p-3 border border-border/30 font-semibold text-center w-14">Weight</th>
+                              <th className="p-3 border border-border/30 font-semibold text-center w-10">1</th>
+                              <th className="p-3 border border-border/30 font-semibold text-center w-10">2</th>
+                              <th className="p-3 border border-border/30 font-semibold text-center w-10">3</th>
+                              <th className="p-3 border border-border/30 font-semibold text-center w-10">4</th>
+                              <th className="p-3 border border-border/30 font-semibold text-center w-10">5</th>
+                              <th className="p-3 border border-border/30 font-semibold w-32">Notes</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {data.categories?.map((c: any, i: number) => (
+                              <tr key={i} className="border-b border-border/20 hover:bg-muted/10 transition-colors">
+                                <td className="p-3 border border-border/30">
+                                  <div className="font-semibold text-primary mb-0.5">{c.name}</div>
+                                  <div className="text-[10px] text-muted-foreground">{c.description}</div>
+                                </td>
+                                <td className="p-3 border border-border/30 text-center font-medium text-muted-foreground">
+                                  {c.weight ? `${c.weight}%` : '—'}
+                                </td>
+                                {[1, 2, 3, 4, 5].map(score => (
+                                  <td key={score} className="p-3 border border-border/30 text-center">
+                                    <div className="w-5 h-5 rounded border border-border/40 mx-auto print:border-black" />
+                                  </td>
+                                ))}
+                                <td className="p-3 border border-border/30" />
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                        {data.scoringGuide && (
+                          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-muted-foreground">
+                            {Object.entries(data.scoringGuide).map(([k, v]) => (
+                              <span key={k}><strong>{k}</strong> = {v as string}</span>
+                            ))}
+                          </div>
+                        )}
+                        {data.overallRecommendation && (
+                          <div className="mt-3 p-3 bg-primary/5 border border-primary/15 rounded-lg">
+                            <p className="text-xs text-muted-foreground"><span className="font-semibold text-primary">Overall Recommendation Guide:</span> {data.overallRecommendation}</p>
+                          </div>
+                        )}
+                      </div>
+                    )
+                  ), { icon: Award, accentColor: "bg-purple-500/10 text-purple-400" })}
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    {renderCard("Technical Interview Questions", "artifact-tech", "techQuestions", (data, isEditing) => (
+                      isEditing ? (
+                        <Textarea className="min-h-[200px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("techQuestions", JSON.parse(e.target.value)); } catch(e){} }} />
+                      ) : (
+                        <div className="space-y-3">
+                          {data.questions?.map((q: any, i: number) => (
+                            <div key={i} className="bg-muted/20 p-3.5 rounded-xl border border-border/20">
+                              <div className="flex items-center gap-2 mb-2">
+                                <span className="text-[10px] uppercase font-semibold text-primary tracking-wider">{q.category}</span>
+                                {q.difficulty && <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${q.difficulty === 'Hard' ? 'bg-red-500/10 text-red-400' : q.difficulty === 'Medium' ? 'bg-amber-500/10 text-amber-400' : 'bg-emerald-500/10 text-emerald-400'}`}>{q.difficulty}</span>}
+                              </div>
+                              <p className="text-sm font-medium mb-2">{q.question}</p>
+                              <div className="bg-muted/30 p-2.5 rounded text-xs text-muted-foreground border-l-2 border-primary/40">
+                                <strong className="text-foreground">Listen for:</strong> {q.expectedAnswer}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )
+                    ), { icon: Target, accentColor: "bg-blue-500/10 text-blue-400" })}
+
+                    {renderCard("Behavioral STAR Questions", "artifact-behavioral", "behavioralQuestions", (data, isEditing) => (
+                      isEditing ? (
+                        <Textarea className="min-h-[200px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("behavioralQuestions", JSON.parse(e.target.value)); } catch(e){} }} />
+                      ) : (
+                        <div className="space-y-3">
+                          {data.questions?.map((q: any, i: number) => (
+                            <div key={i} className="bg-muted/20 p-3.5 rounded-xl border border-border/20">
+                              <div className="flex items-center gap-2 mb-2">
+                                <span className="text-[10px] uppercase font-semibold text-purple-400 tracking-wider">{q.category}</span>
+                                {q.difficulty && <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${q.difficulty === 'Hard' ? 'bg-red-500/10 text-red-400' : q.difficulty === 'Medium' ? 'bg-amber-500/10 text-amber-400' : 'bg-emerald-500/10 text-emerald-400'}`}>{q.difficulty}</span>}
+                              </div>
+                              <p className="text-sm font-medium mb-2">{q.question}</p>
+                              <div className="bg-muted/30 p-2.5 rounded text-xs text-muted-foreground border-l-2 border-purple-500/40">
+                                <strong className="text-foreground">Listen for:</strong> {q.expectedAnswer}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )
+                    ), { icon: Users, accentColor: "bg-purple-500/10 text-purple-400" })}
+                  </div>
+
+                  {renderCard("Screening Checklist", "artifact-screening", "screeningChecklist", (data, isEditing) => (
+                    isEditing ? (
+                      <Textarea className="min-h-[150px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("screeningChecklist", JSON.parse(e.target.value)); } catch(e){} }} />
+                    ) : (
+                      <ul className="space-y-2 bg-muted/20 p-4 rounded-xl border border-border/20">
+                        {data.checklist?.map((c: string, i: number) => (
+                          <li key={i} className="flex gap-2.5 text-xs items-start">
+                            <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                            <span className="text-muted-foreground">{c}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )
+                  ), { icon: Shield, accentColor: "bg-cyan-500/10 text-cyan-400" })}
+                </section>
+
                 {/* ─── Section: Executive Overview ─────────────────────────── */}
-                <section className="space-y-4">
+                <section className="space-y-8" id="artifact-summary">
                   <h2 className="text-lg font-semibold border-b border-border/30 pb-2">Executive Hiring Kit Overview</h2>
                   
                   {renderCard("Hiring Summary", "artifact-summary", "hiringSummary", (data, isEditing) => (
@@ -1330,161 +1512,8 @@ export default function AppPage() {
                   </div>
                 </section>
 
-                {/* ─── Section: Interview Process ─────────────────────────── */}
-                <section className="space-y-4">
-                  <h2 className="text-lg font-semibold border-b border-border/30 pb-2">Interview Process & Evaluation</h2>
-                  
-                  {renderCard("Round-by-Round Interview Plan", "artifact-plan", "interviewPlan", (data, isEditing) => (
-                    isEditing ? (
-                      <Textarea className="min-h-[200px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("interviewPlan", JSON.parse(e.target.value)); } catch(e){} }} />
-                    ) : (
-                      <div className="space-y-3">
-                        {data.rounds?.map((r: any, i: number) => (
-                          <div key={i} className="bg-muted/20 p-4 rounded-xl border border-border/20 relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-1 h-full bg-primary/40" />
-                            <div className="flex justify-between items-start mb-2 ml-2">
-                              <h4 className="font-semibold text-sm">{r.roundName}</h4>
-                              <span className="px-2 py-0.5 rounded-full bg-muted/50 text-[10px] font-medium text-muted-foreground shrink-0">{r.duration}</span>
-                            </div>
-                            <p className="text-xs text-primary mb-1 ml-2"><span className="text-foreground font-medium">Interviewer:</span> {r.interviewer}</p>
-                            <p className="text-xs text-muted-foreground mb-3 ml-2">{r.goal}</p>
-                            
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3 pt-3 border-t border-border/15 ml-2">
-                              <div>
-                                <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold block mb-1.5">Evaluation Criteria</span>
-                                <ul className="text-xs space-y-0.5 list-disc pl-3.5 text-muted-foreground">
-                                  {r.evaluationCriteria?.map((c: string, idx: number) => <li key={idx}>{c}</li>)}
-                                </ul>
-                              </div>
-                              <div>
-                                <span className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold block mb-1.5">Sample Questions</span>
-                                <ul className="text-xs space-y-0.5 list-disc pl-3.5 text-muted-foreground">
-                                  {r.sampleQuestions?.map((q: string, idx: number) => <li key={idx}>{q}</li>)}
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )
-                  ), { icon: Target, accentColor: "bg-indigo-500/10 text-indigo-400" })}
-
-                  {renderCard("Candidate Evaluation Scorecard", "artifact-scorecard", "scorecard", (data, isEditing) => (
-                    isEditing ? (
-                      <Textarea className="min-h-[200px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("scorecard", JSON.parse(e.target.value)); } catch(e){} }} />
-                    ) : (
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-xs text-left border-collapse">
-                          <thead>
-                            <tr className="bg-muted/30">
-                              <th className="p-3 border border-border/30 font-semibold">Category</th>
-                              <th className="p-3 border border-border/30 font-semibold text-center w-14">Weight</th>
-                              <th className="p-3 border border-border/30 font-semibold text-center w-10">1</th>
-                              <th className="p-3 border border-border/30 font-semibold text-center w-10">2</th>
-                              <th className="p-3 border border-border/30 font-semibold text-center w-10">3</th>
-                              <th className="p-3 border border-border/30 font-semibold text-center w-10">4</th>
-                              <th className="p-3 border border-border/30 font-semibold text-center w-10">5</th>
-                              <th className="p-3 border border-border/30 font-semibold w-32">Notes</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {data.categories?.map((c: any, i: number) => (
-                              <tr key={i} className="border-b border-border/20">
-                                <td className="p-3 border border-border/30">
-                                  <div className="font-semibold text-primary mb-0.5">{c.name}</div>
-                                  <div className="text-[10px] text-muted-foreground">{c.description}</div>
-                                </td>
-                                <td className="p-3 border border-border/30 text-center font-medium text-muted-foreground">
-                                  {c.weight ? `${c.weight}%` : '—'}
-                                </td>
-                                {[1, 2, 3, 4, 5].map(score => (
-                                  <td key={score} className="p-3 border border-border/30 text-center">
-                                    <div className="w-5 h-5 rounded border border-border/40 mx-auto print:border-black" />
-                                  </td>
-                                ))}
-                                <td className="p-3 border border-border/30" />
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                        {data.scoringGuide && (
-                          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[10px] text-muted-foreground">
-                            {Object.entries(data.scoringGuide).map(([k, v]) => (
-                              <span key={k}><strong>{k}</strong> = {v as string}</span>
-                            ))}
-                          </div>
-                        )}
-                        {data.overallRecommendation && (
-                          <div className="mt-3 p-3 bg-primary/5 border border-primary/15 rounded-lg">
-                            <p className="text-xs text-muted-foreground"><span className="font-semibold text-primary">Overall Recommendation Guide:</span> {data.overallRecommendation}</p>
-                          </div>
-                        )}
-                      </div>
-                    )
-                  ), { icon: Award, accentColor: "bg-purple-500/10 text-purple-400" })}
-
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    {renderCard("Technical Interview Questions", "artifact-tech", "techQuestions", (data, isEditing) => (
-                      isEditing ? (
-                        <Textarea className="min-h-[200px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("techQuestions", JSON.parse(e.target.value)); } catch(e){} }} />
-                      ) : (
-                        <div className="space-y-3">
-                          {data.questions?.map((q: any, i: number) => (
-                            <div key={i} className="bg-muted/20 p-3.5 rounded-xl border border-border/20">
-                              <div className="flex items-center gap-2 mb-2">
-                                <span className="text-[10px] uppercase font-semibold text-primary tracking-wider">{q.category}</span>
-                                {q.difficulty && <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${q.difficulty === 'Hard' ? 'bg-red-500/10 text-red-400' : q.difficulty === 'Medium' ? 'bg-amber-500/10 text-amber-400' : 'bg-emerald-500/10 text-emerald-400'}`}>{q.difficulty}</span>}
-                              </div>
-                              <p className="text-sm font-medium mb-2">{q.question}</p>
-                              <div className="bg-muted/30 p-2.5 rounded text-xs text-muted-foreground border-l-2 border-primary/40">
-                                <strong className="text-foreground">Listen for:</strong> {q.expectedAnswer}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )
-                    ), { icon: Target, accentColor: "bg-blue-500/10 text-blue-400" })}
-
-                    {renderCard("Behavioral STAR Questions", "artifact-behavioral", "behavioralQuestions", (data, isEditing) => (
-                      isEditing ? (
-                        <Textarea className="min-h-[200px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("behavioralQuestions", JSON.parse(e.target.value)); } catch(e){} }} />
-                      ) : (
-                        <div className="space-y-3">
-                          {data.questions?.map((q: any, i: number) => (
-                            <div key={i} className="bg-muted/20 p-3.5 rounded-xl border border-border/20">
-                              <div className="flex items-center gap-2 mb-2">
-                                <span className="text-[10px] uppercase font-semibold text-purple-400 tracking-wider">{q.category}</span>
-                                {q.difficulty && <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${q.difficulty === 'Hard' ? 'bg-red-500/10 text-red-400' : q.difficulty === 'Medium' ? 'bg-amber-500/10 text-amber-400' : 'bg-emerald-500/10 text-emerald-400'}`}>{q.difficulty}</span>}
-                              </div>
-                              <p className="text-sm font-medium mb-2">{q.question}</p>
-                              <div className="bg-muted/30 p-2.5 rounded text-xs text-muted-foreground border-l-2 border-purple-500/40">
-                                <strong className="text-foreground">Listen for:</strong> {q.expectedAnswer}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )
-                    ), { icon: Users, accentColor: "bg-purple-500/10 text-purple-400" })}
-                  </div>
-
-                  {renderCard("Screening Checklist", "artifact-screening", "screeningChecklist", (data, isEditing) => (
-                    isEditing ? (
-                      <Textarea className="min-h-[150px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("screeningChecklist", JSON.parse(e.target.value)); } catch(e){} }} />
-                    ) : (
-                      <ul className="space-y-2 bg-muted/20 p-4 rounded-xl border border-border/20">
-                        {data.checklist?.map((c: string, i: number) => (
-                          <li key={i} className="flex gap-2.5 text-xs items-start">
-                            <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                            <span className="text-muted-foreground">{c}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )
-                  ), { icon: Shield, accentColor: "bg-cyan-500/10 text-cyan-400" })}
-                </section>
-
                 {/* ─── Section: Communications ────────────────────────────── */}
-                <section className="space-y-4">
+                <section className="space-y-8" id="artifact-outreach">
                   <h2 className="text-lg font-semibold border-b border-border/30 pb-2">Outreach & Communications</h2>
                   
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -1500,7 +1529,7 @@ export default function AppPage() {
                       isEditing ? (
                         <Textarea className="min-h-[200px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("inviteEmail", JSON.parse(e.target.value)); } catch(e){} }} />
                       ) : (
-                        <div className="space-y-3 text-sm bg-muted/20 p-4 rounded-xl border border-border/20">
+                        <div className="document-preview">
                           <div className="border-b border-border/20 pb-2"><strong className="text-muted-foreground text-xs mr-2">Subject:</strong> <span className="text-sm">{data.subject}</span></div>
                           <div className="whitespace-pre-wrap text-sm leading-relaxed">{data.body}</div>
                         </div>
@@ -1511,7 +1540,7 @@ export default function AppPage() {
                       isEditing ? (
                         <Textarea className="min-h-[200px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("offerEmail", JSON.parse(e.target.value)); } catch(e){} }} />
                       ) : (
-                        <div className="space-y-3 text-sm bg-muted/20 p-4 rounded-xl border border-border/20">
+                        <div className="document-preview">
                           <div className="border-b border-border/20 pb-2"><strong className="text-muted-foreground text-xs mr-2">Subject:</strong> <span className="text-sm">{data.subject}</span></div>
                           <div className="whitespace-pre-wrap text-sm leading-relaxed">{data.body}</div>
                         </div>
@@ -1522,7 +1551,7 @@ export default function AppPage() {
                       isEditing ? (
                         <Textarea className="min-h-[200px] font-mono text-xs" defaultValue={JSON.stringify(data, null, 2)} onBlur={(e) => { try { updateArtifactData("rejectionEmail", JSON.parse(e.target.value)); } catch(e){} }} />
                       ) : (
-                        <div className="space-y-3 text-sm bg-muted/20 p-4 rounded-xl border border-border/20">
+                        <div className="document-preview">
                           <div className="border-b border-border/20 pb-2"><strong className="text-muted-foreground text-xs mr-2">Subject:</strong> <span className="text-sm">{data.subject}</span></div>
                           <div className="whitespace-pre-wrap text-sm leading-relaxed">{data.body}</div>
                         </div>
@@ -1531,7 +1560,8 @@ export default function AppPage() {
                   </div>
                 </section>
 
-                </div>
+                  </div>
+                  </div>
                 )}
 
                 {generationDone && !viewingDetails && (

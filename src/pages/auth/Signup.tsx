@@ -79,19 +79,22 @@ export default function Signup() {
       setLoading(false);
     } else {
       toast({
-        title: "Welcome to Atomest!",
-        description: "Your account has been created successfully.",
+        title: "Account Created!",
+        description: "Welcome to Atomest.",
       });
-      setLocation("/ai-products/recruiter-ai/dashboard");
+      const returnTo = sessionStorage.getItem('returnTo') || '/dashboard';
+      sessionStorage.removeItem('returnTo');
+      setLocation(returnTo);
     }
   };
 
   const handleGoogleSignup = async () => {
     setLoading(true);
+    const returnTo = sessionStorage.getItem('returnTo') || '/dashboard';
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/ai-products/recruiter-ai/dashboard`,
+        redirectTo: `${window.location.origin}${returnTo}`,
       },
     });
     if (error) {

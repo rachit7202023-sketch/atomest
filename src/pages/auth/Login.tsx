@@ -49,17 +49,20 @@ export default function Login() {
         title: "Welcome back!",
         description: "Successfully logged in.",
       });
-      setLocation("/ai-products/recruiter-ai/dashboard");
+      const returnTo = sessionStorage.getItem('returnTo') || '/dashboard';
+      sessionStorage.removeItem('returnTo');
+      setLocation(returnTo);
     }
     setLoading(false);
   };
 
   const handleGoogleLogin = async () => {
     setLoading(true);
+    const returnTo = sessionStorage.getItem('returnTo') || '/dashboard';
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/ai-products/recruiter-ai/dashboard`,
+        redirectTo: `${window.location.origin}${returnTo}`,
       },
     });
     
