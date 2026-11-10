@@ -86,6 +86,15 @@ export function Navbar() {
               Home
             </Link>
 
+            <Link
+              href="/services"
+              className={`transition-colors py-1 ${
+                isActive("/services") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
+              }`}
+            >
+              Services
+            </Link>
+
             {/* Solutions Dropdown Menu */}
             <div className="relative" ref={dropdownRef}>
               <button
@@ -142,6 +151,22 @@ export function Navbar() {
             </Link>
 
             <Link
+              href="/services"
+              className={`transition-colors py-1 ${
+                isActive("/services") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
+              }`}
+            >
+              Services
+            </Link>
+            <Link
+              href="/work"
+              className={`transition-colors py-1 ${
+                isActive("/work") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
+              }`}
+            >
+              Work
+            </Link>
+            <Link
               href="/about"
               className={`transition-colors py-1 ${
                 isActive("/about") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
@@ -149,7 +174,6 @@ export function Navbar() {
             >
               About
             </Link>
-
             <Link
               href="/contact"
               className={`transition-colors py-1 ${
