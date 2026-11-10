@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { ChevronDown, Globe, GitFork, Bot, Layers, Sparkles, Menu, X, ArrowRight } from "lucide-react";
+import { ChevronDown, Globe, GitFork, Bot, Layers, Sparkles, Menu, ArrowRight } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function Navbar() {
@@ -70,7 +70,7 @@ export function Navbar() {
                 ATOMEST
               </span>
               <span className="text-[9px] font-mono text-[#8B5CF6] tracking-wider uppercase font-semibold">
-                AI Solutions
+                Digital Solutions Studio
               </span>
             </div>
           </Link>
@@ -142,23 +142,6 @@ export function Navbar() {
             </div>
 
             <Link
-              href="/solutions/products"
-              className={`transition-colors py-1 ${
-                isActive("/solutions/products") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
-              }`}
-            >
-              Products
-            </Link>
-
-            <Link
-              href="/services"
-              className={`transition-colors py-1 ${
-                isActive("/services") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
-              }`}
-            >
-              Services
-            </Link>
-            <Link
               href="/work"
               className={`transition-colors py-1 ${
                 isActive("/work") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
@@ -166,6 +149,7 @@ export function Navbar() {
             >
               Work
             </Link>
+
             <Link
               href="/about"
               className={`transition-colors py-1 ${
@@ -174,6 +158,7 @@ export function Navbar() {
             >
               About
             </Link>
+
             <Link
               href="/contact"
               className={`transition-colors py-1 ${
@@ -221,6 +206,12 @@ export function Navbar() {
                   <div className="flex flex-col space-y-2 text-sm">
                     <Link href="/" className="py-1 text-[#A0A5B5] hover:text-white transition-colors">
                       Home
+                    </Link>
+                    <Link href="/services" className="py-1 text-[#A0A5B5] hover:text-white transition-colors">
+                      Services
+                    </Link>
+                    <Link href="/work" className="py-1 text-[#A0A5B5] hover:text-white transition-colors">
+                      Work
                     </Link>
                     <Link href="/about" className="py-1 text-[#A0A5B5] hover:text-white transition-colors">
                       About Us

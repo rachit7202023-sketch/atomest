@@ -13,12 +13,14 @@ const render = (await import(pathToFileURL(toAbsolute('dist/server/entry-server.
 // Determine all approved V2 routes to pre-render
 const routesToPrerender = [
   '/',
+  '/services',
+  '/work',
   '/about',
+  '/contact',
   '/solutions/websites',
   '/solutions/automation',
   '/solutions/agents',
   '/solutions/products',
-  '/contact',
 ];
 
 (async () => {
@@ -49,28 +51,29 @@ const routesToPrerender = [
   }
 
   // Generate sitemap.xml
+  const siteUrl = 'https://www.atomest.com';
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${routesToPrerender.map(route => `
-  <url>
-    <loc>https://atomest.com${route}</loc>
-    <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>weekly</changefreq>
+${routesToPrerender
+  .map(
+    (route) => `  <url>
+    <loc>${siteUrl}${route === '/' ? '' : route}</loc>
+    <changefreq>${route === '/' ? 'daily' : 'weekly'}</changefreq>
     <priority>${route === '/' ? '1.0' : '0.8'}</priority>
-  </url>
-`).join('')}
+  </url>`
+  )
+  .join('\n')}
 </urlset>`;
 
-  fs.writeFileSync(toAbsolute('dist/client/sitemap.xml'), sitemap.trim());
+  fs.writeFileSync(toAbsolute('dist/client/sitemap.xml'), sitemap);
   console.log('generated sitemap.xml');
 
   // Generate robots.txt
   const robots = `User-agent: *
 Allow: /
 
-Sitemap: https://atomest.com/sitemap.xml
+Sitemap: ${siteUrl}/sitemap.xml
 `;
   fs.writeFileSync(toAbsolute('dist/client/robots.txt'), robots);
   console.log('generated robots.txt');
-
 })();
