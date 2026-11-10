@@ -1,6 +1,22 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
-import { GitFork, ArrowRight, CheckCircle2, Zap, Clock, ShieldCheck, Sparkles, Database, Mail, Calendar, RefreshCw } from "lucide-react";
+import {
+  GitFork,
+  ArrowRight,
+  CheckCircle2,
+  Zap,
+  Clock,
+  ShieldCheck,
+  Sparkles,
+  Database,
+  Mail,
+  Calendar,
+  RefreshCw,
+  BellRing,
+  FileSpreadsheet,
+  Send,
+  Timer,
+} from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { AutomationPreview } from "../../components/showcase/AutomationPreview";
@@ -58,7 +74,7 @@ export default function Automation() {
         <title>AI Automation Solutions | Atomest</title>
         <meta
           name="description"
-          content="Stop doing manually what technology can handle. Autonomous workflow pipelines, CRM synchronization, and lead management engineered by Atomest."
+          content="Stop doing manually what technology can handle. Speed-to-Lead automations, workflow pipelines, CRM synchronization, and lead management engineered by Atomest."
         />
       </Helmet>
 
@@ -91,10 +107,10 @@ export default function Automation() {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
                 <a
-                  href="#pipeline-demo"
+                  href="#speed-to-lead"
                   className="atomest-btn-secondary inline-flex items-center gap-2"
                 >
-                  <span>Inspect Live Workflow</span>
+                  <span>Speed-to-Lead Pilot ($199)</span>
                 </a>
               </div>
             </div>
@@ -119,8 +135,136 @@ export default function Automation() {
           </div>
         </section>
 
+        {/* ── FEATURED SERVICE: Speed-to-Lead Sprint ── */}
+        <section id="speed-to-lead" className="atomest-section">
+          <div className="atomest-container">
+            <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#151824] via-[#10121A] to-[#08090D] border border-[#8B5CF6]/30 shadow-2xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-[#8B5CF6]/10 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <div className="lg:col-span-7">
+                  <div className="flex flex-wrap items-center gap-2.5 mb-4">
+                    <span className="atomest-badge-violet inline-flex items-center gap-1.5">
+                      <Zap className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                      <span>Featured 48-Hour Sprint</span>
+                    </span>
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-mono text-emerald-400 bg-emerald-400/10 border border-emerald-400/20">
+                      Pilot Slots Open: 3 Only
+                    </span>
+                  </div>
+
+                  <h2 className="text-3xl sm:text-5xl font-extrabold font-display text-[#F5F6FA] mb-4 leading-tight">
+                    Speed-to-Lead Inbound Sprint
+                  </h2>
+
+                  <p className="text-sm sm:text-base text-[#A0A5B5] leading-relaxed mb-6">
+                    Research proves that responding to inbound inquiries within 5 minutes increases conversion rates by up to 391%. We configure, integrate, and deploy an automated end-to-end capture and follow-up pipeline for your business in 48 to 72 hours.
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+                    <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#08090D]/80 border border-[#252938]">
+                      <Timer className="w-5 h-5 text-[#8B5CF6] shrink-0 mt-0.5" />
+                      <div>
+                        <div className="text-xs font-semibold text-[#F5F6FA]">&lt; 60-Second Alerts</div>
+                        <div className="text-[11px] text-[#A0A5B5]">Instant Telegram or Slack notifications with 1-tap phone dial</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#08090D]/80 border border-[#252938]">
+                      <FileSpreadsheet className="w-5 h-5 text-[#3B82F6] shrink-0 mt-0.5" />
+                      <div>
+                        <div className="text-xs font-semibold text-[#F5F6FA]">Automated CRM Sync</div>
+                        <div className="text-[11px] text-[#A0A5B5]">Deduplicated logging to Google Sheets, Notion, or your CRM</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#08090D]/80 border border-[#252938]">
+                      <Send className="w-5 h-5 text-[#8B5CF6] shrink-0 mt-0.5" />
+                      <div>
+                        <div className="text-xs font-semibold text-[#F5F6FA]">Prospect Acknowledgment</div>
+                        <div className="text-[11px] text-[#A0A5B5]">Personalized email receipt so leads don't look elsewhere</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#08090D]/80 border border-[#252938]">
+                      <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                      <div>
+                        <div className="text-xs font-semibold text-[#F5F6FA]">Spam Trap & Error Logging</div>
+                        <div className="text-[11px] text-[#A0A5B5]">Honeypot protection and fail-safe alerts if an API glitches</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-4">
+                    <Link
+                      to="/contact?solution=automation"
+                      className="atomest-btn-primary inline-flex items-center gap-2"
+                    >
+                      <span>Claim a Pilot Slot ($199)</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                    <span className="text-xs text-[#A0A5B5] font-mono">
+                      Turnaround: 48–72 hours • ₹0 ongoing software subscription
+                    </span>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5">
+                  <div className="p-6 sm:p-7 rounded-2xl bg-[#08090D] border border-[#252938] space-y-5">
+                    <div className="flex items-center justify-between pb-4 border-b border-[#1C1F2B]">
+                      <div>
+                        <span className="text-xs font-mono text-[#8B5CF6] uppercase">Sprint Package</span>
+                        <div className="text-xl font-bold font-display text-[#F5F6FA]">Done-For-You Pilot</div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-2xl font-extrabold font-display text-[#F5F6FA]">$199</div>
+                        <span className="text-[11px] font-mono text-[#A0A5B5] line-through">$399 regular</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2.5 text-xs text-[#A0A5B5]">
+                      <div className="flex items-center gap-2 text-[#F5F6FA]">
+                        <CheckCircle2 className="w-4 h-4 text-[#8B5CF6] shrink-0" />
+                        <span>Form integration (Webflow, WordPress, custom forms)</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#F5F6FA]">
+                        <CheckCircle2 className="w-4 h-4 text-[#8B5CF6] shrink-0" />
+                        <span>Deterministic payload validation & 24h deduplication</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#F5F6FA]">
+                        <CheckCircle2 className="w-4 h-4 text-[#8B5CF6] shrink-0" />
+                        <span>Google Sheets / CRM data synchronization</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#F5F6FA]">
+                        <CheckCircle2 className="w-4 h-4 text-[#8B5CF6] shrink-0" />
+                        <span>Real-time Telegram / Slack owner instant notifications</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#F5F6FA]">
+                        <CheckCircle2 className="w-4 h-4 text-[#8B5CF6] shrink-0" />
+                        <span>Personalized prospect confirmation email</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#F5F6FA]">
+                        <CheckCircle2 className="w-4 h-4 text-[#8B5CF6] shrink-0" />
+                        <span>10-point test verification suite executed pre-launch</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-[#F5F6FA]">
+                        <CheckCircle2 className="w-4 h-4 text-[#8B5CF6] shrink-0" />
+                        <span>14 days of dedicated post-launch monitoring</span>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 border-t border-[#1C1F2B]">
+                      <div className="flex items-center gap-2 text-xs text-[#C4B5FD]">
+                        <Clock className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                        <span>Delivered and verified in 48–72 hours after intake</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Visual Workflow Demonstration */}
-        <section id="pipeline-demo" className="atomest-section">
+        <section id="pipeline-demo" className="atomest-section pt-0">
           <div className="atomest-container">
             <div className="max-w-3xl mb-8">
               <div className="atomest-badge-violet mb-3">

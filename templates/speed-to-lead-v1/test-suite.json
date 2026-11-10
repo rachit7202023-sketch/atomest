@@ -1,0 +1,194 @@
+{
+  "testSuite": "Atomest Speed-to-Lead V1 Validation Protocol",
+  "version": "1.0.0",
+  "testEnvironment": "Local & Synthetic Sandbox vs Real Service Integration",
+  "cases": [
+    {
+      "id": "TC-01",
+      "name": "Standard Qualified Submission (Happy Path)",
+      "type": "Live Integration Ready",
+      "input": {
+        "fullName": "Sarah Jenkins",
+        "email": "sarah@apexdesign.io",
+        "phone": "+1 415 555 2671",
+        "company": "Apex Design Studio",
+        "interest": "Website Solutions",
+        "message": "We need a redesign for our SaaS client launching in Q4.",
+        "consent": true
+      },
+      "expectedResult": {
+        "isValid": true,
+        "sheetsAction": "Row appended in Leads_Primary with status 'New'",
+        "telegramAlertSent": true,
+        "acknowledgmentEmailSent": true,
+        "statusCode": 200
+      }
+    },
+    {
+      "id": "TC-02",
+      "name": "Missing Required Email Address",
+      "type": "Validation Gate (Simulated)",
+      "input": {
+        "fullName": "Marcus Vance",
+        "email": "",
+        "phone": "+1 555 0192",
+        "company": "Vance Holdings",
+        "interest": "AI Automation",
+        "message": "Interested in workflow auditing.",
+        "consent": true
+      },
+      "expectedResult": {
+        "isValid": false,
+        "errors": ["email is required."],
+        "sheetsAction": "No primary row created",
+        "telegramAlertSent": "Quarantine alert dispatched to owner",
+        "acknowledgmentEmailSent": false
+      }
+    },
+    {
+      "id": "TC-03",
+      "name": "Malformed Email Syntax (No Domain / No TLD)",
+      "type": "Validation Gate (Simulated)",
+      "input": {
+        "fullName": "David Ross",
+        "email": "david_at_rosscorp",
+        "message": "Please call me about automations.",
+        "consent": true
+      },
+      "expectedResult": {
+        "isValid": false,
+        "errors": ["email syntax is invalid."],
+        "sheetsAction": "Quarantined",
+        "telegramAlertSent": "Quarantine alert dispatched",
+        "acknowledgmentEmailSent": false
+      }
+    },
+    {
+      "id": "TC-04",
+      "name": "Duplicate Lead Resubmitted within 24 Hours",
+      "type": "Deduplication & State Update (Live Integration)",
+      "input": {
+        "fullName": "Sarah Jenkins",
+        "email": "sarah@apexdesign.io",
+        "phone": "+1 415 555 2671",
+        "company": "Apex Design Studio",
+        "interest": "Website Solutions",
+        "message": "Following up on my previous note.",
+        "consent": true
+      },
+      "expectedResult": {
+        "isValid": true,
+        "sheetsAction": "Matches existing Email on matching column; updates row timestamp without inserting duplicate row",
+        "telegramAlertSent": true,
+        "acknowledgmentEmailSent": "Suppressed or sent as follow-up acknowledgment"
+      }
+    },
+    {
+      "id": "TC-05",
+      "name": "Missing Consent Opt-In",
+      "type": "Compliance Gate (Simulated)",
+      "input": {
+        "fullName": "Elena Rostova",
+        "email": "elena@biotechcorp.de",
+        "message": "Exploring AI agent possibilities.",
+        "consent": false
+      },
+      "expectedResult": {
+        "isValid": true,
+        "sheetsAction": "Row created with Consent=false",
+        "telegramAlertSent": true,
+        "acknowledgmentEmailSent": false
+      }
+    },
+    {
+      "id": "TC-06",
+      "name": "Honeypot Bot Submission (Spam Trap)",
+      "type": "Anti-Spam Filter (Simulated)",
+      "input": {
+        "fullName": "Crypto Boost Bot",
+        "email": "bot@promotions-fast.ru",
+        "message": "Buy ranking signals today!",
+        "hp_field": "I am a hidden input field filled by a bot",
+        "consent": true
+      },
+      "expectedResult": {
+        "isValid": false,
+        "errors": ["Spam bot detected via honeypot."],
+        "sheetsAction": "Quarantined / Dropped silently",
+        "telegramAlertSent": "Low priority spam log",
+        "acknowledgmentEmailSent": false
+      }
+    },
+    {
+      "id": "TC-07",
+      "name": "International Unformatted Phone Number",
+      "type": "Sanitization Gate (Simulated)",
+      "input": {
+        "fullName": "Liam O'Connor",
+        "email": "liam@dublinagency.ie",
+        "phone": "+353 (01) 496-0123",
+        "message": "Looking for inbound automation sprint.",
+        "consent": true
+      },
+      "expectedResult": {
+        "isValid": true,
+        "sanitizedPhone": "+353014960123",
+        "sheetsAction": "Row stored with normalized phone",
+        "telegramAlertSent": true,
+        "acknowledgmentEmailSent": true
+      }
+    },
+    {
+      "id": "TC-08",
+      "name": "HTML & Script Injection In Message",
+      "type": "Security & Escaping (Simulated)",
+      "input": {
+        "fullName": "Security Audit Test",
+        "email": "audit@secops.org",
+        "message": "<script>alert('XSS-PROBE')</script> Hello team.",
+        "consent": true
+      },
+      "expectedResult": {
+        "isValid": true,
+        "sanitizedMessage": "Plain text preserved safely without tag execution",
+        "sheetsAction": "Escaped text stored safely in Google Sheets cell",
+        "telegramAlertSent": true,
+        "acknowledgmentEmailSent": true
+      }
+    },
+    {
+      "id": "TC-09",
+      "name": "Excessive Message Length (> 1500 Characters)",
+      "type": "Safety & Buffer Truncation (Simulated)",
+      "input": {
+        "fullName": "Verbose Prospect",
+        "email": "verbose@enterprise.com",
+        "message": "A".repeat(4000),
+        "consent": true
+      },
+      "expectedResult": {
+        "isValid": true,
+        "sanitizedMessage": "Gracefully truncated to 1500 chars to avoid Slack/Telegram 4096 character limits",
+        "telegramAlertSent": true,
+        "acknowledgmentEmailSent": true
+      }
+    },
+    {
+      "id": "TC-10",
+      "name": "Google Sheets API Timeout / Downstream Network Glitch",
+      "type": "Fault Tolerance & Retries (Live Integration Test)",
+      "input": {
+        "fullName": "Resilience Test User",
+        "email": "resilience@atomest.dev",
+        "message": "Testing network retry policies.",
+        "consent": true
+      },
+      "expectedResult": {
+        "isValid": true,
+        "n8nBehavior": "Node configured with retryOnFail (3 attempts, 2000ms delay)",
+        "recovery": "If final attempt fails, workflow routes to error output branch without crashing instance"
+      }
+    }
+  ]
+}
+

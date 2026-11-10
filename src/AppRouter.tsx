@@ -1,17 +1,11 @@
 import { Suspense, lazy } from "react";
-import { Switch, Route } from "wouter";
+import { Switch, Route, Redirect } from "wouter";
 import { GoogleAnalytics } from "@/components/seo/GoogleAnalytics";
 import { ScrollToTop } from "@/components/ScrollToTop";
 
 const Home = lazy(() => import("@/pages/Home"));
-const Tools = lazy(() => import("@/pages/Tools"));
-const ToolPage = lazy(() => import("@/pages/ToolPage"));
-const Categories = lazy(() => import("@/pages/Categories"));
-const CategoryPage = lazy(() => import("@/pages/CategoryPage"));
 const About = lazy(() => import("@/pages/About"));
 const NotFound = lazy(() => import("@/pages/not-found"));
-const AiProducts = lazy(() => import("@/pages/AiProducts"));
-const Products = lazy(() => import("@/pages/Products"));
 const Login = lazy(() => import("@/pages/auth/Login"));
 const Signup = lazy(() => import("@/pages/auth/Signup"));
 const Account = lazy(() => import("@/pages/auth/Account"));
@@ -23,14 +17,6 @@ const SolutionAutomation = lazy(() => import("@/pages/solutions/Automation"));
 const SolutionAgents = lazy(() => import("@/pages/solutions/Agents"));
 const SolutionProducts = lazy(() => import("@/pages/solutions/Products"));
 const Contact = lazy(() => import("@/pages/Contact"));
-
-// ── New: Dynamic AI Employee page (auto-populated from module registry) ──
-const EmployeePage = lazy(() => import("@/pages/employee/EmployeePage"));
-
-// ── Legacy: kept for backwards compat during migration ──
-const RecruiterAiLanding = lazy(() => import("@/modules/recruiter-ai/pages/LandingPage"));
-const RecruiterAiDashboard = lazy(() => import("@/modules/recruiter-ai/pages/DashboardPage"));
-const RecruiterAiApp = lazy(() => import("@/modules/recruiter-ai/pages/AppPage"));
 
 function PageLoader() {
   return (
@@ -45,10 +31,7 @@ function PageLoader() {
 
 export default function AppRouter() {
   const isClient = typeof window !== "undefined";
-  if (isClient) {
-    console.log("AppRouter current pathname:", window.location.pathname);
-  }
-  
+
   return (
     <>
       {isClient && <ScrollToTop />}
@@ -63,28 +46,25 @@ export default function AppRouter() {
           <Route path="/solutions/agents" component={SolutionAgents} />
           <Route path="/solutions/products" component={SolutionProducts} />
           <Route path="/contact" component={Contact} />
-
-          <Route path="/tools" component={Tools} />
-          <Route path="/tools/:slug" component={ToolPage} />
-          <Route path="/categories" component={Categories} />
-          <Route path="/categories/:slug" component={CategoryPage} />
           <Route path="/about" component={About} />
-          <Route path="/products" component={Products} />
-          <Route path="/ai-products" component={AiProducts} />
 
-          {/* ── New platform routes (module registry driven) ── */}
-          <Route path="/employees/:id" component={EmployeePage} />
-
-          {/* ── Legacy routes (preserved during migration) ── */}
-          <Route path="/ai-products/recruiter-ai" component={RecruiterAiLanding} />
-          <Route path="/ai-products/recruiter-ai/dashboard" component={RecruiterAiDashboard} />
-          <Route path="/ai-products/recruiter-ai/app" component={RecruiterAiApp} />
-          <Route path="/ai-products/recruiter-ai/app/:id" component={RecruiterAiApp} />
-
+          {/* ── Client / Account Operations ── */}
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/account" component={Account} />
           <Route path="/dashboard" component={Dashboard} />
+
+          {/* ── Legacy Route Fallbacks (HTTP 301 handled at hosting level by vercel.json) ── */}
+          <Route path="/tools">{() => <Redirect to="/solutions/automation" replace />}</Route>
+          <Route path="/tools/:rest*">{() => <Redirect to="/solutions/automation" replace />}</Route>
+          <Route path="/categories">{() => <Redirect to="/solutions/automation" replace />}</Route>
+          <Route path="/categories/:rest*">{() => <Redirect to="/solutions/automation" replace />}</Route>
+          <Route path="/products">{() => <Redirect to="/solutions/products" replace />}</Route>
+          <Route path="/ai-products">{() => <Redirect to="/solutions/products" replace />}</Route>
+          <Route path="/ai-products/:rest*">{() => <Redirect to="/solutions/products" replace />}</Route>
+          <Route path="/originals/:rest*">{() => <Redirect to="/solutions/products" replace />}</Route>
+          <Route path="/employees/:rest*">{() => <Redirect to="/solutions/agents" replace />}</Route>
+
           <Route component={NotFound} />
         </Switch>
       </Suspense>

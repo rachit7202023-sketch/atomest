@@ -1,8 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { products } from '../src/data/products.ts';
-import { categories } from '../src/data/categories.ts';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -12,31 +10,16 @@ const toAbsolute = (p: string) => path.resolve(__dirname, '..', p);
 const template = fs.readFileSync(toAbsolute('dist/client/index.html'), 'utf-8');
 const render = (await import(pathToFileURL(toAbsolute('dist/server/entry-server.js')).href)).render;
 
-// Determine all routes to pre-render
+// Determine all approved V2 routes to pre-render
 const routesToPrerender = [
   '/',
   '/about',
-  '/originals',
-  '/tools',
-  '/categories',
   '/solutions/websites',
   '/solutions/automation',
   '/solutions/agents',
   '/solutions/products',
   '/contact',
 ];
-
-for (const product of products) {
-  if (product.type === "original") {
-    routesToPrerender.push(`/originals/${product.slug}`);
-  } else {
-    routesToPrerender.push(`/tools/${product.slug}`);
-  }
-}
-
-for (const cat of categories) {
-  routesToPrerender.push(`/categories/${cat.id}`);
-}
 
 (async () => {
   for (const url of routesToPrerender) {

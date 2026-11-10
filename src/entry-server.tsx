@@ -1,11 +1,11 @@
 import React from "react";
-import { renderToString } from "react-dom/server";
+import { prerender } from "react-dom/static";
 import { Router } from "wouter";
 import { HelmetProvider } from "react-helmet-async";
 import AppRouter from "./AppRouter";
 
-export function render(url: string, helmetContext: any) {
-  const html = renderToString(
+export async function render(url: string, helmetContext: any) {
+  const { prelude } = await prerender(
     <React.StrictMode>
       <HelmetProvider context={helmetContext}>
         <Router ssrPath={url}>
@@ -14,5 +14,7 @@ export function render(url: string, helmetContext: any) {
       </HelmetProvider>
     </React.StrictMode>
   );
+
+  const html = await new Response(prelude).text();
   return { html };
 }

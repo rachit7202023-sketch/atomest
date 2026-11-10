@@ -18,6 +18,20 @@ export default function Products() {
 
   const roadmapItems = [
     {
+      id: "speed-to-lead-blueprint",
+      name: "Speed-to-Lead n8n Blueprint",
+      tagline: "Self-Hostable Inbound Capture & Routing Architecture",
+      status: "Packaging & QA • Coming Soon",
+      statusColor: "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
+      quarter: "Next Release",
+      description: "Our complete battle-tested n8n workflow for sub-60-second inbound lead routing, deterministic spam filtering, Google Sheets sync, Telegram alerts, and automated prospect acknowledgment. Currently undergoing packaging and multi-platform QA.",
+      features: [
+        "Plug-and-play n8n JSON workflow export with zero paid API dependencies",
+        "Deterministic validation, 24-hour deduplication & bot honeypot",
+        "Multi-channel dispatcher (Telegram, Slack, Email) with 10-point test suite",
+      ],
+    },
+    {
       id: "flowengine",
       name: "Atomest FlowEngine",
       tagline: "Autonomous Event Orchestration Engine",
@@ -266,6 +280,7 @@ export default function Products() {
                         onChange={(e) => setFormData({ ...formData, product: e.target.value })}
                         className="w-full px-3.5 py-2.5 rounded-xl bg-[#151824] border border-[#252938] text-xs sm:text-sm text-[#F5F6FA] focus:outline-none focus:border-[#8B5CF6] transition-colors"
                       >
+                        <option value="speed-to-lead-blueprint">Speed-to-Lead n8n Blueprint (Coming Soon)</option>
                         <option value="flowengine">Atomest FlowEngine (Autonomous Orchestrator)</option>
                         <option value="grounding-studio">Atomest Grounding Studio (Knowledge RAG)</option>
                         <option value="leadpulse">Atomest LeadPulse (Intent Scoring)</option>

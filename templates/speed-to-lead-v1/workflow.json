@@ -1,0 +1,198 @@
+{
+  "name": "Atomest Speed-to-Lead V1",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-ingest",
+        "responseMode": "onReceived",
+        "responseData": "allEntries",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "node-01-webhook",
+      "name": "Inbound Lead Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "atomest-lead-ingest"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Atomest Deterministic Validator & Sanitizer\nconst item = $input.first().json;\n\n// Extract and trim fields\nconst fullName = (item.fullName || item.name || '').trim();\nconst email = (item.email || '').trim().toLowerCase();\nconst phoneRaw = (item.phone || '').trim();\nconst company = (item.company || '').trim();\nconst interest = (item.interest || 'General Inquiry').trim();\nconst message = (item.message || item.description || '').trim();\nconst consent = item.consent === true || item.consent === 'true' || item.consent === 1;\n\nconst errors = [];\n\n// 1. Required Presence Validation\nif (!fullName) errors.push('fullName is required.');\nif (!email) errors.push('email is required.');\nif (!message) errors.push('message is required.');\n\n// 2. Strict Email Regex Validation\nconst emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\nif (email && !emailRegex.test(email)) {\n  errors.push('email syntax is invalid.');\n}\n\n// 3. Phone Normalization (E.164-compatible strip)\nconst sanitizedPhone = phoneRaw.replace(/[^0-9+]/g, '');\n\n// 4. Honeypot Anti-Spam Check\nif (item.hp_field && item.hp_field.length > 0) {\n  errors.push('Spam bot detected via honeypot.');\n}\n\nconst isValid = errors.length === 0;\nconst leadId = 'LEAD-' + Math.random().toString(36).substring(2, 9).toUpperCase();\nconst receivedAt = new Date().toISOString();\n\nreturn {\n  json: {\n    isValid,\n    leadId,\n    receivedAt,\n    errors,\n    sanitized: {\n      fullName,\n      email,\n      phone: sanitizedPhone,\n      company: company || 'Not Specified',\n      interest,\n      message: message.substring(0, 1500), // Cap length for safety\n      consent\n    },\n    rawPayload: item\n  }\n};"
+      },
+      "id": "node-02-validator",
+      "name": "Validate & Sanitize Lead",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.isValid }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "node-03-if-valid",
+      "name": "Is Valid Lead?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID_HERE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Leads_Primary",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Lead_ID": "={{ $json.leadId }}",
+            "Received_At": "={{ $json.receivedAt }}",
+            "Full_Name": "={{ $json.sanitized.fullName }}",
+            "Email": "={{ $json.sanitized.email }}",
+            "Phone": "={{ $json.sanitized.phone }}",
+            "Company": "={{ $json.sanitized.company }}",
+            "Interest": "={{ $json.sanitized.interest }}",
+            "Message": "={{ $json.sanitized.message }}",
+            "Consent": "={{ $json.sanitized.consent }}",
+            "Status": "New"
+          },
+          "matchingColumns": [
+            "Email"
+          ]
+        },
+        "options": {}
+      },
+      "id": "node-04-sheets-upsert",
+      "name": "Store Lead in Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [900, 200]
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID_HERE",
+        "text": "=🚨 *NEW INBOUND LEAD RECEIVED*\n\n👤 *Name:* {{ $json.sanitized.fullName }}\n🏢 *Company:* {{ $json.sanitized.company }}\n✉️ *Email:* `{{ $json.sanitized.email }}`\n📞 *Phone:* `{{ $json.sanitized.phone || 'N/A' }}`\n🎯 *Interest:* {{ $json.sanitized.interest }}\n\n💬 *Project Scope:*\n_{{ $json.sanitized.message }}_\n\n⏱ *SLA Target:* Contact within 15 minutes.\n🔗 *Lead ID:* `{{ $json.leadId }}`",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "node-05-telegram-alert",
+      "name": "Telegram Alert to Owner",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [1120, 200]
+    },
+    {
+      "parameters": {
+        "fromEmail": "YOUR_VERIFIED_BUSINESS_EMAIL@CLIENT.COM",
+        "toEmail": "={{ $json.sanitized.email }}",
+        "subject": "=Inquiry received — {{ $json.sanitized.company !== 'Not Specified' ? $json.sanitized.company : $json.sanitized.fullName }}",
+        "text": "=Hi {{ $json.sanitized.fullName.split(' ')[0] }},\n\nThank you for reaching out regarding {{ $json.sanitized.interest }}.\n\nOur team has received your inquiry:\n\"{{ $json.sanitized.message }}\"\n\nA senior solution architect is reviewing your requirements and will reply within 2 business hours.\n\nBest regards,\nClient Business Team"
+      },
+      "id": "node-06-prospect-ack",
+      "name": "Send Prospect Acknowledgment",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1340, 200]
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID_HERE",
+        "text": "=⚠️ *QUARANTINE: Invalid / Malformed Inbound Lead*\n\n❌ *Errors:* {{ $json.errors.join(', ') }}\n📥 *Raw Payload:* `{{ JSON.stringify($json.rawPayload) }}`",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "node-07-error-quarantine",
+      "name": "Quarantine Alert (Validation Failed)",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [900, 420]
+    }
+  ],
+  "connections": {
+    "Inbound Lead Webhook": {
+      "main": [
+        [
+          {
+            "node": "Validate & Sanitize Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate & Sanitize Lead": {
+      "main": [
+        [
+          {
+            "node": "Is Valid Lead?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is Valid Lead?": {
+      "main": [
+        [
+          {
+            "node": "Store Lead in Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Quarantine Alert (Validation Failed)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store Lead in Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Telegram Alert to Owner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Alert to Owner": {
+      "main": [
+        [
+          {
+            "node": "Send Prospect Acknowledgment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
+
