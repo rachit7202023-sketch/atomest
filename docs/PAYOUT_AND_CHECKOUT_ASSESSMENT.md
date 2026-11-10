@@ -57,3 +57,4 @@ Atomest needs an external platform to handle:
    - 3 sales clear the $100 payout threshold.
    - Payouts transfer directly into your Indian bank account every Tuesday without complex merchant account setups.
 3. Once sales volume reaches $1,000+/month, re-evaluate Lemon Squeezy or Dodo Payments for lower percentage fees.
+

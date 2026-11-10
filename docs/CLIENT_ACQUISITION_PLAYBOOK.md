@@ -91,3 +91,4 @@ Never send generic text spam. A personalized screen-share video gets 5x higher r
 | **Days 7–9** | Send gentle follow-ups to Batch 1 non-replies. Record and send Batch 2 (15 targets). | 15 sent + follow-ups. |
 | **Days 10–12** | Conduct 15-minute discovery calls with interested responders. | 2–3 discovery calls booked. |
 | **Days 13–14** | Deliver 1-page proposals using our Service Agreement Template and close Client #1! | **Client #1 Closed.** |
+

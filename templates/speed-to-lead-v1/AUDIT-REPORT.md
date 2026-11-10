@@ -75,3 +75,4 @@ The verified production DAG now cleanly separates validation, storage, notificat
 
 1. **For Client Delivery (Turnkey Service):** Ready to be imported directly into a client's n8n instance (self-hosted or cloud) with simple credential mapping for Google Sheets, Telegram, and SMTP/Resend.
 2. **For Digital Product Storefront (Division B):** Ready to be packaged into a `.zip` bundle alongside the updated setup SOP.
+
