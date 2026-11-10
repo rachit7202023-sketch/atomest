@@ -87,7 +87,7 @@
     {
       "parameters": {
         "chatId": "YOUR_TELEGRAM_CHAT_ID_HERE",
-        "text": "=🚨 *NEW INBOUND LEAD RECEIVED*\n\n👤 *Name:* {{ $json.sanitized.fullName }}\n🏢 *Company:* {{ $json.sanitized.company }}\n✉️ *Email:* `{{ $json.sanitized.email }}`\n📞 *Phone:* `{{ $json.sanitized.phone || 'N/A' }}`\n🎯 *Interest:* {{ $json.sanitized.interest }}\n\n💬 *Project Scope:*\n_{{ $json.sanitized.message }}_\n\n⏱ *SLA Target:* Contact within 15 minutes.\n🔗 *Lead ID:* `{{ $json.leadId }}`",
+        "text": "=🚨 *NEW INBOUND LEAD RECEIVED*\n\n👤 *Name:* {{ $json.sanitized.fullName }}\n🏢 *Company:* {{ $json.sanitized.company }}\n✉️ *Email:* `{{ $json.sanitized.email }}`\n📞 *Phone:* `{{ $json.sanitized.phone || 'N/A' }}`\n🎯 *Interest:* {{ $json.sanitized.interest }}\n\n💬 *Project Scope:*\n_{{ $json.sanitized.message }}_\n\n⚖️ *Consent Given:* {{ $json.sanitized.consent ? 'YES (Auto-Acknowledgment Sent)' : 'NO (Acknowledgment Suppressed)' }}\n🔗 *Lead ID:* `{{ $json.leadId }}`",
         "additionalFields": {
           "parse_mode": "Markdown"
         }
@@ -100,16 +100,33 @@
     },
     {
       "parameters": {
+        "conditions": {
+          "boolean": [
+            {
+              "value1": "={{ $json.sanitized.consent }}",
+              "value2": true
+            }
+          ]
+        }
+      },
+      "id": "node-06-if-consent",
+      "name": "Has Prospect Consented to Email?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1340, 200]
+    },
+    {
+      "parameters": {
         "fromEmail": "YOUR_VERIFIED_BUSINESS_EMAIL@CLIENT.COM",
         "toEmail": "={{ $json.sanitized.email }}",
         "subject": "=Inquiry received — {{ $json.sanitized.company !== 'Not Specified' ? $json.sanitized.company : $json.sanitized.fullName }}",
-        "text": "=Hi {{ $json.sanitized.fullName.split(' ')[0] }},\n\nThank you for reaching out regarding {{ $json.sanitized.interest }}.\n\nOur team has received your inquiry:\n\"{{ $json.sanitized.message }}\"\n\nA senior solution architect is reviewing your requirements and will reply within 2 business hours.\n\nBest regards,\nClient Business Team"
+        "text": "=Hi {{ $json.sanitized.fullName.split(' ')[0] }},\n\nThank you for reaching out regarding {{ $json.sanitized.interest }}.\n\nOur team has received your inquiry:\n\"{{ $json.sanitized.message }}\"\n\nWe are reviewing your requirements and will reply within 1–2 business days.\n\nBest regards,\nClient Team"
       },
-      "id": "node-06-prospect-ack",
+      "id": "node-07-prospect-ack",
       "name": "Send Prospect Acknowledgment",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
-      "position": [1340, 200]
+      "position": [1560, 160]
     },
     {
       "parameters": {
@@ -119,7 +136,7 @@
           "parse_mode": "Markdown"
         }
       },
-      "id": "node-07-error-quarantine",
+      "id": "node-08-error-quarantine",
       "name": "Quarantine Alert (Validation Failed)",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
@@ -182,6 +199,17 @@
       "main": [
         [
           {
+            "node": "Has Prospect Consented to Email?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Has Prospect Consented to Email?": {
+      "main": [
+        [
+          {
             "node": "Send Prospect Acknowledgment",
             "type": "main",
             "index": 0
@@ -195,4 +223,3 @@
     "executionOrder": "v1"
   }
 }
-
