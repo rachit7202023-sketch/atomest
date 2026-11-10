@@ -10,17 +10,17 @@ const toAbsolute = (p: string) => path.resolve(__dirname, '..', p);
 const template = fs.readFileSync(toAbsolute('dist/client/index.html'), 'utf-8');
 const render = (await import(pathToFileURL(toAbsolute('dist/server/entry-server.js')).href)).render;
 
-// Determine all approved V2 routes to pre-render
+// Determine all approved studio routes to pre-render
 const routesToPrerender = [
   '/',
   '/services',
   '/work',
+  '/products',
   '/about',
   '/contact',
   '/solutions/websites',
   '/solutions/automation',
   '/solutions/agents',
-  '/solutions/products',
 ];
 
 (async () => {

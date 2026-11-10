@@ -6,6 +6,7 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 const Home = lazy(() => import("@/pages/Home"));
 const Services = lazy(() => import("@/pages/Services"));
 const Work = lazy(() => import("@/pages/Work"));
+const DigitalProducts = lazy(() => import("@/pages/DigitalProducts"));
 const About = lazy(() => import("@/pages/About"));
 const Contact = lazy(() => import("@/pages/Contact"));
 const NotFound = lazy(() => import("@/pages/not-found"));
@@ -18,7 +19,6 @@ const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const SolutionWebsites = lazy(() => import("@/pages/solutions/Websites"));
 const SolutionAutomation = lazy(() => import("@/pages/solutions/Automation"));
 const SolutionAgents = lazy(() => import("@/pages/solutions/Agents"));
-const SolutionProducts = lazy(() => import("@/pages/solutions/Products"));
 
 function PageLoader() {
   return (
@@ -42,9 +42,11 @@ export default function AppRouter() {
         <Switch>
           <Route path="/" component={Home} />
 
-          {/* ── Primary Navigation Routes ── */}
+          {/* ── Primary Public Navigation Routes ── */}
           <Route path="/services" component={Services} />
           <Route path="/work" component={Work} />
+          <Route path="/products" component={DigitalProducts} />
+          <Route path="/digital-products" component={DigitalProducts} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
 
@@ -52,23 +54,22 @@ export default function AppRouter() {
           <Route path="/solutions/websites" component={SolutionWebsites} />
           <Route path="/solutions/automation" component={SolutionAutomation} />
           <Route path="/solutions/agents" component={SolutionAgents} />
-          <Route path="/solutions/products" component={SolutionProducts} />
 
-          {/* ── Client / Account Operations ── */}
+          {/* ── Client / Account Operations (preserved for admin / internal use) ── */}
           <Route path="/login" component={Login} />
           <Route path="/signup" component={Signup} />
           <Route path="/account" component={Account} />
           <Route path="/dashboard" component={Dashboard} />
 
           {/* ── Legacy Route Fallbacks ── */}
+          <Route path="/solutions/products">{() => <Redirect to="/products" replace />}</Route>
           <Route path="/tools">{() => <Redirect to="/solutions/automation" replace />}</Route>
           <Route path="/tools/:rest*">{() => <Redirect to="/solutions/automation" replace />}</Route>
           <Route path="/categories">{() => <Redirect to="/solutions/automation" replace />}</Route>
           <Route path="/categories/:rest*">{() => <Redirect to="/solutions/automation" replace />}</Route>
-          <Route path="/products">{() => <Redirect to="/solutions/products" replace />}</Route>
-          <Route path="/ai-products">{() => <Redirect to="/solutions/products" replace />}</Route>
-          <Route path="/ai-products/:rest*">{() => <Redirect to="/solutions/products" replace />}</Route>
-          <Route path="/originals/:rest*">{() => <Redirect to="/solutions/products" replace />}</Route>
+          <Route path="/ai-products">{() => <Redirect to="/products" replace />}</Route>
+          <Route path="/ai-products/:rest*">{() => <Redirect to="/products" replace />}</Route>
+          <Route path="/originals/:rest*">{() => <Redirect to="/products" replace />}</Route>
           <Route path="/employees/:rest*">{() => <Redirect to="/solutions/agents" replace />}</Route>
 
           <Route component={NotFound} />

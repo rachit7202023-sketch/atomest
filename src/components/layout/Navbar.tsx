@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { ChevronDown, Globe, GitFork, Bot, Layers, Sparkles, Menu, ArrowRight } from "lucide-react";
+import { ChevronDown, Globe, GitFork, Bot, Menu, ArrowRight } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function Navbar() {
@@ -47,12 +47,6 @@ export function Navbar() {
       description: "Grounded business assistants & copilots",
       href: "/solutions/agents",
       icon: Bot,
-    },
-    {
-      title: "AI Products",
-      description: "Proprietary software pipeline & waitlist",
-      href: "/solutions/products",
-      icon: Layers,
     },
   ];
 
@@ -151,6 +145,15 @@ export function Navbar() {
             </Link>
 
             <Link
+              href="/products"
+              className={`transition-colors py-1 ${
+                isActive("/products") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
+              }`}
+            >
+              Products
+            </Link>
+
+            <Link
               href="/about"
               className={`transition-colors py-1 ${
                 isActive("/about") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
@@ -211,7 +214,10 @@ export function Navbar() {
                       Services
                     </Link>
                     <Link href="/work" className="py-1 text-[#A0A5B5] hover:text-white transition-colors">
-                      Work
+                      Work / Portfolio
+                    </Link>
+                    <Link href="/products" className="py-1 text-[#A0A5B5] hover:text-white transition-colors">
+                      Digital Products
                     </Link>
                     <Link href="/about" className="py-1 text-[#A0A5B5] hover:text-white transition-colors">
                       About Us

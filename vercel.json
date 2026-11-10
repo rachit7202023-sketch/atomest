@@ -6,11 +6,11 @@
     { "source": "/tools/:path*", "destination": "/solutions/automation", "permanent": true },
     { "source": "/categories", "destination": "/solutions/automation", "permanent": true },
     { "source": "/categories/:path*", "destination": "/solutions/automation", "permanent": true },
-    { "source": "/products", "destination": "/solutions/products", "permanent": true },
-    { "source": "/ai-products", "destination": "/solutions/products", "permanent": true },
-    { "source": "/ai-products/:path*", "destination": "/solutions/products", "permanent": true },
-    { "source": "/originals", "destination": "/solutions/products", "permanent": true },
-    { "source": "/originals/:path*", "destination": "/solutions/products", "permanent": true },
+    { "source": "/solutions/products", "destination": "/products", "permanent": true },
+    { "source": "/ai-products", "destination": "/products", "permanent": true },
+    { "source": "/ai-products/:path*", "destination": "/products", "permanent": true },
+    { "source": "/originals", "destination": "/products", "permanent": true },
+    { "source": "/originals/:path*", "destination": "/products", "permanent": true },
     { "source": "/employees/:path*", "destination": "/solutions/agents", "permanent": true }
   ],
   "rewrites": [
