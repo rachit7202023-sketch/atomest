@@ -2,108 +2,109 @@ import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Link } from "wouter";
-import { ArrowRight, Globe, GitFork, Bot, Layers, Sparkles, CheckCircle2, ShieldCheck, Zap } from "lucide-react";
+import { ArrowRight, Globe, GitFork, Bot, Layers, Sparkles, CheckCircle2, ShieldCheck, Zap, HelpCircle, FileText, KeyRound } from "lucide-react";
 
 export default function Services() {
   const serviceCategories = [
     {
       id: "web-development",
       title: "Web Development",
-      tagline: "High-Performance Digital Flagships",
+      tagline: "High-Performance Digital Platforms",
       badge: "Core Service",
       icon: Globe,
       color: "text-[#3B82F6]",
       border: "border-[#3B82F6]/30",
       description:
-        "Fast, modern, conversion-focused websites and web platforms engineered to build technical authority, rank on search engines, and convert visitors into qualified leads.",
-      problemsSolved: [
-        "Slow, outdated websites that fail modern Core Web Vitals",
-        "Low conversion rates and weak mobile responsiveness",
-        "Disorganized messaging that confuses high-intent prospects",
-        "Lack of structured SEO architecture and technical schema",
+        "Fast, mobile-optimized business websites, landing pages, and web applications built to give your business strong credibility, rank effectively, and convert casual visitors into qualified customer enquiries.",
+      whatWeBuild: [
+        "Business & Corporate Websites (3–10+ pages)",
+        "High-Conversion Landing Pages for ad campaigns",
+        "Complete Website Redesigns & Modernization",
+        "Lead Generation & Contact Capture Funnels",
+        "E-Commerce Websites (Shopify or headless setups within agreed scope)",
+        "Custom Client Portals & Web Applications",
       ],
-      offerings: [
-        "Business & Corporate Websites",
-        "High-Conversion Landing Pages",
-        "Website Redesigns & Modernization",
-        "Portfolio & Credibility Websites",
-        "Lead Generation Funnels",
-        "E-Commerce Websites (Shopify / Headless)",
-        "Custom Web Applications & Portals",
+      problemSolved:
+        "Slow, outdated websites that confuse prospects, perform poorly on mobile phones, fail search engine standards, and lose high-intent potential clients to competitors.",
+      whatYouReceive: [
+        "Fully responsive modern website tested across desktop, tablet, and mobile",
+        "Fast page load speeds and semantic, search-friendly structure",
+        "Integrated contact form sending instant email notifications",
+        "Full administrative handover with documentation on making text and image updates",
       ],
-      outcomes: [
-        "Sub-second load times & 95+ Core Web Vitals",
-        "Higher inquiry-to-consultation conversion rate",
-        "Clean, responsive presentation across all screens",
-        "Built-in analytics and lead-capture pipelines",
+      whatYouProvide: [
+        "Your business branding (logo, brand colors, imagery if available)",
+        "Rough draft or existing copy explaining your services and pricing",
+        "Domain registrar access (or assistance from our team to connect it)",
+        "Any third-party integration accounts (e.g., Google Analytics, form destination)",
       ],
-      ctaText: "Start a Web Project",
+      ctaText: "Enquire About Web Development",
     },
     {
       id: "business-automation",
       title: "Business Automation",
-      tagline: "Autonomous Event & Data Pipelines",
+      tagline: "Autonomous Workflow Pipelines",
       badge: "Core Service",
       icon: GitFork,
       color: "text-[#8B5CF6]",
       border: "border-[#8B5CF6]/30",
       description:
-        "Resilient, self-healing automations that connect forms, CRMs, messaging, and databases—eliminating manual data entry, follow-up delays, and operational friction.",
-      problemsSolved: [
-        "Slow response times to new inbound leads (Speed-to-Lead issues)",
-        "Manual copy-pasting data between forms, spreadsheets, and CRMs",
-        "Missed follow-ups and uncoordinated appointment scheduling",
-        "Siloed communication across email, Slack, and internal tools",
+        "Reliable workflows that connect your forms, spreadsheets, inboxes, and CRMs. We eliminate repetitive manual data entry, follow-up delays, and lost customer enquiries.",
+      whatWeBuild: [
+        "Speed-to-Lead notification systems (instant SMS, Telegram, or Slack alerts)",
+        "Google Sheets & CRM synchronization (HubSpot, Airtable, Notion)",
+        "Automated customer acknowledgment & email follow-up sequences",
+        "Appointment and consultation request routing",
+        "Multi-app data synchronization and automated reporting",
+        "Custom webhook integrations between specialized business tools",
       ],
-      offerings: [
-        "Lead Capture & Speed-to-Lead Triage",
-        "Google Sheets & Workspace Automations",
-        "CRM Integrations (HubSpot, Airtable, Notion)",
-        "Automated Email Notifications & Sequences",
-        "Calendar & Appointment Request Pipelines",
-        "Data Synchronization Across Platforms",
-        "Custom Webhook & Event-Driven Workflows",
+      problemSolved:
+        "Leads going cold because your team takes hours to respond, staff wasting valuable time copy-pasting customer details across disconnected spreadsheets, and missed client follow-ups.",
+      whatYouReceive: [
+        "Turnkey automated workflow configured on your preferred platform (e.g., self-hosted n8n or Make.com)",
+        "End-to-end testing with real sample data before launch",
+        "Automated error-alerting mechanism if an API key expires or a service is down",
+        "Step-by-step SOP and video walkthrough of how the workflow operates",
       ],
-      outcomes: [
-        "Under-60-second response to new leads",
-        "Zero manual copy-pasting between business tools",
-        "Reliable execution with automated error alerting",
-        "Hours of saved team bandwidth every single week",
+      whatYouProvide: [
+        "Access to the tools you want connected (e.g., Google Workspace, CRM, email service)",
+        "Clear explanation of your current manual workflow and step-by-step handoffs",
+        "Customer notification message templates (or we can assist in drafting them)",
       ],
-      ctaText: "Automate Your Workflow",
+      ctaText: "Enquire About Automation",
     },
     {
       id: "ai-solutions",
       title: "AI Solutions",
-      tagline: "Grounded Business Assistants & Copilots",
+      tagline: "Practical Business Assistants",
       badge: "Core Service",
       icon: Bot,
       color: "text-emerald-400",
       border: "border-emerald-500/30",
       description:
-        "Deterministic, grounded AI agents and copilots with strict data boundaries, designed to answer customer inquiries, qualify leads, and assist internal team operations.",
-      problemsSolved: [
-        "Customer inquiries going unanswered after business hours",
-        "Support teams answering the same repetitive questions repeatedly",
-        "Valuable lead information buried in unread inboxes",
-        "Internal staff losing hours searching company documentation",
+        "Practical AI assistants and chatbots strictly grounded in your company documentation, FAQs, and service guidelines. Designed to answer customer questions accurately 24/7 without making things up.",
+      whatWeBuild: [
+        "Website FAQ Chatbots that answer customer questions accurately 24/7",
+        "Inbound Lead Qualification Assistants that gather project details before booking",
+        "Document-Based SOP Assistants for internal team knowledge retrieval",
+        "AI-Assisted Customer Support Draft Responders",
+        "Basic Voice AI Inbound Assistants (scoped only where verified tools and reliable telephony APIs apply)",
+        "Custom Domain-Specific Task Assistants",
       ],
-      offerings: [
-        "Website FAQ & Inbound Chatbots",
-        "AI Customer Support Assistants (24/7)",
-        "AI Lead Qualification & Intent Scoring",
-        "Document-Based SOP Knowledge Copilots",
-        "AI-Powered Inbound Email Processing",
-        "Basic Voice AI Inbound Assistants",
-        "Custom Domain-Specific AI Agents",
+      problemSolved:
+        "Customer questions left unanswered after business hours, repetitive support tickets draining team productivity, and valuable inquiries going uncollected on weekends.",
+      whatYouReceive: [
+        "Embedded, mobile-friendly chat widget matching your website's visual brand",
+        "Strict prompt boundaries and grounding preventing hallucinations or off-topic replies",
+        "Clear fallback path to human email/booking when an inquiry exceeds scope",
+        "Full test log and prompt maintenance instructions",
       ],
-      outcomes: [
-        "Instant, accurate answers grounded in your business data",
-        "Automatic lead qualification before reaching your sales calendar",
-        "Human escalation paths for edge cases and VIP requests",
-        "Strict hallucination safeguards and data privacy",
+      whatYouProvide: [
+        "Your verified FAQ documents, price lists, service guidelines, and company policies",
+        "LLM API account credentials (e.g., Google Gemini, OpenAI, or Anthropic)",
+        "Guidelines on how and when to escalate conversations to a human team member",
       ],
-      ctaText: "Deploy an AI Solution",
+      ctaText: "Enquire About AI Solutions",
     },
   ];
 
@@ -113,7 +114,7 @@ export default function Services() {
         <title>Services | Atomest — Web Development, Business Automation & AI Solutions</title>
         <meta
           name="description"
-          content="Explore Atomest's three core service pillars: Web Development, Business Automation, and AI Solutions. Engineered for growing businesses and SMBs."
+          content="Explore Atomest's three core service pillars: Web Development, Business Automation, and AI Solutions. Practical, outcome-oriented digital solutions for growing businesses."
         />
       </Helmet>
 
@@ -127,18 +128,18 @@ export default function Services() {
           <div className="atomest-container relative z-10 text-center max-w-3xl mx-auto space-y-5">
             <div className="atomest-badge-violet inline-flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6]" />
-              <span>Full-Stack Digital Solutions Studio</span>
+              <span>Division A: Digital Services</span>
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-extrabold font-display tracking-tight text-[#F5F6FA] leading-[1.1]">
               Three Pillars.{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#A78BFA] to-[#3B82F6]">
-                One Digital Studio.
+                Measurable Outcomes.
               </span>
             </h1>
 
             <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
-              We help growing businesses establish high-converting online presences, eliminate manual work through automation, and implement practical, grounded AI systems.
+              We help growing businesses establish high-converting online presences, eliminate manual work through automation, and implement practical AI solutions that work reliably.
             </p>
           </div>
         </section>
@@ -175,7 +176,7 @@ export default function Services() {
                   </div>
 
                   <Link
-                    href="/contact"
+                    href={`/contact?solution=${service.id === "web-development" ? "web-development" : service.id === "business-automation" ? "business-automation" : "ai-solutions"}`}
                     className="atomest-btn-primary inline-flex items-center justify-center gap-2 text-xs py-2.5 px-5 self-start sm:self-auto"
                   >
                     <span>{service.ctaText}</span>
@@ -188,15 +189,24 @@ export default function Services() {
                   {service.description}
                 </p>
 
-                {/* Grid of Details: What We Offer, Problems We Solve, Business Outcomes */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-                  {/* Column 1: Specific Offerings */}
+                {/* Problem Solved Callout */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-[#151824] border border-amber-500/20 text-xs sm:text-sm text-[#A0A5B5] leading-relaxed">
+                  <span className="font-semibold text-amber-400 font-mono uppercase text-[11px] block mb-1">
+                    Problem this solves:
+                  </span>
+                  {service.problemSolved}
+                </div>
+
+                {/* Detailed 3-Column Breakdown */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+                  {/* Column 1: What We Build */}
                   <div className="p-6 rounded-2xl bg-[#151824] border border-[#252938] space-y-3">
-                    <div className="text-xs font-mono uppercase text-[#8B5CF6] tracking-wider">
-                      Specific Deliverables
+                    <div className="text-xs font-mono uppercase text-[#8B5CF6] tracking-wider flex items-center gap-1.5">
+                      <FileText className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                      <span>What We Build</span>
                     </div>
                     <ul className="space-y-2 text-xs sm:text-sm text-[#F5F6FA]">
-                      {service.offerings.map((item, i) => (
+                      {service.whatWeBuild.map((item, i) => (
                         <li key={i} className="flex items-start gap-2">
                           <CheckCircle2 className="w-4 h-4 text-[#8B5CF6] shrink-0 mt-0.5" />
                           <span>{item}</span>
@@ -205,30 +215,32 @@ export default function Services() {
                     </ul>
                   </div>
 
-                  {/* Column 2: Problems Solved */}
+                  {/* Column 2: What You Receive */}
                   <div className="p-6 rounded-2xl bg-[#151824] border border-[#252938] space-y-3">
-                    <div className="text-xs font-mono uppercase text-amber-400 tracking-wider">
-                      Problems We Solve
+                    <div className="text-xs font-mono uppercase text-emerald-400 tracking-wider flex items-center gap-1.5">
+                      <Zap className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>What You Receive</span>
                     </div>
-                    <ul className="space-y-2 text-xs sm:text-sm text-[#A0A5B5]">
-                      {service.problemsSolved.map((item, i) => (
+                    <ul className="space-y-2 text-xs sm:text-sm text-[#F5F6FA]">
+                      {service.whatYouReceive.map((item, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <span className="text-amber-400 shrink-0 font-bold">•</span>
+                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
                           <span>{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  {/* Column 3: Business Outcomes */}
+                  {/* Column 3: What You Need to Provide */}
                   <div className="p-6 rounded-2xl bg-[#151824] border border-[#252938] space-y-3">
-                    <div className="text-xs font-mono uppercase text-emerald-400 tracking-wider">
-                      Business Outcomes
+                    <div className="text-xs font-mono uppercase text-[#3B82F6] tracking-wider flex items-center gap-1.5">
+                      <KeyRound className="w-3.5 h-3.5 text-[#3B82F6]" />
+                      <span>What You Provide</span>
                     </div>
-                    <ul className="space-y-2 text-xs sm:text-sm text-[#F5F6FA]">
-                      {service.outcomes.map((item, i) => (
+                    <ul className="space-y-2 text-xs sm:text-sm text-[#A0A5B5]">
+                      {service.whatYouProvide.map((item, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <Zap className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                          <span className="text-[#3B82F6] shrink-0 font-bold">•</span>
                           <span>{item}</span>
                         </li>
                       ))}
@@ -245,14 +257,14 @@ export default function Services() {
               Looking for a combined digital solution?
             </h3>
             <p className="text-sm sm:text-base text-[#A0A5B5] max-w-2xl mx-auto leading-relaxed">
-              Most of our clients pair a modern high-converting website with an automated lead capture workflow and a 24/7 AI qualification assistant for maximum commercial impact.
+              Many clients combine a modern business website with an automated lead capture workflow and a 24/7 AI qualification assistant for a complete customer acquisition system.
             </p>
             <div className="pt-2">
               <Link
-                href="/contact"
+                href="/contact?solution=combined"
                 className="atomest-btn-primary inline-flex items-center gap-2 text-sm px-6 py-3"
               >
-                <span>Request a Custom Scoping Proposal</span>
+                <span>Request a Project Proposal</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
@@ -264,4 +276,3 @@ export default function Services() {
     </>
   );
 }
-

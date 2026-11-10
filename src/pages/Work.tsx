@@ -2,60 +2,63 @@ import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Link } from "wouter";
-import { ArrowRight, Sparkles, CheckCircle2, ShieldCheck, Globe, GitFork, Bot, Cpu, ExternalLink } from "lucide-react";
+import { ArrowRight, CheckCircle2, ShieldCheck, Globe, GitFork, Bot, Info } from "lucide-react";
 
 export default function Work() {
-  const conceptProjects = [
+  const systems = [
     {
-      title: "OmniFlow Lead Triage Architecture",
+      title: "Speed-to-Lead Notification Pipeline",
       category: "Business Automation",
+      badge: "Architecture Preview",
       icon: GitFork,
       color: "text-[#8B5CF6]",
       border: "border-[#8B5CF6]/30",
       description:
-        "An automated speed-to-lead engine that captures inbound inquiry webhooks, validates contact data, determines intent scoring, and pushes synchronous notifications to Slack and HubSpot in under 60 seconds.",
+        "An automated speed-to-lead workflow template that captures inbound inquiry webhooks, validates contact data, updates Google Sheets or CRM tables, and pushes immediate alerts to Slack, Telegram, or email.",
       features: [
-        "Sub-minute inbound lead triage and multi-channel alerting",
-        "CRM contact creation & pipeline deal assignment",
+        "Tested sub-60-second webhook-to-notification execution",
+        "Configurable CRM contact creation & spreadsheet row logging",
         "Automated confirmation email delivery to prospect",
-        "Dead-letter retry queues for fail-safe execution",
+        "Deterministic input validation with honeypot spam protection",
       ],
-      stack: ["n8n", "Webhooks", "HubSpot API", "Resend", "Slack Webhooks"],
-      status: "Verified Architectural Template",
+      stack: ["n8n / Webhooks", "Google Sheets API", "Resend / SMTP", "Slack / Telegram"],
+      statusDetail: "Architecture Preview & Verification Template",
     },
     {
-      title: "Veloce Conversion Web Platform",
+      title: "Modern Business Web Platform Architecture",
       category: "Web Development",
+      badge: "Prototype Demonstration",
       icon: Globe,
       color: "text-[#3B82F6]",
       border: "border-[#3B82F6]/30",
       description:
-        "Modern, dark-aesthetic business website engineered for service companies. Features sub-second First Contentful Paint, structured JSON-LD schema, interactive lead calculator, and direct backend lead ingestion.",
+        "Modern, dark-aesthetic business website architecture engineered for service companies. Features fast static rendering, responsive layout grids, structured SEO metadata, and integrated contact form ingestion.",
       features: [
-        "98+ Google Lighthouse Performance Score",
-        "Fully responsive modern dark interface",
-        "Integrated consultation request funnel",
-        "WCAG-compliant accessibility and semantic HTML",
+        "Clean, responsive layout tested across mobile, tablet, and desktop",
+        "Static pre-rendering for sub-second initial page paint",
+        "Integrated consultation request funnel with backend database storage",
+        "Semantic, accessible HTML structure and clean typography hierarchy",
       ],
       stack: ["React", "TypeScript", "Tailwind CSS", "Vite SSR", "Supabase"],
-      status: "Production-Ready Architecture",
+      statusDetail: "Production-Hardened Architectural Baseline",
     },
     {
-      title: "Atlas Grounded Knowledge Assistant",
+      title: "Grounded Knowledge & FAQ Assistant",
       category: "AI Solutions",
+      badge: "Concept Demonstration",
       icon: Bot,
       color: "text-emerald-400",
       border: "border-emerald-500/30",
       description:
-        "A private, zero-data-retention AI customer and employee assistant that answers technical questions and SOP inquiries strictly grounded in verified business documentation, with automatic human fallback.",
+        "An AI customer and employee assistant that answers technical questions and FAQ inquiries strictly grounded in verified business documentation, with deterministic human fallback for edge cases.",
       features: [
-        "Zero-hallucination document-grounded responses",
-        "Deterministic escalation when confidence score falls below threshold",
-        "Interactive web chat widget with persistent session state",
-        "Secure credential isolation and data privacy safeguards",
+        "Document-grounded prompt boundary to reduce hallucinations",
+        "Automatic escalation when confidence score falls below threshold",
+        "Embeddable web chat widget with persistent session state",
+        "Human email escalation for inquiries exceeding documented scope",
       ],
-      stack: ["Gemini 1.5 Pro / Flash", "Vector Store", "FastAPI / Node.js", "Webchat UI"],
-      status: "Concept Demonstration",
+      stack: ["Gemini 1.5 Flash / Pro", "Vector Store", "Node.js / Express", "Webchat Widget"],
+      statusDetail: "Active Prototype & Implementation Pattern",
     },
   ];
 
@@ -85,20 +88,31 @@ export default function Work() {
             <h1 className="text-4xl sm:text-6xl font-extrabold font-display tracking-tight text-[#F5F6FA] leading-[1.1]">
               Engineered Systems.{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#A78BFA] to-[#3B82F6]">
-                Measurable Impact.
+                Practical Solutions.
               </span>
             </h1>
 
             <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
-              We engineer transparent, production-grade solutions across web platforms, business automations, and intelligent AI copilots.
+              Explore our architectural patterns across web platforms, business automations, and intelligent AI assistants. All projects are clearly labeled by development stage.
             </p>
           </div>
         </section>
 
         {/* Systems Grid */}
         <main className="atomest-container py-16 sm:py-24 space-y-12">
+          {/* Transparency Disclaimer */}
+          <div className="p-4 sm:p-5 rounded-2xl bg-[#10121A] border border-[#252938] text-center max-w-3xl mx-auto space-y-1">
+            <div className="inline-flex items-center gap-1.5 text-xs font-mono uppercase text-[#8B5CF6] tracking-wider">
+              <Info className="w-4 h-4 text-[#8B5CF6]" />
+              <span>Commercial Transparency Policy</span>
+            </div>
+            <p className="text-xs text-[#A0A5B5] leading-relaxed">
+              The systems featured below represent real architectural templates, functional prototypes, and internal builds developed by Atomest. We never fabricate client reviews, simulated case studies, or unverified performance metrics.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {conceptProjects.map((project, idx) => {
+            {systems.map((project, idx) => {
               const Icon = project.icon;
               return (
                 <div
@@ -111,7 +125,7 @@ export default function Work() {
                         <Icon className="w-6 h-6" />
                       </div>
                       <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#151824] text-[#C4B5FD] border border-[#252938]">
-                        {project.status}
+                        {project.badge}
                       </span>
                     </div>
 
@@ -162,23 +176,13 @@ export default function Work() {
                       href="/contact"
                       className="atomest-btn-secondary flex items-center justify-center gap-2 w-full text-xs font-semibold hover:border-[#8B5CF6] transition-colors"
                     >
-                      <span>Enquire About Similar Project</span>
+                      <span>Enquire About a Similar Solution</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                   </div>
                 </div>
               );
             })}
-          </div>
-
-          {/* Strict Integrity Notice */}
-          <div className="p-6 rounded-2xl bg-[#0B0D14] border border-[#252938] text-center space-y-2 max-w-3xl mx-auto">
-            <div className="text-xs font-mono uppercase text-[#8B5CF6] tracking-wider">
-              Commitment to Transparency
-            </div>
-            <p className="text-xs sm:text-sm text-[#A0A5B5] leading-relaxed">
-              Atomest maintains strict professional integrity: we never fabricate client logos, fake case study metrics, or simulated testimonial reviews. All project architectures shown are real technical implementations and blueprints built by our engineering team.
-            </p>
           </div>
         </main>
 
@@ -187,4 +191,3 @@ export default function Work() {
     </>
   );
 }
-

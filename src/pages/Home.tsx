@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ArrowRight, Sparkles, Globe, GitFork, Bot, Layers, CheckCircle2, ShieldCheck, Zap, Compass, Palette, Code2, Rocket, Cpu } from "lucide-react";
+import { ArrowRight, Sparkles, Globe, GitFork, Bot, Layers, CheckCircle2, ShieldCheck, Zap, Compass, Palette, Code2, Rocket, Laptop, Smartphone, Users, Briefcase, Building, UserCheck } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -9,41 +9,68 @@ export default function Home() {
   const threePillars = [
     {
       title: "Web Development",
-      tagline: "High-Performance Digital Flagships",
+      tagline: "High-Performance Digital Platforms",
       badge: "Core Service",
-      description: "Modern, search-optimized business websites, landing pages, and web applications engineered for speed, technical authority, and conversion.",
+      description: "Fast, mobile-friendly websites and landing pages built to give your business an authoritative presence and turn visitors into enquiries.",
       icon: Globe,
       route: "/services#web-development",
       color: "text-[#3B82F6]",
-      deliverables: ["Business & corporate websites", "High-conversion landing pages", "Lead generation funnels", "Full redesigns & modernization"],
+      deliverables: ["Business & corporate websites", "High-converting landing pages", "Complete website redesigns", "Lead capture funnels"],
     },
     {
       title: "Business Automation",
-      tagline: "Autonomous Event & Data Pipelines",
+      tagline: "Autonomous Workflow Pipelines",
       badge: "Core Service",
-      description: "Stop doing manually what technology can handle. Connect forms, CRMs, messaging, and databases into deterministic, self-healing workflows.",
+      description: "Connect your forms, spreadsheets, inboxes, and CRMs. Eliminate repetitive manual tasks and respond to new leads in under 60 seconds.",
       icon: GitFork,
       route: "/services#business-automation",
       color: "text-[#8B5CF6]",
-      deliverables: ["Inbound lead triage & routing", "Multi-system CRM synchronization", "Appointment & booking automation", "Custom operational event logic"],
+      deliverables: ["Instant lead alerts & routing", "Google Sheets & CRM synchronization", "Automated email follow-ups", "Appointment enquiry workflows"],
     },
     {
       title: "AI Solutions",
-      tagline: "Grounded Business Assistants",
+      tagline: "Practical Business Assistants",
       badge: "Core Service",
-      description: "Intelligent conversational and task-oriented agents with deterministic tool integrations, private data grounding, and strict human fallbacks.",
+      description: "Custom AI assistants grounded strictly in your business knowledge to answer customer FAQs, pre-qualify leads, and assist your team 24/7.",
       icon: Bot,
       route: "/services#ai-solutions",
       color: "text-emerald-400",
-      deliverables: ["24/7 customer support agents", "Inbound sales qualification assistants", "Internal knowledge & SOP copilots", "Domain-specific AI copilots"],
+      deliverables: ["Website FAQ chatbots", "24/7 customer support assistants", "Inbound lead qualification", "Internal document & SOP copilots"],
+    },
+  ];
+
+  const whoWeHelp = [
+    {
+      title: "Service Businesses & Agencies",
+      icon: Briefcase,
+      description: "Law firms, accounting practices, clinics, consultancies, and creative agencies that need a modern web presence and automated client intake.",
+      benefits: ["Never lose an incoming enquiry", "Faster speed-to-lead response", "Professional credibility"],
+    },
+    {
+      title: "Startups & Emerging Brands",
+      icon: Rocket,
+      description: "Early-stage founders who need high-converting landing pages, product waitlists, and automated user onboarding without hiring a full engineering team.",
+      benefits: ["Rapid time-to-launch", "Built-in lead capture", "Scalable foundations"],
+    },
+    {
+      title: "Solo Operators & Creators",
+      icon: UserCheck,
+      description: "Consultants, coaches, and solo entrepreneurs who want to eliminate administrative copy-pasting, automate scheduling, and save 10+ hours a week.",
+      benefits: ["Zero repetitive data entry", "Automated booking & invoicing", "Affordable setup"],
+    },
+    {
+      title: "Local & Growing SMBs",
+      icon: Building,
+      description: "Established local businesses looking to modernize their outdated websites, rank better on search, and sync customer data across everyday tools.",
+      benefits: ["Sub-second mobile loading", "Automated email confirmations", "Clear ROI"],
     },
   ];
 
   const valueProps = [
     {
       step: "01",
-      title: "Build better digital experiences",
-      description: "Fast, modern, conversion-focused websites and web platforms that turn casual visitors into high-intent business opportunities.",
+      title: "Turn visitors into paying customers",
+      description: "Fast, modern websites that look exceptional on mobile devices, explain your offer with clarity, and make it effortless for prospects to reach out.",
       icon: Globe,
       color: "text-[#3B82F6]",
       bg: "bg-[#3B82F6]/10",
@@ -51,8 +78,8 @@ export default function Home() {
     },
     {
       step: "02",
-      title: "Eliminate repetitive workflows",
-      description: "Resilient autonomous pipelines that connect your tools, qualify incoming leads, sync data across systems, and eliminate manual friction.",
+      title: "Never let a high-value lead slip away",
+      description: "Automated pipelines that immediately notify your team on phone, Slack, or email when someone submits an inquiry, and send instant confirmation.",
       icon: GitFork,
       color: "text-[#8B5CF6]",
       bg: "bg-[#8B5CF6]/10",
@@ -60,8 +87,8 @@ export default function Home() {
     },
     {
       step: "03",
-      title: "Put intelligent systems to work",
-      description: "Grounded AI agents and task assistants that handle customer inquiries, support internal operations, and automate complex decisions.",
+      title: "Answer customer questions 24/7",
+      description: "Grounded AI assistants that provide instant, accurate answers about your services, pricing guidelines, and availability, day or night.",
       icon: Bot,
       color: "text-emerald-400",
       bg: "bg-emerald-500/10",
@@ -74,46 +101,49 @@ export default function Home() {
       number: "01",
       title: "Discover",
       icon: Compass,
-      description: "We audit your existing systems, conversion bottlenecks, and manual operations to determine where intelligent software delivers real ROI.",
+      description: "We review your current website, manual tasks, and bottlenecks to identify where digital improvements or automations will deliver the highest return.",
     },
     {
       number: "02",
-      title: "Design",
+      title: "Scope & Plan",
       icon: Palette,
-      description: "We architect system workflows, data schemas, and interactive interfaces before writing code, ensuring clarity and stakeholder alignment.",
+      description: "We establish clear deliverables, page layouts, and workflow diagrams before building, giving you total transparency on timelines and scope.",
     },
     {
       number: "03",
-      title: "Build",
+      title: "Build & Test",
       icon: Code2,
-      description: "Our engineers build using modern, battle-tested frameworks (React, TypeScript, Supabase, serverless compute) with rigorous type safety.",
+      description: "We develop your solution using modern, reliable frameworks and thoroughly test mobile responsiveness, form deliveries, and error fallbacks.",
     },
     {
       number: "04",
-      title: "Deploy",
+      title: "Deploy & Support",
       icon: Rocket,
-      description: "We handle production provisioning, observability telemetry, edge routing, and ongoing maintenance so your systems run without interruption.",
+      description: "We handle domain configuration, launch, and handover documentation, ensuring your team is fully equipped to run the new system smoothly.",
     },
   ];
 
   const conceptCapabilities = [
     {
-      title: "OmniFlow Lead Triage Architecture",
+      title: "Speed-to-Lead Notification Pipeline",
       division: "Business Automation",
-      description: "Captures inbound consultation inquiries, parses intent via Gemini models, validates business domains, and triggers synchronous deal writes in HubSpot and Slack.",
-      specs: ["Sub-400ms end-to-end execution", "Zero-loss dead-letter queue", "Idempotent event routing"],
+      badge: "Architecture Preview",
+      description: "Captures consultation inquiries from website forms, validates contact information, logs data to Google Sheets, and sends instant alerts to team channels.",
+      specs: ["Sub-60-second notification delivery", "Email & Slack integration", "Tested error-handling path"],
     },
     {
-      title: "Atlas Sovereign Knowledge Agent",
+      title: "Internal Knowledge & FAQ Assistant",
       division: "AI Solutions",
-      description: "A private, zero-retention internal assistant designed to answer compliance, legal, and operational inquiries by querying vector-indexed internal SOP documents.",
-      specs: ["SOC2-ready VPC isolation", "Grounded inline citations", "Deterministic human escalation"],
+      badge: "Prototype Demonstration",
+      description: "An AI assistant configured to answer questions strictly based on verified business guidelines and service documentation, with human escalation for complex requests.",
+      specs: ["Grounded document retrieval", "Strict guardrails against hallucination", "Clear fallback to human contact"],
     },
     {
-      title: "Veloce High-Authority Web Platform",
+      title: "High-Performance Modern Web Platform",
       division: "Web Development",
-      description: "A next-generation corporate website architecture featuring edge rendering, fluid dark aesthetic, sub-second First Contentful Paint, and dynamic lead qualification.",
-      specs: ["99+ Core Web Vitals score", "Full mobile responsiveness", "Dynamic lead form routing"],
+      badge: "Architecture Preview",
+      description: "A fast, modern website structure featuring clean dark aesthetics, clear value proposition hierarchy, and built-in lead inquiry capture.",
+      specs: ["Responsive across desktop and mobile", "Fast static loading", "Accessible, semantic HTML"],
     },
   ];
 
@@ -123,7 +153,7 @@ export default function Home() {
         <title>Atomest | Digital Solutions Studio — Web, Automation & AI</title>
         <meta
           name="description"
-          content="Atomest is a digital solutions studio. We build digital experiences, automate business operations, and implement practical AI solutions for growing businesses."
+          content="Atomest is a digital solutions studio. We build modern business websites, automate daily workflows, and implement practical AI solutions for growing businesses."
         />
       </Helmet>
 
@@ -184,47 +214,74 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Right Column: Abstract AI Visual Centerpiece */}
+              {/* Right Column: Tangible Deliverable Preview Card (Replacing abstract console) */}
               <div className="lg:col-span-5 flex justify-center">
-                <div className="relative w-full max-w-[420px] aspect-square rounded-3xl bg-[#10121A] border border-[#252938] p-6 shadow-2xl flex flex-col justify-between overflow-hidden">
-                  <div className="absolute inset-0 bg-[radial-gradient(#252938_1px,transparent_1px)] [background-size:16px_16px] opacity-40 pointer-events-none" />
-
-                  {/* Top Bar of abstract console */}
-                  <div className="flex items-center justify-between pb-3 border-b border-[#252938] relative z-10">
+                <div className="w-full max-w-[460px] rounded-3xl bg-[#10121A] border border-[#252938] p-6 shadow-2xl flex flex-col justify-between overflow-hidden space-y-4">
+                  {/* Top Bar: Live Deliverable Preview */}
+                  <div className="flex items-center justify-between pb-3 border-b border-[#252938]">
                     <div className="flex items-center gap-2">
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                      <span className="text-xs font-mono text-[#F5F6FA]">ATOMEST_STUDIO :: v2.0</span>
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <span className="text-xs font-mono text-[#F5F6FA]">ATOMEST DELIVERABLES PREVIEW</span>
                     </div>
                     <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#151824] text-[#8B5CF6] border border-[#8B5CF6]/30">
-                      SYSTEM READY
+                      LIVE EXAMPLES
                     </span>
                   </div>
 
-                  {/* Central Orbital Centerpiece */}
-                  <div className="relative flex-1 flex items-center justify-center my-6">
-                    <div className="absolute w-56 h-56 rounded-full border border-[#8B5CF6]/20 border-dashed animate-[spin_30s_linear_infinite]" />
-                    <div className="absolute w-40 h-40 rounded-full border border-[#3B82F6]/30 animate-[spin_20s_linear_infinite_reverse]" />
-
-                    <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-tr from-[#8B5CF6] to-[#3B82F6] flex items-center justify-center shadow-[0_0_40px_rgba(139,92,246,0.5)]">
-                      <Cpu className="w-9 h-9 text-white animate-pulse" />
+                  {/* Sample 1: Modern Web Platform */}
+                  <div className="p-3.5 rounded-xl bg-[#151824] border border-[#252938] space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2 font-semibold text-[#3B82F6]">
+                        <Globe className="w-4 h-4" />
+                        <span>High-Converting Website</span>
+                      </div>
+                      <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                        Mobile-Ready
+                      </span>
                     </div>
-
-                    <div className="absolute -top-1 left-8 px-2.5 py-1 rounded-lg bg-[#151824]/90 border border-[#252938] text-[10px] font-mono text-[#C4B5FD] shadow-lg backdrop-blur-sm">
-                      ⚡ 3 Core Pillars
-                    </div>
-                    <div className="absolute -bottom-1 right-8 px-2.5 py-1 rounded-lg bg-[#151824]/90 border border-[#252938] text-[10px] font-mono text-emerald-400 shadow-lg backdrop-blur-sm">
-                      ✓ Pipeline Synced
-                    </div>
+                    <p className="text-[11px] text-[#A0A5B5] leading-snug">
+                      Clean dark typography, sub-second loading, and direct contact capture designed for modern businesses.
+                    </p>
                   </div>
 
-                  {/* Bottom Console Status */}
-                  <div className="pt-3 border-t border-[#252938] relative z-10 grid grid-cols-2 gap-2 text-[11px] font-mono">
-                    <div className="text-[#A0A5B5]">
-                      Delivery: <span className="text-[#F5F6FA]">Production</span>
+                  {/* Sample 2: Speed-to-Lead Automation */}
+                  <div className="p-3.5 rounded-xl bg-[#151824] border border-[#252938] space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2 font-semibold text-[#8B5CF6]">
+                        <GitFork className="w-4 h-4" />
+                        <span>Speed-to-Lead Pipeline</span>
+                      </div>
+                      <span className="text-[10px] font-mono text-[#C4B5FD] bg-[#8B5CF6]/10 px-2 py-0.5 rounded border border-[#8B5CF6]/20">
+                        Under 60s Alert
+                      </span>
                     </div>
-                    <div className="text-right text-[#8B5CF6]">
-                      Reliable Execution
+                    <p className="text-[11px] text-[#A0A5B5] leading-snug">
+                      Form submit → instant Telegram / Slack notification → Google Sheets sync → automatic prospect confirmation.
+                    </p>
+                  </div>
+
+                  {/* Sample 3: Grounded AI Assistant */}
+                  <div className="p-3.5 rounded-xl bg-[#151824] border border-[#252938] space-y-2">
+                    <div className="flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-2 font-semibold text-emerald-400">
+                        <Bot className="w-4 h-4" />
+                        <span>Grounded Support Assistant</span>
+                      </div>
+                      <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                        24/7 Availability
+                      </span>
                     </div>
+                    <p className="text-[11px] text-[#A0A5B5] leading-snug">
+                      Answers prospect FAQs using your documented guidelines with strict accuracy safeguards.
+                    </p>
+                  </div>
+
+                  {/* Bottom Note */}
+                  <div className="pt-2 border-t border-[#1C1F2B] flex items-center justify-between text-[11px] text-[#A0A5B5]">
+                    <span>Customized to your tools</span>
+                    <Link href="#showcase" className="text-[#8B5CF6] hover:underline flex items-center gap-1 font-medium">
+                      See interactive demos <ArrowRight className="w-3 h-3" />
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -233,7 +290,60 @@ export default function Home() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION B: THREE CORE SERVICES                                           */}
+        {/* SECTION B: WHO WE HELP                                                   */}
+        {/* ========================================================================= */}
+        <section className="atomest-section bg-[#0B0D14] border-b border-[#252938]">
+          <div className="atomest-container">
+            <div className="max-w-3xl mb-12">
+              <div className="atomest-badge-blue mb-3 inline-flex items-center gap-2">
+                <Users className="w-3.5 h-3.5 text-[#3B82F6]" />
+                <span>Who We Help</span>
+              </div>
+              <h2 className="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-[#F5F6FA] mb-4">
+                Tailored for ambitious businesses of every size.
+              </h2>
+              <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
+                Whether you are a solo operator looking to save 10 hours a week or an established service business modernizing your online presence, we deliver practical, reliable solutions.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {whoWeHelp.map((group, idx) => {
+                const Icon = group.icon;
+                return (
+                  <div
+                    key={idx}
+                    className="p-6 rounded-2xl bg-[#10121A] border border-[#252938] hover:border-[#8B5CF6]/40 transition-all flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="w-12 h-12 rounded-xl bg-[#151824] border border-[#252938] flex items-center justify-center text-[#8B5CF6] mb-4">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <h3 className="font-display font-bold text-lg text-[#F5F6FA] mb-2">
+                        {group.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-[#A0A5B5] leading-relaxed mb-4">
+                        {group.description}
+                      </p>
+                    </div>
+
+                    <div className="space-y-1.5 pt-4 border-t border-[#1C1F2B]">
+                      {group.benefits.map((b, bIdx) => (
+                        <div key={bIdx} className="flex items-center gap-2 text-xs text-[#C4B5FD]">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-[#8B5CF6] shrink-0" />
+                          <span>{b}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ========================================================================= */}
+        {/* SECTION C: THREE CORE SERVICES                                           */}
         {/* ========================================================================= */}
         <section id="services" className="atomest-section border-b border-[#252938]">
           <div className="atomest-container">
@@ -305,7 +415,7 @@ export default function Home() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION C: VALUE PROPOSITION                                             */}
+        {/* SECTION D: VALUE PROPOSITION                                             */}
         {/* ========================================================================= */}
         <section className="atomest-section bg-[#0B0D14] border-b border-[#252938]">
           <div className="atomest-container">
@@ -318,7 +428,7 @@ export default function Home() {
                 Less manual work. More meaningful growth.
               </h2>
               <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
-                Most companies waste hundreds of hours every month wrestling with disconnected software, manual data handoffs, and outdated websites. We solve this by engineering purposeful intelligent systems.
+                Most companies waste hours every week wrestling with disconnected software, manual data copy-pasting, and outdated websites. We solve this by engineering purposeful digital solutions.
               </p>
             </div>
 
@@ -348,7 +458,7 @@ export default function Home() {
 
                     <div className="pt-6 mt-6 border-t border-[#1C1F2B] flex items-center gap-2 text-xs font-medium text-[#8B5CF6]">
                       <CheckCircle2 className="w-3.5 h-3.5" />
-                      <span>Engineered for measurable ROI</span>
+                      <span>Engineered for practical business results</span>
                     </div>
                   </div>
                 );
@@ -358,12 +468,12 @@ export default function Home() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION D: INTERACTIVE CAPABILITY SHOWCASE                               */}
+        {/* SECTION E: INTERACTIVE CAPABILITY SHOWCASE                               */}
         {/* ========================================================================= */}
         <InteractiveShowcase />
 
         {/* ========================================================================= */}
-        {/* SECTION E: HOW WE WORK                                                   */}
+        {/* SECTION F: HOW WE WORK                                                   */}
         {/* ========================================================================= */}
         <section className="atomest-section bg-[#0B0D14] border-y border-[#252938]">
           <div className="atomest-container">
@@ -376,7 +486,7 @@ export default function Home() {
                 How we work.
               </h2>
               <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
-                A disciplined four-phase delivery framework designed for engineering clarity, velocity, and zero surprises.
+                A disciplined four-phase delivery framework designed for clarity, velocity, and zero surprises.
               </p>
             </div>
 
@@ -414,20 +524,20 @@ export default function Home() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION F: WORK / CAPABILITIES SHOWCASE (CONCEPT DEMONSTRATIONS)          */}
+        {/* SECTION G: ARCHITECTURAL SYSTEMS & PROTOTYPES                            */}
         {/* ========================================================================= */}
         <section className="atomest-section border-b border-[#252938]">
           <div className="atomest-container">
             <div className="max-w-3xl mb-12">
               <div className="atomest-badge-blue mb-3">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#3B82F6]" />
-                <span>Concept Demonstrations</span>
+                <span>Architecture & Prototypes</span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-[#F5F6FA] mb-4">
                 Architectural systems we build.
               </h2>
               <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
-                Transparent demonstrations of our architectural patterns across high-impact business domains.
+                Demonstrations of our architectural patterns across high-impact business domains. Clearly labeled as prototypes and architecture previews.
               </p>
             </div>
 
@@ -443,7 +553,7 @@ export default function Home() {
                         {item.division}
                       </span>
                       <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#151824] text-[#A0A5B5] border border-[#252938]">
-                        Concept demonstration
+                        {item.badge}
                       </span>
                     </div>
 
@@ -470,13 +580,13 @@ export default function Home() {
 
             {/* Integrity Notice */}
             <div className="mt-8 p-4 rounded-xl bg-[#0B0D14] border border-[#252938] text-center text-xs text-[#A0A5B5]">
-              Atomest maintains strict integrity: we never fabricate client logos, fake case studies, or simulated testimonials. Genuine client references are provided during formal enterprise scoping.
+              Atomest maintains strict integrity: we never fabricate client logos, fake case studies, or simulated testimonials. Systems shown above are architectural blueprints and prototypes developed by our team.
             </div>
           </div>
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION G: FINAL CTA                                                     */}
+        {/* SECTION H: FINAL CTA                                                     */}
         {/* ========================================================================= */}
         <section className="atomest-section py-20 sm:py-28">
           <div className="atomest-container">
@@ -486,7 +596,7 @@ export default function Home() {
               <div className="max-w-2xl mx-auto relative z-10 space-y-6">
                 <div className="atomest-badge-violet inline-flex items-center gap-2">
                   <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6]" />
-                  <span>Start Your Transformation</span>
+                  <span>Start Your Project</span>
                 </div>
 
                 <h2 className="text-3xl sm:text-5xl font-extrabold font-display tracking-tight text-[#F5F6FA]">
@@ -494,7 +604,7 @@ export default function Home() {
                 </h2>
 
                 <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
-                  Schedule a preliminary architecture discovery call. We'll assess your current workflows and deliver a tangible engineering proposal.
+                  Tell us about your project or current operational bottlenecks. We will assess your requirements and deliver a clear, transparent proposal.
                 </p>
 
                 <div className="pt-2">
