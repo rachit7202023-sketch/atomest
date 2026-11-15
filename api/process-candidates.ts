@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import { processCandidatesStream, ProcessCandidatesInput } from '@/server/processCandidates';
+import { processCandidatesStream, ProcessCandidatesInput } from '../src/server/processCandidates';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS setup — explicit origin allowlist, no wildcard+credentials
