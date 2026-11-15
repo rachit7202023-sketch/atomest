@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "src/pages/Home.tsx"
+        ],
+        "createdAt": "2026-11-15T19:06:34.579Z",
+        "reason": "user confirmed: gradient text on hero heading is intentional premium design per mission brief (Linear/Stripe/Framer aesthetic)"
+      }
+    ]
+  }
+}
