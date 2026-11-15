@@ -11,8 +11,8 @@ declare global {
 
 export function GoogleAnalytics() {
   const [location] = useLocation();
-  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID || "G-BFJ0ZJMBTW";
-  const isProduction = import.meta.env.PROD;
+  const measurementId = import.meta.env?.VITE_GA_MEASUREMENT_ID || "G-BFJ0ZJMBTW";
+  const isProduction = import.meta.env?.PROD;
 
   // Track route changes on client-side
   useEffect(() => {
