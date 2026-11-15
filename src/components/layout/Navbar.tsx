@@ -11,7 +11,7 @@ import {
   Cpu,
   Sparkles,
 } from "lucide-react";
-import { motion, AnimatePresence } from "motion";
+import { motion, AnimatePresence } from "motion/react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function Navbar() {
@@ -160,7 +160,7 @@ export function Navbar() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    transition={typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? { duration: 0.01 } : { duration: 0.15, ease: "ease-out" }}
+                    transition={typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? { duration: 0.01 } : { duration: 0.15, ease: "easeOut" }}
                     className="absolute top-full left-0 mt-2 w-80 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl p-2 z-50"
                   >
                     <div className="px-3 py-2 text-[10px] font-mono text-indigo-400 uppercase tracking-wider border-b border-slate-800 mb-1">
@@ -231,7 +231,7 @@ export function Navbar() {
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    transition={typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? { duration: 0.01 } : { duration: 0.15, ease: "ease-out" }}
+                    transition={typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? { duration: 0.01 } : { duration: 0.15, ease: "easeOut" }}
                     className="absolute top-full left-0 mt-2 w-80 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl p-2 z-50"
                   >
                     <div className="px-3 py-2 text-[10px] font-mono text-indigo-400 uppercase tracking-wider border-b border-slate-800 mb-1">
@@ -333,7 +333,7 @@ export function Navbar() {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 20 }}
-                transition={typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? { duration: 0.01 } : { duration: 0.2, ease: "ease-out" }}
+                transition={typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? { duration: 0.01 } : { duration: 0.2, ease: "easeOut" }}
               >
                 <div className="flex items-center gap-2 pb-4 border-b border-slate-800 mb-6">
                   <div className="w-7 h-7 rounded-lg bg-gradient-to-tr from-indigo-500 to-blue-600 flex items-center justify-center font-bold text-white text-xs">

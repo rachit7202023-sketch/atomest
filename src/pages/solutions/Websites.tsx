@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
-import { Globe, ArrowRight, CheckCircle2, Zap, ShieldCheck, Sparkles, Layers, Cpu } from "lucide-react";
+import { Globe, ArrowRight, CheckCircle2, Zap, ShieldCheck, Sparkles, Layers, Cpu, Rocket } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 

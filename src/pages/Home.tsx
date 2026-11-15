@@ -30,11 +30,13 @@ import {
 import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
-import { motion, AnimatePresence } from "motion";
+import { motion, AnimatePresence } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 /* ------------------------------------------------------------------ */
 /* Data                                                               */
@@ -239,7 +241,7 @@ function HeroEcosystem() {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !ref.current) return undefined;
+    if (typeof window === "undefined" || !ref.current) return;
 
     const prefersReduced =
       typeof window.matchMedia === "function" &&
@@ -325,7 +327,9 @@ function HeroEcosystem() {
       );
     });
 
-    return () => tl.kill();
+    return () => {
+      tl.kill();
+    };
   }, []);
 
   return (
@@ -355,7 +359,7 @@ function InteractiveWorkflow() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    if (typeof window === "undefined" || !ref.current) return undefined;
+    if (typeof window === "undefined" || !ref.current) return;
 
     const prefersReduced =
       typeof window.matchMedia === "function" &&
@@ -423,7 +427,7 @@ function InteractiveWorkflow() {
     }
 
     highlight(0);
-    return undefined;
+    return;
   }, []);
 
   useEffect(() => {
@@ -575,7 +579,7 @@ export default function Home() {
       typeof window.matchMedia === "function" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (prefersReduced) return undefined;
+    if (prefersReduced) return;
 
     const tl = gsap.timeline();
 
@@ -595,9 +599,10 @@ export default function Home() {
 
     // Section scroll reveals
     gsap.utils.toArray(".reveal-section").forEach((section) => {
-      gsap.from(section, {
+      const el = section as HTMLElement;
+      gsap.from(el, {
         scrollTrigger: {
-          trigger: section,
+          trigger: el,
           start: "top 80%",
           end: "bottom 20%",
           toggleActions: "play none none reverse",
@@ -612,9 +617,10 @@ export default function Home() {
 
     // Staggered card reveals within sections
     gsap.utils.toArray(".reveal-item").forEach((item, i) => {
-      gsap.from(item, {
+      const el = item as HTMLElement;
+      gsap.from(el, {
         scrollTrigger: {
-          trigger: item,
+          trigger: el,
           start: "top 85%",
           toggleActions: "play none none reverse",
         },
@@ -627,7 +633,9 @@ export default function Home() {
       });
     });
 
-    return () => tl.kill();
+    return () => {
+      tl.kill();
+    };
   }, []);
 
   return (
