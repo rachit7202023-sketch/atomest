@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { ContactInquirySchema, WaitlistSignupSchema } from "@/lib/validation";
+import { ContactInquirySchema, WaitlistSignupSchema } from "./validation";
 
 describe("ContactInquirySchema", () => {
   it("accepts a valid contact inquiry", () => {

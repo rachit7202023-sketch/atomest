@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
-import { ContactInquirySchema } from '../src/lib/validation';
-import { checkRateLimit, getClientIp, RateLimitError } from '../src/server/lib/rate-limiter';
+import { ContactInquirySchema } from './lib/validation';
+import { checkRateLimit, getClientIp, RateLimitError } from './server/lib/rate-limiter';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // CORS setup — reflect the request origin rather than wildcard+credentials
