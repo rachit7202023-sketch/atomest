@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { ChevronDown, Globe, GitFork, Bot, Menu, ArrowRight } from "lucide-react";
+import { ChevronDown, Globe, GitFork, Bot, Menu, ArrowRight, Phone, Cpu } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function Navbar() {
   const [location] = useLocation();
+  const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -12,6 +13,7 @@ export function Navbar() {
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsServicesOpen(false);
         setIsSolutionsOpen(false);
       }
     }
@@ -21,6 +23,7 @@ export function Navbar() {
 
   // Close dropdown on route change
   useEffect(() => {
+    setIsServicesOpen(false);
     setIsSolutionsOpen(false);
   }, [location]);
 
@@ -80,14 +83,89 @@ export function Navbar() {
               Home
             </Link>
 
-            <Link
-              href="/services"
-              className={`transition-colors py-1 ${
-                isActive("/services") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
-              }`}
-            >
-              Services
-            </Link>
+            <div className="relative" ref={dropdownRef}>
+              <button
+                type="button"
+                onClick={() => setIsServicesOpen(!isServicesOpen)}
+                className={`flex items-center gap-1 transition-colors py-1 ${
+                  isActive("/services") || location.startsWith("/services/") ? "text-[#F5F6FA]" : "text-[#A0A5B5] hover:text-[#F5F6FA]"
+                }`}
+              >
+                <span>Services</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isServicesOpen ? "rotate-180" : ""}`} />
+              </button>
+
+              {isServicesOpen && (
+                <div className="absolute top-full left-0 mt-2 w-80 rounded-2xl bg-[#10121A] border border-[#252938] shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="px-3 py-2 text-[10px] font-mono text-[#8B5CF6] uppercase tracking-wider border-b border-[#1C1F2B] mb-1">
+                    Service Divisions
+                  </div>
+                  <div className="space-y-1">
+                    {[
+                      {
+                        title: "AI Voice Receptionist",
+                        description: "24/7 intelligent call handling & booking",
+                        href: "/services/ai-voice-receptionist",
+                        icon: Phone,
+                      },
+                      {
+                        title: "Lead Automation",
+                        description: "Instant capture, qualification & CRM sync",
+                        href: "/services/lead-automation",
+                        icon: GitFork,
+                      },
+                      {
+                        title: "CRM & Workflow Automation",
+                        description: "Connect apps & automate operations",
+                        href: "/services/crm-workflow-automation",
+                        icon: Cpu,
+                      },
+                      {
+                        title: "AI Customer Support",
+                        description: "Grounded 24/7 support assistant",
+                        href: "/services/ai-customer-support",
+                        icon: Bot,
+                      },
+                      {
+                        title: "Premium Business Websites",
+                        description: "High-converting web platforms",
+                        href: "/services/premium-business-websites",
+                        icon: Globe,
+                      },
+                    ].map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#151824] transition-colors group text-left"
+                        >
+                          <div className="w-8 h-8 rounded-lg bg-[#151824] border border-[#252938] flex items-center justify-center text-[#8B5CF6] group-hover:bg-[#8B5CF6] group-hover:text-white shrink-0 transition-colors mt-0.5">
+                            <Icon className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <div className="text-xs font-bold text-[#F5F6FA] group-hover:text-white transition-colors">
+                              {item.title}
+                            </div>
+                            <div className="text-[11px] text-[#A0A5B5] leading-snug">
+                              {item.description}
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                    <div className="pt-2 px-3">
+                      <Link
+                        href="/services"
+                        className="flex items-center gap-2 p-2 rounded-xl hover:bg-[#151824] transition-colors text-[11px] font-mono text-[#8B5CF6]"
+                      >
+                        View all services <ArrowRight className="w-3 h-3" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
 
             {/* Solutions Dropdown Menu */}
             <div className="relative" ref={dropdownRef}>

@@ -8,22 +8,22 @@ import { InteractiveShowcase } from "@/components/showcase/InteractiveShowcase";
 export default function Home() {
   const threePillars = [
     {
-      title: "Web Development",
+      title: "Premium Websites",
       tagline: "High-Performance Digital Platforms",
       badge: "Core Service",
       description: "Fast, mobile-friendly websites and landing pages built to give your business an authoritative presence and turn visitors into enquiries.",
       icon: Globe,
-      route: "/services#web-development",
+      route: "/services/premium-business-websites",
       color: "text-[#3B82F6]",
       deliverables: ["Business & corporate websites", "High-converting landing pages", "Complete website redesigns", "Lead capture funnels"],
     },
     {
-      title: "Business Automation",
+      title: "Lead Automation",
       tagline: "Autonomous Workflow Pipelines",
       badge: "Core Service",
       description: "Connect your forms, spreadsheets, inboxes, and CRMs. Eliminate repetitive manual tasks and respond to new leads in under 60 seconds.",
       icon: GitFork,
-      route: "/services#business-automation",
+      route: "/services/lead-automation",
       color: "text-[#8B5CF6]",
       deliverables: ["Instant lead alerts & routing", "Google Sheets & CRM synchronization", "Automated email follow-ups", "Appointment enquiry workflows"],
     },
@@ -31,11 +31,11 @@ export default function Home() {
       title: "AI Solutions",
       tagline: "Practical Business Assistants",
       badge: "Core Service",
-      description: "Custom AI assistants grounded strictly in your business knowledge to answer customer FAQs, pre-qualify leads, and assist your team 24/7.",
+      description: "AI voice receptionist, customer support, and lead qualification assistants grounded in your business knowledge.",
       icon: Bot,
-      route: "/services#ai-solutions",
+      route: "/services/ai-customer-support",
       color: "text-emerald-400",
-      deliverables: ["Website FAQ chatbots", "24/7 customer support assistants", "Inbound lead qualification", "Internal document & SOP copilots"],
+      deliverables: ["AI voice receptionist", "24/7 customer support assistants", "Inbound lead qualification", "Internal document & SOP copilots"],
     },
   ];
 

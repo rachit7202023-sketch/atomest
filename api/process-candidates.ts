@@ -3,9 +3,14 @@ import { createClient } from '@supabase/supabase-js';
 import { processCandidatesStream, ProcessCandidatesInput } from './services/processCandidates';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // CORS setup
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // CORS setup — explicit origin allowlist, no wildcard+credentials
+  const allowedOrigins = ['https://www.atomest.com', 'http://localhost:3000'];
+  const origin = req.headers.origin;
+  const isAllowed = origin && allowedOrigins.includes(origin as string);
+  if (isAllowed) {
+    res.setHeader('Access-Control-Allow-Origin', origin as string);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization');
 

@@ -11,11 +11,20 @@ export default function Contact() {
     if (typeof window !== "undefined") {
       const params = new URLSearchParams(window.location.search);
       const sol = params.get("solution");
-      if (sol === "web-development" || sol === "websites") return "web-development";
-      if (sol === "business-automation" || sol === "automation") return "business-automation";
-      if (sol === "ai-solutions" || sol === "agents") return "ai-solutions";
-      if (sol === "combined") return "combined";
-      if (sol === "digital-products" || sol === "products") return "digital-products";
+      const validSolutions = [
+        "web-development",
+        "business-automation",
+        "ai-solutions",
+        "ai-voice-receptionist",
+        "lead-automation",
+        "crm-workflow-automation",
+        "ai-customer-support",
+        "premium-business-websites",
+        "combined",
+        "digital-products",
+        "other",
+      ];
+      if (sol && validSolutions.includes(sol)) return sol;
     }
     return "web-development";
   };
@@ -35,11 +44,22 @@ export default function Contact() {
       const params = new URLSearchParams(window.location.search);
       const sol = params.get("solution");
       if (sol) {
-        if (sol === "web-development" || sol === "websites") setFormData((p) => ({ ...p, solution: "web-development" }));
-        else if (sol === "business-automation" || sol === "automation") setFormData((p) => ({ ...p, solution: "business-automation" }));
-        else if (sol === "ai-solutions" || sol === "agents") setFormData((p) => ({ ...p, solution: "ai-solutions" }));
-        else if (sol === "combined") setFormData((p) => ({ ...p, solution: "combined" }));
-        else if (sol === "digital-products" || sol === "products") setFormData((p) => ({ ...p, solution: "digital-products" }));
+        const validSolutions = [
+          "web-development",
+          "business-automation",
+          "ai-solutions",
+          "ai-voice-receptionist",
+          "lead-automation",
+          "crm-workflow-automation",
+          "ai-customer-support",
+          "premium-business-websites",
+          "combined",
+          "digital-products",
+          "other",
+        ];
+        if (validSolutions.includes(sol)) {
+          setFormData((p) => ({ ...p, solution: sol }));
+        }
       }
     }
   }, [location]);
@@ -48,11 +68,15 @@ export default function Contact() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const solutionOptions = [
-    { id: "web-development", label: "Web Development" },
-    { id: "business-automation", label: "Business Automation" },
+    { id: "web-development", label: "Premium Websites" },
+    { id: "lead-automation", label: "Lead Automation" },
+    { id: "ai-voice-receptionist", label: "AI Voice Receptionist" },
+    { id: "crm-workflow-automation", label: "CRM & Workflow Automation" },
+    { id: "ai-customer-support", label: "AI Customer Support" },
     { id: "ai-solutions", label: "AI Solutions" },
+    { id: "business-automation", label: "Business Automation" },
     { id: "combined", label: "Combined Solution" },
-    { id: "digital-products", label: "Digital Product Enquiry" },
+    { id: "digital-products", label: "Digital Products" },
     { id: "other", label: "Other" },
   ];
 

@@ -95,14 +95,30 @@ export function Footer() {
           {/* Legal Column */}
           <div className="md:col-span-2 space-y-3">
             <h4 className="font-display font-bold text-sm text-[#F5F6FA] uppercase tracking-wider text-xs">
+              Legal
+            </h4>
+            <ul className="space-y-2 text-xs text-[#A0A5B5]">
+              <li>
+                <Link href="/privacy" className="hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Governance Column */}
+          <div className="md:col-span-2 space-y-3">
+            <h4 className="font-display font-bold text-sm text-[#F5F6FA] uppercase tracking-wider text-xs">
               Governance
             </h4>
             <ul className="space-y-2 text-xs text-[#A0A5B5]">
               <li>
                 <span className="cursor-default">Zero-Data Retention</span>
-              </li>
-              <li>
-                <span className="cursor-default">SOC2 Ready Architecture</span>
               </li>
               <li>
                 <span className="cursor-default">Confidentiality & Mutual NDA</span>

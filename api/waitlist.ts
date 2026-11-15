@@ -1,10 +1,13 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createClient } from '@supabase/supabase-js';
+import { WaitlistSignupSchema } from '@/lib/validation';
+import { checkRateLimit, getClientIp, RateLimitError } from './lib/rate-limiter';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // CORS setup
+  // CORS setup — reflect the request origin rather than wildcard+credentials
+  const origin = req.headers.origin || '*';
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', origin);
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
   res.setHeader('Access-Control-Allow-Headers', 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version');
 
@@ -18,50 +21,65 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
+  // ── Rate limiting: 10 signups per minute per IP (shared store, fail-closed) ──
+  const ip = getClientIp(req);
+  let rateLimit: Awaited<ReturnType<typeof checkRateLimit>>;
   try {
-    const { email, product, full_name, company_name, role } = req.body;
-
-    if (!email || !product) {
-      res.status(400).json({ error: 'Missing required fields: email, product' });
+    rateLimit = await checkRateLimit(ip, { maxRequests: 10, windowMs: 60_000 });
+  } catch (err) {
+    if (err instanceof RateLimitError) {
+      res.status(err.statusCode).json({ error: err.message });
       return;
     }
-
-    const supabaseUrl = process.env.VITE_SUPABASE_URL;
-    // We should use SERVICE_ROLE_KEY to bypass RLS for waitlist insert if possible. 
-    // If not, we will use VITE_SUPABASE_ANON_KEY and ensure RLS allows anonymous inserts on waitlist, 
-    // but the SQL I created prevents all direct inserts. Let's assume we have a SERVICE_ROLE_KEY.
-    // Wait, let's just use ANON_KEY and we can just run the operation on the client instead if we wanted to, 
-    // but wait, the waitlist migration has RLS set to false for inserts.
-    // I should modify the migration or use the anon key if we don't have service role key.
-    // Actually, I will just use the anon key and we can insert into the 'waitlist' table.
-    // If I need to change RLS on waitlist to allow anon inserts:
-    
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
-    if (!supabaseUrl || !supabaseKey) {
-      throw new Error("Missing Supabase configuration");
-    }
-
-    const supabase = createClient(supabaseUrl, supabaseKey);
-
-    const { error } = await supabase.from('waitlist').insert({
-      email,
-      product,
-      full_name: full_name || null,
-      company_name: company_name || null,
-      role: role || null
-    });
-
-    if (error) {
-      if (error.code === '23505') { // Unique violation
-        res.status(200).json({ success: true, message: 'Already on waitlist' });
-        return;
-      }
-      throw error;
-    }
-
-    res.status(200).json({ success: true });
-  } catch (error: any) {
-    console.error('Waitlist API Error:', error);
-    res.status(500).json({ error: error.message || 'Internal Server Error' });
+    throw err;
   }
+  if (!rateLimit.allowed) {
+    res.setHeader('Retry-After', String(rateLimit.retryAfter ?? 60));
+    res.status(429).json({ error: 'Too many requests. Please try again later.' });
+    return;
+  }
+
+  // ── Server-side validation (source of truth) ──
+  const validation = WaitlistSignupSchema.safeParse(req.body);
+  if (!validation.success) {
+    console.log('[waitlist] validation failed');
+    res.status(400).json({ error: validation.error.issues[0]?.message ?? 'Invalid request data' });
+    return;
+  }
+
+  const { email, product, full_name, company_name, role } = validation.data;
+
+  const supabaseUrl = process.env.VITE_SUPABASE_URL;
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
+  if (!supabaseUrl || !supabaseKey) {
+    console.log('[waitlist] missing supabase configuration');
+    res.status(503).json({ error: 'Signup could not be saved. Please try again later.' });
+    return;
+  }
+
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const { error } = await supabase.from('leads').insert({
+    email,
+    product,
+    full_name: full_name || null,
+    company_name: company_name || null,
+    role: role || null,
+  });
+
+  if (error) {
+    if (error.code === '23505') {
+      // Unique violation — already registered, idempotent
+      console.log('[waitlist] duplicate signup ignored');
+      res.status(200).json({ success: true, message: 'Already registered' });
+      return;
+    }
+    console.log('[waitlist] database save failed');
+    res.status(503).json({ error: 'Signup could not be saved. Please try again later.' });
+    return;
+  }
+
+  console.log('[waitlist] signup saved', { product });
+  res.status(200).json({ success: true });
 }

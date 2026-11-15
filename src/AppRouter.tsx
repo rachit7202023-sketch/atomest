@@ -9,13 +9,22 @@ const Work = lazy(() => import("@/pages/Work"));
 const DigitalProducts = lazy(() => import("@/pages/DigitalProducts"));
 const About = lazy(() => import("@/pages/About"));
 const Contact = lazy(() => import("@/pages/Contact"));
+const Privacy = lazy(() => import("@/pages/privacy"));
+const Terms = lazy(() => import("@/pages/terms"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 const Login = lazy(() => import("@/pages/auth/Login"));
 const Signup = lazy(() => import("@/pages/auth/Signup"));
 const Account = lazy(() => import("@/pages/auth/Account"));
 const Dashboard = lazy(() => import("@/pages/Dashboard"));
 
-// ── Atomest V2: Solution & Technology Division Routes ──
+// ── Service Division Detail Routes ──
+const AIVoiceReceptionist = lazy(() => import("@/pages/services/AIVoiceReceptionist"));
+const LeadAutomation = lazy(() => import("@/pages/services/LeadAutomation"));
+const CRMWorkflowAutomation = lazy(() => import("@/pages/services/CRMWorkflowAutomation"));
+const AICustomerSupport = lazy(() => import("@/pages/services/AICustomerSupport"));
+const PremiumBusinessWebsites = lazy(() => import("@/pages/services/PremiumBusinessWebsites"));
+
+// ── Solution / Technology Division Routes ──
 const SolutionWebsites = lazy(() => import("@/pages/solutions/Websites"));
 const SolutionAutomation = lazy(() => import("@/pages/solutions/Automation"));
 const SolutionAgents = lazy(() => import("@/pages/solutions/Agents"));
@@ -44,11 +53,18 @@ export default function AppRouter() {
 
           {/* ── Primary Public Navigation Routes ── */}
           <Route path="/services" component={Services} />
+          <Route path="/services/ai-voice-receptionist" component={AIVoiceReceptionist} />
+          <Route path="/services/lead-automation" component={LeadAutomation} />
+          <Route path="/services/crm-workflow-automation" component={CRMWorkflowAutomation} />
+          <Route path="/services/ai-customer-support" component={AICustomerSupport} />
+          <Route path="/services/premium-business-websites" component={PremiumBusinessWebsites} />
           <Route path="/work" component={Work} />
           <Route path="/products" component={DigitalProducts} />
           <Route path="/digital-products" component={DigitalProducts} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
+          <Route path="/privacy" component={Privacy} />
+          <Route path="/terms" component={Terms} />
 
           {/* ── Technology Division Routes ── */}
           <Route path="/solutions/websites" component={SolutionWebsites} />

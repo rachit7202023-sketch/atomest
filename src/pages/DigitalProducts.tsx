@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "wouter";
-import { Sparkles, ArrowRight, CheckCircle2, ShieldCheck, Layers, GitFork, FileSpreadsheet, Bot, AlertCircle } from "lucide-react";
+import { Sparkles, ArrowRight, CheckCircle2, ShieldCheck, Layers, GitFork, FileSpreadsheet, Bot, AlertCircle, ShoppingCart } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
@@ -149,6 +149,29 @@ export default function DigitalProducts() {
             <p className="text-xs sm:text-sm text-[#A0A5B5] leading-relaxed">
               Atomest strictly avoids listing fake or unverified products. Every kit, workflow, and template below is actively undergoing technical testing, documentation formatting, and QA before its official release.
             </p>
+          </div>
+
+          {/* Gumroad Storefront */}
+          <div className="p-8 rounded-2xl bg-[#10121A] border border-[#252938] max-w-3xl mx-auto text-center space-y-4 mb-12">
+            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase text-[#8B5CF6] tracking-wider">
+              <ShoppingCart className="w-4 h-4 text-[#8B5CF6]" />
+              <span>Available on Gumroad</span>
+            </div>
+            <h3 className="text-2xl font-extrabold font-display text-[#F5F6FA] mb-2">
+              Purchase digital products directly
+            </h3>
+            <p className="text-xs sm:text-sm text-[#A0A5B5] leading-relaxed max-w-md mx-auto mb-6">
+              All Atomest digital products are sold through Gumroad — secure checkout, instant delivery, and automatic tax handling. Prices and availability are confirmed upon public release.
+            </p>
+            <a
+              href="https://gumroad.com/atomest"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="atomest-btn-primary inline-flex items-center gap-2 text-sm px-6 py-3"
+            >
+              <span>Visit Gumroad Store</span>
+              <ArrowRight className="w-4 h-4" />
+            </a>
           </div>
 
           {/* Genuine Upcoming Products Grid */}

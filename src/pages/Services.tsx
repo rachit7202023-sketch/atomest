@@ -175,13 +175,22 @@ export default function Services() {
                     </div>
                   </div>
 
-                  <Link
-                    href={`/contact?solution=${service.id === "web-development" ? "web-development" : service.id === "business-automation" ? "business-automation" : "ai-solutions"}`}
-                    className="atomest-btn-primary inline-flex items-center justify-center gap-2 text-xs py-2.5 px-5 self-start sm:self-auto"
-                  >
-                    <span>{service.ctaText}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+                  <div className="flex gap-2">
+                    <Link
+                      href={`/services/${service.id === "web-development" ? "premium-business-websites" : service.id === "business-automation" ? "lead-automation" : "ai-customer-support"}`}
+                      className="atomest-btn-secondary inline-flex items-center justify-center gap-2 text-xs py-2.5 px-5 self-start sm:self-auto hover:border-[#8B5CF6]"
+                    >
+                      <span>View Details</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                    <Link
+                      href={`/contact?solution=${service.id === "web-development" ? "premium-business-websites" : service.id === "business-automation" ? "lead-automation" : "ai-customer-support"}`}
+                      className="atomest-btn-primary inline-flex items-center justify-center gap-2 text-xs py-2.5 px-5 self-start sm:self-auto"
+                    >
+                      <span>{service.ctaText}</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
                 </div>
 
                 {/* Description */}
