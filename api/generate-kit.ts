@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { generateKitArtifacts, GenerateKitInput } from './server/generateKit';
+import { generateKitArtifacts, GenerateKitInput } from '../src/server/services/generateKit';
 import { createClient } from '@supabase/supabase-js';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

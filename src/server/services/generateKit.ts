@@ -1,5 +1,5 @@
 import { getGeminiClient, generateStructuredJson } from './gemini';
-import { RECRUITER_PROMPTS } from './prompts/recruiter-ai';
+import { RECRUITER_PROMPTS } from '../prompts/recruiter-ai';
 import { buildPrompt } from './promptBuilder';
 import { SupabaseClient } from '@supabase/supabase-js';
 
