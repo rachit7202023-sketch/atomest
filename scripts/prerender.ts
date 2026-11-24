@@ -76,15 +76,58 @@ async function render(url: string, helmetContext: any, AppRouter: any) {
 
     let html = template.replace("<!--app-html-->", appHtml);
 
-    if (helmet) {
-      const seoHead = `
-        ${helmet.title.toString()}
-        ${helmet.meta.toString()}
-        ${helmet.link.toString()}
-        ${helmet.script.toString()}
-      `;
-      html = html.replace("<!--seo-head-->", seoHead);
-    }
+    // Helmet renders page-specific SEO tags into the DOM during prerendering
+    // (inside #root). Extract them so we can move them into the document head
+    // and strip them from the body to avoid duplicate/invalid tags.
+    const appTitleMatch = appHtml.match(/<title>([\s\S]*?)<\/title>/);
+    const appTitle = appTitleMatch ? appTitleMatch[1] : null;
+
+    const appHtmlWithoutSeo = appHtml
+      .replace(/<title[\s\S]*?<\/title>/gi, "")
+      .replace(/<meta[^>]*(name="description"|property="og:"|name="twitter:")[^>]*\/?>/gi, "")
+      .replace(/<link[^>]*rel="canonical"[^>]*\/?>/gi, "");
+
+    html = template.replace("<!--app-html-->", appHtmlWithoutSeo);
+
+    // Inject SEO metadata into the static head. Prefer page-specific Helmet
+    // context data when available; fall back to the title extracted from the
+    // prerendered DOM, then to sensible defaults.
+    const defaultTitle = "Atomest | AI Automation Studio — Websites, Automation & AI";
+    const defaultDescription = "Atomest helps businesses eliminate repetitive operations, capture more leads, and scale using AI-powered automation. Service-first AI automation studio for US, UK and international SMBs.";
+    const canonicalUrl = `https://www.atomest.com${url === "/" ? "" : url}`;
+
+    const helmetTitleStr = helmet && helmet.title ? helmet.title.toString() : "";
+    const seoTitle = helmetTitleStr
+      ? helmetTitleStr
+      : appTitle
+        ? `<title>${appTitle}</title>`
+        : `<title>${defaultTitle}</title>`;
+
+    const helmetMetaStr = helmet && helmet.meta ? helmet.meta.toString() : "";
+    const seoMeta = helmetMetaStr
+      ? helmetMetaStr
+      : `
+    <meta name="description" content="${defaultDescription}" />
+    <meta property="og:title" content="${appTitle ?? defaultTitle}" />
+    <meta property="og:description" content="${defaultDescription}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="${canonicalUrl}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${appTitle ?? defaultTitle}" />
+    <meta name="twitter:description" content="${defaultDescription}" />
+  `;
+
+    const helmetLinkStr = helmet && helmet.link ? helmet.link.toString() : "";
+    const seoLink = helmetLinkStr
+      ? helmetLinkStr
+      : `<link rel="canonical" href="${canonicalUrl}" />`;
+
+    const helmetScriptStr = helmet && helmet.script ? helmet.script.toString() : "";
+
+    html = html.replace(
+      "<!--seo-head-->",
+      `\n${seoTitle}\n${seoMeta}\n${seoLink}\n${helmetScriptStr}\n  `
+    );
 
     const filePath =
       url === "/" ? "index.html" : `${url.replace(/^\//, "")}/index.html`;

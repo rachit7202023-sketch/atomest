@@ -18,12 +18,16 @@ export function Navbar() {
   const [location] = useLocation();
   const [isServicesOpen, setIsServicesOpen] = useState(false);
   const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const servicesDropdownRef = useRef<HTMLDivElement>(null);
+  const solutionsDropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown on outside click
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      const servicesOpen = isServicesOpen && servicesDropdownRef.current && !servicesDropdownRef.current.contains(target);
+      const solutionsOpen = isSolutionsOpen && solutionsDropdownRef.current && !solutionsDropdownRef.current.contains(target);
+      if (servicesOpen || solutionsOpen) {
         setIsServicesOpen(false);
         setIsSolutionsOpen(false);
       }
@@ -136,7 +140,7 @@ export function Navbar() {
             </Link>
 
             {/* Services Dropdown */}
-            <div className="relative" ref={dropdownRef}>
+            <div className="relative" ref={servicesDropdownRef}>
               <button
                 type="button"
                 onClick={() => setIsServicesOpen((p) => !p)}
@@ -207,7 +211,7 @@ export function Navbar() {
             </div>
 
             {/* Solutions Dropdown */}
-            <div className="relative" ref={dropdownRef}>
+            <div className="relative" ref={solutionsDropdownRef}>
               <button
                 type="button"
                 onClick={() => setIsSolutionsOpen((p) => !p)}

@@ -560,6 +560,12 @@
     animation: atomest-shimmer 1.8s ease-in-out infinite;
   }
 
+  /* ── Shadcn-style utilities mapped to Atomest design tokens ── */
+  .bg-background { background-color: hsl(var(--background)); }
+  .bg-card { background-color: hsl(var(--card)); }
+  .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+  .border-border { border-color: hsl(var(--border)); }
+
   /* Hide number arrows */
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {

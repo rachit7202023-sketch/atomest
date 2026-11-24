@@ -11,6 +11,15 @@
         ],
         "createdAt": "2026-11-15T19:06:34.579Z",
         "reason": "user confirmed: gradient text on hero heading is intentional premium design per mission brief (Linear/Stripe/Framer aesthetic)"
+      },
+      {
+        "rule": "ai-color-palette",
+        "value": "*",
+        "files": [
+          "src/components/layout/Navbar.tsx"
+        ],
+        "createdAt": "2026-11-24T07:28:01.326Z",
+        "reason": "user confirmed via CLAUDE.md: indigo→blue gradient is the intentional brand mark on the desktop logo; preserve Premium Hybrid Futuristic Luxury visual direction, do not redesign"
       }
     ]
   }
