@@ -11,3 +11,7 @@ dist
 
 # Local MCP configuration
 .mcp.json
+
+.claude/
+screenshots/
+
