@@ -4,142 +4,269 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* ── ATOMEST V2: TAILWIND V4 THEME TOKENS ─────────────────────────────────── */
+/* ============================================================================
+   ATOMEST 2.0 — PREMIUM DESIGN SYSTEM (three-layer tokens)
+   Layers: Primitive (raw) → Semantic (purpose) → Component (per-component)
+   ============================================================================ */
+
+/* ── PRIMITIVES: raw design values ──────────────────────────────────────── */
 @theme inline {
-  --color-background: #08090D;
-  --color-background-secondary: #10121A;
-  --color-surface: #151824;
-  --color-surface-hover: #1C2030;
-  --color-foreground: #F5F6FA;
-  --color-foreground-secondary: #A0A5B5;
-  --color-border: #252938;
-  --color-input: #151824;
-  --color-ring: #8B5CF6;
+  /* Slate grayscale (primitive) */
+  --color-slate-950: #020617;
+  --color-slate-900: #0F172A;
+  --color-slate-800: #1E293B;
+  --color-slate-700: #334155;
+  --color-slate-600: #475569;
+  --color-slate-500: #64748B;
+  --color-slate-400: #94A3B8;
+  --color-slate-300: #CBD5E1;
+  --color-slate-200: #E2E8F0;
+  --color-slate-100: #F1F5F9;
+  --color-slate-50:  #F8FAFC;
 
-  --color-card: #10121A;
-  --color-card-foreground: #F5F6FA;
-  --color-card-border: #252938;
+  /* Indigo brand (primitive) */
+  --color-indigo-50:  #EEF2FF;
+  --color-indigo-100: #E0E7FF;
+  --color-indigo-500: #6366F1;
+  --color-indigo-600: #4F46E5;
+  --color-indigo-700: #4338CA;
+  --color-indigo-800: #3730A3;
+  --color-indigo-900: #312E81;
 
-  --color-popover: #151824;
-  --color-popover-foreground: #F5F6FA;
-  --color-popover-border: #252938;
+  /* Status (primitive) */
+  --color-emerald-500: #10B981;
+  --color-amber-500:   #F59E0B;
+  --color-rose-500:    #F43F5E;
 
-  --color-primary: #8B5CF6;
-  --color-primary-foreground: #FFFFFF;
-  --color-primary-border: #8B5CF6;
+  /* Spacing (4px base) */
+  --space-0:   0;
+  --space-px:  1px;
+  --space-0-5: 0.125rem;  /* 2px */
+  --space-1:   0.25rem;   /* 4px */
+  --space-1-5: 0.375rem;  /* 6px */
+  --space-2:   0.5rem;    /* 8px */
+  --space-2-5: 0.625rem;  /* 10px */
+  --space-3:   0.75rem;   /* 12px */
+  --space-3-5: 0.875rem;  /* 14px */
+  --space-4:   1rem;      /* 16px */
+  --space-5:   1.25rem;   /* 20px */
+  --space-6:   1.5rem;    /* 24px */
+  --space-7:   1.75rem;   /* 28px */
+  --space-8:   2rem;      /* 32px */
+  --space-9:   2.25rem;   /* 36px */
+  --space-10:  2.5rem;    /* 40px */
+  --space-11:  2.75rem;   /* 44px */
+  --space-12:  3rem;      /* 48px */
+  --space-14:  3.5rem;    /* 56px */
+  --space-16:  4rem;      /* 64px */
+  --space-20:  5rem;      /* 80px */
+  --space-24:  6rem;      /* 96px */
+  --space-28:  7rem;      /* 112px */
+  --space-32:  8rem;      /* 128px */
 
-  --color-secondary: #151824;
-  --color-secondary-foreground: #F5F6FA;
-  --color-secondary-border: #252938;
-
-  --color-muted: #10121A;
-  --color-muted-foreground: #A0A5B5;
-  --color-muted-border: #252938;
-
-  --color-accent: #3B82F6;
-  --color-accent-foreground: #FFFFFF;
-  --color-accent-border: #3B82F6;
-
-  --color-destructive: #EF4444;
-  --color-destructive-foreground: #FFFFFF;
-
-  --color-brand-violet: #8B5CF6;
-  --color-brand-blue: #3B82F6;
-
+  /* Typography */
   --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
+  --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
 
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
-  --radius-xl: 1rem;
-  --radius-2xl: 1.25rem;
-  --radius-3xl: 1.5rem;
+  --font-size-xs:   0.75rem;   /* 12px */
+  --font-size-sm:   0.875rem;  /* 14px */
+  --font-size-base: 1rem;      /* 16px */
+  --font-size-lg:   1.125rem;  /* 18px */
+  --font-size-xl:   1.25rem;   /* 20px */
+  --font-size-2xl:  1.5rem;    /* 24px */
+  --font-size-3xl:  1.875rem;  /* 30px */
+  --font-size-4xl:  2.25rem;   /* 36px */
+  --font-size-5xl:  3rem;      /* 48px */
+  --font-size-6xl:  3.75rem;   /* 60px */
+  --font-size-7xl:  4.5rem;    /* 72px */
+
+  --leading-none:   1;
+  --leading-tight:  1.2;
+  --leading-snug:   1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+
+  --font-weight-normal:   400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+  --font-weight-extrabold: 800;
+
+  --tracking-tighter: -0.05em;
+  --tracking-tight:   -0.025em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.025em;
+
+  /* Radius */
+  --radius-none:   0;
+  --radius-sm:     0.375rem;  /* 6px */
+  --radius-md:     0.5rem;    /* 8px */
+  --radius-lg:     0.75rem;   /* 12px */
+  --radius-xl:     1rem;      /* 16px */
+  --radius-2xl:    1.25rem;   /* 20px */
+  --radius-3xl:    1.5rem;    /* 24px */
+  --radius-full:   9999px;
+
+  /* Shadows */
+  --shadow-sm:   0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow:      0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md:   0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg:   0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-xl:   0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-2xl:  0 25px 50px -12px rgb(0 0 0 / 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
+
+  /* Motion */
+  --duration-75:   75ms;
+  --duration-100:  100ms;
+  --duration-150:  150ms;
+  --duration-200:  200ms;
+  --duration-300:  300ms;
+  --duration-500:  500ms;
+  --duration-700:  700ms;
+  --duration-1000: 1000ms;
+
+  --ease-out:    cubic-bezier(0, 0, 0.2, 1);
+  --ease-in:     cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-expo:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-back:   cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Z-index */
+  --z-0:     0;
+  --z-10:    10;
+  --z-20:    20;
+  --z-30:    30;
+  --z-40:    40;
+  --z-50:    50;
+  --z-auto:  auto;
+  --z-dropdown: 1000;
+  --z-sticky:  1100;
+  --z-modal:   1200;
+  --z-popover: 1300;
+  --z-tooltip: 1400;
 }
 
-/* ── ATOMEST V2: CSS ROOT & DARK SYSTEM VARIABLES ────────────────────────── */
+/* ── SEMANTIC: purpose-based aliases ───────────────────────────────────── */
 :root, .dark {
-  /* Brand palette hex & HSL */
-  --bg-primary: #08090D;
-  --bg-secondary: #10121A;
-  --surface: #151824;
-  --surface-hover: #1C2030;
-  --text-primary: #F5F6FA;
-  --text-secondary: #A0A5B5;
-  --border-color: #252938;
-  --accent-violet: #8B5CF6;
-  --accent-blue: #3B82F6;
+  /* Background & foreground */
+  --background:       220 13% 4%;    /* #020617 */
+  --foreground:       210 40% 98%;   /* #F8FAFC */
+  --background-secondary: 220 13% 7%; /* #0B0C10 */
 
-  /* HSL mappings for shadcn / Radix primitives */
-  --background: 225 24% 4%;           /* #08090D */
-  --foreground: 228 33% 97%;          /* #F5F6FA */
-  --card: 227 24% 8%;                /* #10121A */
-  --card-foreground: 228 33% 97%;     /* #F5F6FA */
-  --card-border: 228 20% 18%;         /* #252938 */
-  --popover: 227 26% 11%;            /* #151824 */
-  --popover-foreground: 228 33% 97%;  /* #F5F6FA */
-  --popover-border: 228 20% 18%;      /* #252938 */
-  
-  --primary: 258 90% 66%;            /* #8B5CF6 */
-  --primary-foreground: 0 0% 100%;    /* #FFFFFF */
-  
-  --secondary: 227 26% 11%;          /* #151824 */
-  --secondary-foreground: 228 33% 97%;/* #F5F6FA */
-  
-  --muted: 227 24% 8%;               /* #10121A */
-  --muted-foreground: 226 12% 67%;    /* #A0A5B5 */
-  
-  --accent: 217 91% 60%;             /* #3B82F6 */
-  --accent-foreground: 0 0% 100%;
-  
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 100%;
-  
-  --border: 228 20% 18%;             /* #252938 */
-  --input: 228 20% 18%;              /* #252938 */
-  --ring: 258 90% 66%;               /* #8B5CF6 */
+  --card:             220 13% 9%;    /* #0F172A */
+  --card-foreground:  210 40% 98%;
+  --card-border:      220 12% 18%;   /* #1E293B */
 
-  --sidebar: 227 24% 8%;             /* #10121A */
-  --sidebar-foreground: 228 33% 97%; /* #F5F6FA */
-  --sidebar-border: 228 20% 18%;     /* #252938 */
-  --sidebar-primary: 258 90% 66%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 227 26% 11%;
-  --sidebar-accent-foreground: 228 33% 97%;
-  --sidebar-ring: 258 90% 66%;
+  --popover:          220 13% 9%;
+  --popover-foreground: 210 40% 98%;
+  --popover-border:   220 12% 18%;
+
+  /* Primary (indigo) */
+  --primary:          244 77% 56%;   /* #4F46E5 */
+  --primary-foreground: 210 40% 98%;
+  --primary-hover:    244 79% 50%;   /* #4338CA */
+  --primary-active:   244 79% 45%;   /* #3730A3 */
+  --primary-border:   244 77% 56%;
+
+  /* Secondary */
+  --secondary:        220 12% 18%;   /* #1E293B */
+  --secondary-foreground: 210 40% 98%;
+
+  /* Muted */
+  --muted:            220 13% 9%;
+  --muted-foreground: 215 16% 56%;   /* #94A3B8 */
+  --muted-border:     220 12% 18%;
+
+  /* Accent (subtle indigo) */
+  --accent:           244 77% 56%;
+  --accent-foreground: 210 40% 98%;
+  --accent-border:    244 77% 56%;
+
+  /* Destructive */
+  --destructive:      0 84% 60%;
+  --destructive-foreground: 210 40% 98%;
+
+  /* Status */
+  --success:          142 71% 45%;   /* #10B981 */
+  --success-foreground: 210 40% 98%;
+  --warning:          38 92% 50%;    /* #F59E0B */
+  --warning-foreground: 210 40% 98%;
+
+  /* Border / input / ring */
+  --border:           220 12% 18%;   /* #1E293B */
+  --input:            220 12% 18%;
+  --ring:             244 77% 56%;   /* #4F46E5 */
+
+  /* CSS variables for direct use in components */
+  --bg-primary:       #020617;
+  --bg-secondary:     #0B0C10;
+  --surface:          #0F172A;
+  --surface-hover:    #1E293B;
+  --text-primary:     #F8FAFC;
+  --text-secondary:   #CBD5E1;
+  --text-muted:       #94A3B8;
+  --border-color:     #1E293B;
+  --accent-indigo:    #4F46E5;
+  --accent-indigo-soft: rgba(79, 70, 229, 0.16);
+  --border-soft:      rgba(148, 163, 184, 0.12);
 
   --radius: 0.75rem;
 
-  /* Typography Scales */
-  --font-display: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-text: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
-  --app-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --app-font-serif: 'Space Grotesk', -apple-system, sans-serif;
-  --app-font-mono: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
-
-  --type-hero: 4rem;
-  --type-hero-lh: 1.1;
-  --type-section: 2.5rem;
+  /* Typography scales (CSS vars) */
+  --type-hero:       4.5rem;
+  --type-hero-lh:    1.05;
+  --type-section:    2.5rem;
   --type-section-lh: 1.2;
-  --type-tile: 1.5rem;
-  --type-tile-lh: 1.35;
-  --type-body: 1rem;
-  --type-body-lh: 1.6;
-  --type-small: 0.875rem;
-  --type-small-lh: 1.4;
-  --type-caption: 0.75rem;
+  --type-tile:       1.5rem;
+  --type-tile-lh:    1.35;
+  --type-body:       1rem;
+  --type-body-lh:    1.6;
+  --type-small:      0.875rem;
+  --type-small-lh:   1.5;
+  --type-caption:    0.75rem;
   --type-caption-lh: 1.25;
 
-  /* Shadows & Glows */
-  --shadow-glow-violet: 0 0 35px -5px rgba(139, 92, 246, 0.4);
-  --shadow-glow-blue: 0 0 35px -5px rgba(59, 130, 246, 0.4);
-  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
-  --shadow-card-hover: 0 20px 40px -15px rgba(139, 92, 246, 0.25);
+  /* Shadows & glows */
+  --shadow-glow-indigo: 0 0 40px -8px rgba(79, 70, 229, 0.35);
+  --shadow-glow-indigo-soft: 0 0 30px -10px rgba(79, 70, 229, 0.2);
+  --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
+  --shadow-card-hover: 0 24px 48px -15px rgba(79, 70, 229, 0.18);
 }
 
-/* ── ATOMEST V2: BASE LAYER ──────────────────────────────────────────────── */
+/* ── COMPONENT: per-component tokens ───────────────────────────────────── */
+:root, .dark {
+  /* Button */
+  --button-radius: var(--radius-xl);
+  --button-padding-y: 0.75rem;
+  --button-padding-x: 1.75rem;
+  --button-font-size: 0.9375rem;
+  --button-font-weight: 600;
+  --button-transition: all 0.25s var(--ease-out);
+
+  /* Card */
+  --card-radius: var(--radius-2xl);
+  --card-padding: 1.75rem;
+  --card-border-width: 1px;
+
+  /* Input */
+  --input-radius: var(--radius-xl);
+  --input-padding-y: 0.75rem;
+  --input-padding-x: 1rem;
+  --input-font-size: 0.9375rem;
+
+  /* Section */
+  --section-padding-y: 5rem;
+  --section-padding-y-md: 7rem;
+  --section-padding-y-lg: 9rem;
+
+  /* Container */
+  --container-max-width: 80rem;
+  --container-px: 1rem;
+}
+
+/* ── BASE LAYER ────────────────────────────────────────────────────────── */
 @layer base {
   * {
     border-color: hsl(var(--border));
@@ -151,128 +278,120 @@
   }
 
   body {
-    background-color: #08090D;
-    color: #F5F6FA;
-    font-family: var(--font-text);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
 
-  /* Headings default to Space Grotesk */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
-    color: #F5F6FA;
-    letter-spacing: -0.03em;
+    color: var(--text-primary);
+    letter-spacing: var(--tracking-tight);
   }
 
   p {
-    color: #A0A5B5;
+    color: var(--text-secondary);
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
   }
 
   /* Accessible focus rings */
   :focus-visible {
-    outline: 2px solid #8B5CF6;
+    outline: 2px solid hsl(var(--ring));
     outline-offset: 2px;
+  }
+
+  /* Selection */
+  ::selection {
+    background: hsl(var(--primary) / 0.3);
+    color: var(--foreground);
   }
 }
 
-/* ── ATOMEST V2: REUSABLE DESIGN SYSTEM UTILITIES ────────────────────────── */
-@layer utilities {
-  /* Typography helpers */
-  .font-display {
-    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-  }
-  .font-body {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  }
-  .font-mono {
-    font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
-  }
-
-  /* Containers & Section Scales */
+/* ── COMPONENTS ────────────────────────────────────────────────────────── */
+@layer components {
+  /* Container */
   .atomest-container {
     width: 100%;
-    max-width: 80rem; /* 1280px */
+    max-width: var(--container-max-width);
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: var(--container-px);
+    padding-right: var(--container-px);
   }
   @media (min-width: 640px) {
-    .atomest-container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
+    .atomest-container { padding-left: 1.5rem; padding-right: 1.5rem; }
   }
   @media (min-width: 1024px) {
-    .atomest-container {
-      padding-left: 2rem;
-      padding-right: 2rem;
-    }
+    .atomest-container { padding-left: 2rem; padding-right: 2rem; }
   }
 
+  /* Section scale */
   .atomest-section {
     position: relative;
-    padding-top: 5rem;
-    padding-bottom: 5rem;
+    padding-top: var(--section-padding-y);
+    padding-bottom: var(--section-padding-y);
   }
   @media (min-width: 640px) {
-    .atomest-section {
-      padding-top: 7rem;
-      padding-bottom: 7rem;
-    }
+    .atomest-section { padding-top: var(--section-padding-y-md); padding-bottom: var(--section-padding-y-md); }
   }
   @media (min-width: 1024px) {
-    .atomest-section {
-      padding-top: 9rem;
-      padding-bottom: 9rem;
-    }
+    .atomest-section { padding-top: var(--section-padding-y-lg); padding-bottom: var(--section-padding-y-lg); }
   }
 
-  /* Cards & Surface Styles */
+  /* Cards */
   .atomest-card {
-    background-color: rgba(16, 18, 26, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid #252938;
-    border-radius: 1.25rem;
-    padding: 1.75rem;
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background-color: var(--surface);
+    border: var(--card-border-width) solid var(--border-color);
+    border-radius: var(--card-radius);
+    padding: var(--card-padding);
+    box-shadow: var(--shadow-card);
+    transition: border-color var(--button-transition), box-shadow var(--button-transition), transform var(--button-transition);
   }
   .atomest-card:hover {
-    border-color: rgba(139, 92, 246, 0.45);
-    box-shadow: 0 20px 40px -15px rgba(139, 92, 246, 0.25);
+    border-color: rgba(79, 70, 229, 0.35);
+    box-shadow: var(--shadow-card-hover);
     transform: translateY(-2px);
   }
 
   .atomest-surface {
-    background-color: #151824;
-    border: 1px solid #252938;
-    border-radius: 0.75rem;
+    background-color: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
   }
 
   /* Buttons */
-  .atomest-btn-primary {
+  .atomest-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 0.9375rem;
-    padding: 0.75rem 1.75rem;
-    border-radius: 0.75rem;
-    background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%);
-    color: #FFFFFF;
-    border: 1px solid rgba(196, 181, 253, 0.35);
-    box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
-    transition: all 0.25s ease;
+    font-weight: var(--button-font-weight);
+    font-size: var(--button-font-size);
+    border-radius: var(--button-radius);
+    transition: var(--button-transition);
     cursor: pointer;
+    border: none;
+    outline: none;
+  }
+  .atomest-btn-primary {
+    --tw-bg: hsl(var(--primary));
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    padding: var(--button-padding-y) var(--button-padding-x);
+    box-shadow: var(--shadow-glow-indigo-soft);
   }
   .atomest-btn-primary:hover {
-    background: linear-gradient(135deg, #9D74FF 0%, #7C3AED 100%);
-    box-shadow: 0 0 35px rgba(139, 92, 246, 0.65);
+    background: hsl(var(--primary-hover));
+    box-shadow: var(--shadow-glow-indigo);
     transform: translateY(-1px);
   }
   .atomest-btn-primary:active {
@@ -280,113 +399,139 @@
   }
 
   .atomest-btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 0.9375rem;
-    padding: 0.75rem 1.75rem;
-    border-radius: 0.75rem;
-    background-color: #151824;
-    color: #F5F6FA;
-    border: 1px solid #252938;
-    transition: all 0.25s ease;
-    cursor: pointer;
+    background-color: var(--surface);
+    color: var(--text-primary);
+    padding: var(--button-padding-y) var(--button-padding-x);
+    border: 1px solid var(--border-color);
   }
   .atomest-btn-secondary:hover {
-    background-color: #1C2030;
-    border-color: rgba(139, 92, 246, 0.4);
-    color: #FFFFFF;
+    background-color: var(--surface-hover);
+    border-color: rgba(79, 70, 229, 0.35);
+    color: var(--text-primary);
     transform: translateY(-1px);
   }
   .atomest-btn-secondary:active {
     transform: scale(0.98);
   }
 
-  .atomest-btn-accent {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 0.9375rem;
-    padding: 0.75rem 1.75rem;
-    border-radius: 0.75rem;
-    background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
-    color: #FFFFFF;
-    border: 1px solid rgba(147, 197, 253, 0.35);
-    box-shadow: 0 0 25px rgba(59, 130, 246, 0.4);
-    transition: all 0.25s ease;
-    cursor: pointer;
+  .atomest-btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    padding: var(--button-padding-y) var(--button-padding-x);
   }
-  .atomest-btn-accent:hover {
-    background: linear-gradient(135deg, #60A5FA 0%, #2563EB 100%);
-    box-shadow: 0 0 35px rgba(59, 130, 246, 0.65);
-    transform: translateY(-1px);
+  .atomest-btn-ghost:hover {
+    background-color: var(--surface-hover);
+    color: var(--text-primary);
   }
 
-  /* Badges & Chips */
-  .atomest-badge-violet {
+  .atomest-btn-sm {
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-lg);
+  }
+  .atomest-btn-lg {
+    font-size: 1rem;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-2xl);
+  }
+
+  /* Badges */
+  .atomest-badge {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
+    font-family: var(--font-display);
+  }
+  .atomest-badge-indigo {
+    background-color: rgba(79, 70, 229, 0.12);
+    border: 1px solid rgba(79, 70, 229, 0.28);
+    color: #C7BDFE;
+  }
+  .atomest-badge-violet {
     background-color: rgba(139, 92, 246, 0.12);
     border: 1px solid rgba(139, 92, 246, 0.28);
-    color: #C4B5FD;
+    color: #D8B4FE;
+  }
+  .atomest-badge-blue {
+    background-color: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.28);
+    color: #BFDBFE;
+  }
+  .atomest-badge-emerald {
+    background-color: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    color: #A7F3D0;
+  }
+  .atomest-badge-slate {
+    background-color: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(148, 163, 184, 0.15);
+    color: #CBD5E1;
   }
 
-  .atomest-badge-blue {
+  /* Divider */
+  .atomest-divider {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 0;
+  }
+
+  /* Section heading (reusable title block) */
+  .atomest-eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
+    padding: 0.25rem 0;
+  }
+  .atomest-eyebrow-text {
     font-size: 0.75rem;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    background-color: rgba(59, 130, 246, 0.12);
-    border: 1px solid rgba(59, 130, 246, 0.28);
-    color: #93C5FD;
+    font-family: var(--font-display);
+    color: hsl(var(--primary));
+  }
+  .atomest-section-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.15;
   }
 
-  /* Glow Effects */
-  .glow-violet {
-    box-shadow: 0 0 40px -5px rgba(139, 92, 246, 0.45);
+  /* Utility text classes */
+  .text-balance {
+    text-wrap: balance;
   }
-  .glow-blue {
-    box-shadow: 0 0 40px -5px rgba(59, 130, 246, 0.45);
+}
+
+/* ── UTILITIES ─────────────────────────────────────────────────────────── */
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-body    { font-family: var(--font-sans); }
+  .font-mono    { font-family: var(--font-mono); }
+
+  .text-balance { text-wrap: balance; }
+
+  /* ── Hide scrollbar (cross-browser) ── */
+  .no-scrollbar {
+    -ms-overflow-style: none;   /* IE / Edge */
+    scrollbar-width: none;      /* Firefox */
   }
-  .glow-border {
-    border-color: rgba(139, 92, 246, 0.45);
-    box-shadow: 0 0 15px rgba(139, 92, 246, 0.2);
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;              /* Chrome / Safari / Opera */
   }
 
-  /* Futuristic Gradient Texts */
-  .gradient-text-hero {
-    background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 50%, #A0A5B5 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .gradient-text-brand {
-    background: linear-gradient(135deg, #8B5CF6 0%, #A78BFA 50%, #3B82F6 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  /* Background Grid Patterns */
+  /* Background grid pattern */
   .atomest-grid-bg {
-    background-image: 
-      linear-gradient(to right, rgba(37, 41, 56, 0.35) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(37, 41, 56, 0.35) 1px, transparent 1px);
+    background-image:
+      linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
@@ -395,48 +540,43 @@
     -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 0%, #000 60%, transparent 100%);
   }
 
-  /* Shimmer Loading Animation */
-  @keyframes shimmer {
+  /* Shimmer skeleton */
+  @keyframes atomest-shimmer {
     0% { transform: translateX(-100%); }
     100% { transform: translateX(100%); }
   }
-
-  .skeleton-shimmer {
+  .atomest-skeleton {
     position: relative;
     overflow: hidden;
-    background: #151824;
+    background: var(--surface);
     border-radius: var(--radius-md);
   }
-  .skeleton-shimmer::after {
+  .atomest-skeleton::after {
     content: "";
     position: absolute;
     inset: 0;
     transform: translateX(-100%);
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(245, 246, 250, 0.05),
-      transparent
-    );
-    animation: shimmer 1.8s ease-in-out infinite;
+    background: linear-gradient(90deg, transparent, rgba(248, 250, 252, 0.06), transparent);
+    animation: atomest-shimmer 1.8s ease-in-out infinite;
   }
 
-  /* Native Experience (Hide Number Arrows) */
+  /* ── Shadcn-style utilities mapped to Atomest design tokens ── */
+  .bg-background { background-color: hsl(var(--background)); }
+  .bg-card { background-color: hsl(var(--card)); }
+  .text-muted-foreground { color: hsl(var(--muted-foreground)); }
+  .border-border { border-color: hsl(var(--border)); }
+
+  /* Hide number arrows */
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+    -webkit-appearance: none; margin: 0;
   }
-  input[type="number"] {
-    -moz-appearance: textfield;
-  }
+  input[type="number"] { -moz-appearance: textfield; }
 }
 
-/* ── ATOMEST V2: ACCESSIBILITY & REDUCED MOTION ──────────────────────────── */
+/* ── REDUCED MOTION ────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
+  *, ::before, ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

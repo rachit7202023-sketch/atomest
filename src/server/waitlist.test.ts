@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import waitlistHandler from "./waitlist";
+import waitlistHandler from "../../api/waitlist";
 
 // Mock @supabase/supabase-js. Both getSupabaseClient() (rate limiter) and the
 // direct createClient() in this handler use the mocked client, so we control

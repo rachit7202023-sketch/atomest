@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Link } from "wouter";
-import { ArrowRight, Globe, GitFork, Bot, Layers, Sparkles, CheckCircle2, ShieldCheck, Zap, HelpCircle, FileText, KeyRound } from "lucide-react";
+import { ArrowRight, Globe, GitFork, Bot, FileText, CheckCircle2, Zap, KeyRound } from "lucide-react";
 
 export default function Services() {
   const serviceCategories = [
@@ -12,8 +12,8 @@ export default function Services() {
       tagline: "High-Performance Digital Platforms",
       badge: "Core Service",
       icon: Globe,
-      color: "text-[#3B82F6]",
-      border: "border-[#3B82F6]/30",
+      color: "text-blue-400",
+      border: "border-blue-500/30",
       description:
         "Fast, mobile-optimized business websites, landing pages, and web applications built to give your business strong credibility, rank effectively, and convert casual visitors into qualified customer enquiries.",
       whatWeBuild: [
@@ -46,8 +46,8 @@ export default function Services() {
       tagline: "Autonomous Workflow Pipelines",
       badge: "Core Service",
       icon: GitFork,
-      color: "text-[#8B5CF6]",
-      border: "border-[#8B5CF6]/30",
+      color: "text-indigo-400",
+      border: "border-indigo-500/30",
       description:
         "Reliable workflows that connect your forms, spreadsheets, inboxes, and CRMs. We eliminate repetitive manual data entry, follow-up delays, and lost customer enquiries.",
       whatWeBuild: [
@@ -108,6 +108,12 @@ export default function Services() {
     },
   ];
 
+  const serviceToRoute: Record<string, string> = {
+    "web-development": "premium-business-websites",
+    "business-automation": "lead-automation",
+    "ai-solutions": "ai-customer-support",
+  };
+
   return (
     <>
       <Helmet>
@@ -118,27 +124,30 @@ export default function Services() {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-[#08090D] flex flex-col justify-between text-[#F5F6FA]">
+      <div className="min-h-screen bg-slate-950 flex flex-col justify-between text-slate-50">
         <Navbar />
 
         {/* Hero Section */}
-        <section className="relative overflow-hidden pt-24 sm:pt-32 pb-16 border-b border-[#252938]">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-[#8B5CF6]/15 via-[#3B82F6]/10 to-transparent rounded-full blur-[120px] pointer-events-none" />
+        <section className="relative overflow-hidden pt-24 sm:pt-32 pb-16 border-b border-slate-800/60 reveal-section">
+          <div
+            className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-indigo-500/15 via-blue-500/10 to-transparent rounded-full blur-[120px] pointer-events-none"
+            aria-hidden="true"
+          />
 
-          <div className="atomest-container relative z-10 text-center max-w-3xl mx-auto space-y-5">
-            <div className="atomest-badge-violet inline-flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6]" />
+          <div className="atomest-container relative z-10 text-center max-w-3xl mx-auto space-y-5 reveal-item">
+            <div className="atomest-badge-indigo inline-flex items-center gap-2">
+              <span className="w-3.5 h-3.5 rounded-full bg-indigo-500"></span>
               <span>Division A: Digital Services</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-extrabold font-display tracking-tight text-[#F5F6FA] leading-[1.1]">
+            <h1 className="atomest-section-title text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.1]">
               Three Pillars.{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#A78BFA] to-[#3B82F6]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-blue-400 to-indigo-400">
                 Measurable Outcomes.
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-400 leading-relaxed">
               We help growing businesses establish high-converting online presences, eliminate manual work through automation, and implement practical AI solutions that work reliably.
             </p>
           </div>
@@ -148,28 +157,29 @@ export default function Services() {
         <main className="atomest-container py-16 sm:py-24 space-y-16">
           {serviceCategories.map((service, index) => {
             const Icon = service.icon;
+            const route = serviceToRoute[service.id] || service.id;
             return (
               <section
                 key={service.id}
                 id={service.id}
-                className="p-8 sm:p-12 rounded-3xl bg-[#10121A] border border-[#252938] hover:border-[#8B5CF6]/40 transition-all shadow-xl space-y-8"
+                className="reveal-item p-8 sm:p-12 rounded-3xl border border-slate-800 bg-slate-900 hover:border-indigo-500/40 transition-all shadow-xl space-y-8"
               >
                 {/* Header */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#1C1F2B]">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800/60">
                   <div className="flex items-center gap-4">
-                    <div className={`w-14 h-14 rounded-2xl bg-[#151824] border ${service.border} flex items-center justify-center ${service.color}`}>
+                    <div className={`w-14 h-14 rounded-2xl bg-slate-800 border ${service.border} flex items-center justify-center ${service.color}`}>
                       <Icon className="w-7 h-7" />
                     </div>
                     <div>
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs font-mono uppercase text-[#8B5CF6] tracking-wider">
+                        <span className="text-xs font-mono uppercase text-indigo-400 tracking-wider">
                           Pillar 0{index + 1}
                         </span>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#151824] text-[#A0A5B5] border border-[#252938]">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-800 text-slate-300 border border-slate-700">
                           {service.badge}
                         </span>
                       </div>
-                      <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-[#F5F6FA]">
+                      <h2 className="text-2xl sm:text-3xl font-extrabold font-display text-slate-50">
                         {service.title}
                       </h2>
                     </div>
@@ -177,14 +187,14 @@ export default function Services() {
 
                   <div className="flex gap-2">
                     <Link
-                      href={`/services/${service.id === "web-development" ? "premium-business-websites" : service.id === "business-automation" ? "lead-automation" : "ai-customer-support"}`}
-                      className="atomest-btn-secondary inline-flex items-center justify-center gap-2 text-xs py-2.5 px-5 self-start sm:self-auto hover:border-[#8B5CF6]"
+                      href={`/services/${route}`}
+                      className="atomest-btn-secondary inline-flex items-center justify-center gap-2 text-xs py-2.5 px-5 self-start sm:self-auto hover:border-indigo-500/50"
                     >
                       <span>View Details</span>
                       <ArrowRight className="w-3.5 h-3.5" />
                     </Link>
                     <Link
-                      href={`/contact?solution=${service.id === "web-development" ? "premium-business-websites" : service.id === "business-automation" ? "lead-automation" : "ai-customer-support"}`}
+                      href={`/contact?solution=${route}`}
                       className="atomest-btn-primary inline-flex items-center justify-center gap-2 text-xs py-2.5 px-5 self-start sm:self-auto"
                     >
                       <span>{service.ctaText}</span>
@@ -194,12 +204,12 @@ export default function Services() {
                 </div>
 
                 {/* Description */}
-                <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed max-w-4xl">
+                <p className="text-base sm:text-lg text-slate-400 leading-relaxed max-w-4xl">
                   {service.description}
                 </p>
 
                 {/* Problem Solved Callout */}
-                <div className="p-4 sm:p-5 rounded-2xl bg-[#151824] border border-amber-500/20 text-xs sm:text-sm text-[#A0A5B5] leading-relaxed">
+                <div className="p-4 sm:p-5 rounded-2xl border border-amber-500/20 bg-amber-500/5 text-xs sm:text-sm text-slate-400 leading-relaxed">
                   <span className="font-semibold text-amber-400 font-mono uppercase text-[11px] block mb-1">
                     Problem this solves:
                   </span>
@@ -209,15 +219,15 @@ export default function Services() {
                 {/* Detailed 3-Column Breakdown */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
                   {/* Column 1: What We Build */}
-                  <div className="p-6 rounded-2xl bg-[#151824] border border-[#252938] space-y-3">
-                    <div className="text-xs font-mono uppercase text-[#8B5CF6] tracking-wider flex items-center gap-1.5">
-                      <FileText className="w-3.5 h-3.5 text-[#8B5CF6]" />
+                  <div className="p-6 rounded-2xl border border-slate-800 bg-slate-800 space-y-3">
+                    <div className="text-xs font-mono uppercase text-indigo-400 tracking-wider flex items-center gap-1.5">
+                      <FileText className="w-3.5 h-3.5 text-indigo-400" />
                       <span>What We Build</span>
                     </div>
-                    <ul className="space-y-2 text-xs sm:text-sm text-[#F5F6FA]">
+                    <ul className="space-y-2 text-xs sm:text-sm text-slate-400">
                       {service.whatWeBuild.map((item, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-[#8B5CF6] shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
                           <span>{item}</span>
                         </li>
                       ))}
@@ -225,12 +235,12 @@ export default function Services() {
                   </div>
 
                   {/* Column 2: What You Receive */}
-                  <div className="p-6 rounded-2xl bg-[#151824] border border-[#252938] space-y-3">
+                  <div className="p-6 rounded-2xl border border-slate-800 bg-slate-800 space-y-3">
                     <div className="text-xs font-mono uppercase text-emerald-400 tracking-wider flex items-center gap-1.5">
                       <Zap className="w-3.5 h-3.5 text-emerald-400" />
                       <span>What You Receive</span>
                     </div>
-                    <ul className="space-y-2 text-xs sm:text-sm text-[#F5F6FA]">
+                    <ul className="space-y-2 text-xs sm:text-sm text-slate-400">
                       {service.whatYouReceive.map((item, i) => (
                         <li key={i} className="flex items-start gap-2">
                           <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
@@ -241,15 +251,15 @@ export default function Services() {
                   </div>
 
                   {/* Column 3: What You Need to Provide */}
-                  <div className="p-6 rounded-2xl bg-[#151824] border border-[#252938] space-y-3">
-                    <div className="text-xs font-mono uppercase text-[#3B82F6] tracking-wider flex items-center gap-1.5">
-                      <KeyRound className="w-3.5 h-3.5 text-[#3B82F6]" />
+                  <div className="p-6 rounded-2xl border border-slate-800 bg-slate-800 space-y-3">
+                    <div className="text-xs font-mono uppercase text-blue-400 tracking-wider flex items-center gap-1.5">
+                      <KeyRound className="w-3.5 h-3.5 text-blue-400" />
                       <span>What You Provide</span>
                     </div>
-                    <ul className="space-y-2 text-xs sm:text-sm text-[#A0A5B5]">
+                    <ul className="space-y-2 text-xs sm:text-sm text-slate-400">
                       {service.whatYouProvide.map((item, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <span className="text-[#3B82F6] shrink-0 font-bold">•</span>
+                          <span className="text-blue-400 shrink-0 font-bold">•</span>
                           <span>{item}</span>
                         </li>
                       ))}
@@ -261,11 +271,11 @@ export default function Services() {
           })}
 
           {/* Combined Services Banner */}
-          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#151824] via-[#10121A] to-[#151824] border border-[#252938] text-center space-y-5">
-            <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-[#F5F6FA]">
+          <div className="reveal-item p-8 sm:p-12 rounded-3xl border border-slate-800 bg-gradient-to-b from-slate-900 to-slate-950 text-center space-y-5 shadow-2xl">
+            <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-slate-50">
               Looking for a combined digital solution?
             </h3>
-            <p className="text-sm sm:text-base text-[#A0A5B5] max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto leading-relaxed">
               Many clients combine a modern business website with an automated lead capture workflow and a 24/7 AI qualification assistant for a complete customer acquisition system.
             </p>
             <div className="pt-2">

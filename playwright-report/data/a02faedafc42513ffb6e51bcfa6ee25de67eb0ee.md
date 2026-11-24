@@ -1,0 +1,198 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: atomest.e2e.ts >> Contact form >> handles a 429 rate-limit response from the API
+- Location: tests\e2e\atomest.e2e.ts:161:3
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+```
+Error: locator.fill: Test timeout of 30000ms exceeded.
+Call log:
+  - waiting for getByLabel(/Full Name/i)
+
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - heading "The page you were looking for doesn't exist." [level=1] [ref=e3]
+  - paragraph [ref=e4]: You may have mistyped the address or the page may have moved.
+```
+
+# Test source
+
+```ts
+  73  |     const solutionsBtn = page.getByRole("button", { name: /Solutions/i });
+  74  | 
+  75  |     await solutionsBtn.click();
+  76  |     await expect(page.getByText("AI Website Solutions")).toBeVisible();
+  77  |     await expect(page.getByText("AI Automation Solutions")).toBeVisible();
+  78  |     await expect(page.getByText("AI Agents")).toBeVisible();
+  79  | 
+  80  |     // Services remains closed
+  81  |     await expect(page.getByText("AI Voice Receptionist")).toBeHidden();
+  82  | 
+  83  |     // Clicking Services closes Solutions and opens Services
+  84  |     await servicesBtn.click();
+  85  |     await expect(page.getByText("AI Website Solutions")).toBeHidden();
+  86  |     await expect(page.getByText("AI Voice Receptionist")).toBeVisible();
+  87  |   });
+  88  | 
+  89  |   test("Clicking a service link in the dropdown navigates to that service page", async ({ page }) => {
+  90  |     await page.goto("/");
+  91  |     await page.getByRole("button", { name: /Services/i }).click();
+  92  |     await page.getByRole("link", { name: /AI Voice Receptionist/i }).click();
+  93  |     await expect(page).toHaveURL(/.*\/services\/ai-voice-receptionist/);
+  94  |     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  95  |   });
+  96  | });
+  97  | 
+  98  | test.describe("Mobile navigation", () => {
+  99  |   test.use({ viewport: { width: 390, height: 844 } });
+  100 | 
+  101 |   test("hamburger opens the drawer and links navigate", async ({ page }) => {
+  102 |     await page.goto("/");
+  103 |     const menu = page.getByLabel(/Toggle menu/i);
+  104 |     await expect(menu).toBeVisible();
+  105 |     await menu.click();
+  106 | 
+  107 |     // Drawer should reveal navigation links
+  108 |     await expect(page.getByRole("link", { name: /Contact & Consultation/i })).toBeVisible();
+  109 |     await expect(page.getByRole("link", { name: /About Us/i })).toBeVisible();
+  110 | 
+  111 |     await page.getByRole("link", { name: /Contact & Consultation/i }).click();
+  112 |     await expect(page).toHaveURL(/.*\/contact/);
+  113 |   });
+  114 | });
+  115 | 
+  116 | test.describe("Contact form", () => {
+  117 |   test("shows client-side validation error when required fields are empty", async ({ page }) => {
+  118 |     await page.goto("/contact");
+  119 |     await page.getByRole("button", { name: /Send Project Enquiry/i }).click();
+  120 |     await expect(page.getByText(/Please fill in your name, email, and project description/i)).toBeVisible();
+  121 |   });
+  122 | 
+  123 |   test("preselects a solution from the ?solution= query param", async ({ page }) => {
+  124 |     await page.goto("/contact?solution=lead-automation");
+  125 | 
+  126 |     await page.getByLabel(/Full Name/i).fill("Alex Mercer");
+  127 |     await page.getByLabel(/Email Address/i).fill("alex@company.com");
+  128 |     await page.getByLabel(/Project Description/i).fill("I want to automate my lead intake process.");
+  129 | 
+  130 |     // Intercept the API so submission succeeds without a real backend
+  131 |     await page.route("**/api/contact", async (route) => {
+  132 |       await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ success: true }) });
+  133 |     });
+  134 | 
+  135 |     await page.getByRole("button", { name: /Send Project Enquiry/i }).click();
+  136 | 
+  137 |     await expect(page.getByRole("heading", { name: /Enquiry Received/i })).toBeVisible();
+  138 |     await expect(page.getByText(/Lead Automation/i)).toBeVisible();
+  139 |   });
+  140 | 
+  141 |   test("shows an error when the API fails", async ({ page }) => {
+  142 |     await page.goto("/contact");
+  143 | 
+  144 |     await page.route("**/api/contact", async (route) => {
+  145 |       await route.fulfill({
+  146 |         status: 500,
+  147 |         contentType: "application/json",
+  148 |         body: JSON.stringify({ error: "Upstream database error" }),
+  149 |       });
+  150 |     });
+  151 | 
+  152 |     await page.getByLabel(/Full Name/i).fill("Alex Mercer");
+  153 |     await page.getByLabel(/Email Address/i).fill("alex@company.com");
+  154 |     await page.getByLabel(/Project Description/i).fill("Something here.");
+  155 |     await page.getByRole("button", { name: /Send Project Enquiry/i }).click();
+  156 | 
+  157 |     await expect(page.getByText(/Upstream database error/i)).toBeVisible();
+  158 |     await expect(page.getByRole("heading", { name: /Enquiry Received/i })).toBeHidden();
+  159 |   });
+  160 | 
+  161 |   test("handles a 429 rate-limit response from the API", async ({ page }) => {
+  162 |     await page.goto("/contact");
+  163 | 
+  164 |     await page.route("**/api/contact", async (route) => {
+  165 |       await route.fulfill({
+  166 |         status: 429,
+  167 |         headers: { "retry-after": "60" },
+  168 |         contentType: "application/json",
+  169 |         body: JSON.stringify({ error: "Too many requests. Please try again later." }),
+  170 |       });
+  171 |     });
+  172 | 
+> 173 |     await page.getByLabel(/Full Name/i).fill("Alex Mercer");
+      |                                         ^ Error: locator.fill: Test timeout of 30000ms exceeded.
+  174 |     await page.getByLabel(/Email Address/i).fill("alex@company.com");
+  175 |     await page.getByLabel(/Project Description/i).fill("Something here.");
+  176 |     await page.getByRole("button", { name: /Send Project Enquiry/i }).click();
+  177 | 
+  178 |     await expect(page.getByText(/Too many requests/i)).toBeVisible();
+  179 |   });
+  180 | });
+  181 | 
+  182 | test.describe("Footer links", () => {
+  183 |   test("navigates to Privacy, Terms, Solutions, About, and Contact", async ({ page }) => {
+  184 |     await page.goto("/");
+  185 |     await page.getByRole("contentinfo").scrollIntoViewIfNeeded();
+  186 | 
+  187 |     await page.getByRole("link", { name: /Privacy Policy/i }).click();
+  188 |     await expect(page).toHaveURL(/.*\/privacy/);
+  189 |     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  190 | 
+  191 |     await page.getByRole("link", { name: /Terms of Service/i }).click();
+  192 |     await expect(page).toHaveURL(/.*\/terms/);
+  193 | 
+  194 |     await page.getByRole("link", { name: /AI Website Solutions/i }).click();
+  195 |     await expect(page).toHaveURL(/.*\/solutions\/websites/);
+  196 | 
+  197 |     await page.getByRole("link", { name: /About Atomest/i }).click();
+  198 |     await expect(page).toHaveURL(/.*\/about/);
+  199 | 
+  200 |     await page.getByRole("link", { name: /Start a Project/i }).click();
+  201 |     await expect(page).toHaveURL(/.*\/contact/);
+  202 |   });
+  203 | });
+  204 | 
+  205 | test.describe("Privacy and Terms pages", () => {
+  206 |   test("Privacy page loads", async ({ page }) => {
+  207 |     await page.goto("/privacy");
+  208 |     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  209 |     await expect(page.getByText(/privacy/i)).toBeVisible();
+  210 |   });
+  211 | 
+  212 |   test("Terms page loads", async ({ page }) => {
+  213 |     await page.goto("/terms");
+  214 |     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  215 |     await expect(page.getByText(/terms/i)).toBeVisible();
+  216 |   });
+  217 | });
+  218 | 
+  219 | test.describe("Responsive layouts", () => {
+  220 |   test("renders without crashing at mobile and desktop widths", async ({ page }) => {
+  221 |     await page.goto("/");
+  222 |     await expect(page.getByRole("navigation")).toBeVisible();
+  223 | 
+  224 |     await page.setViewportSize({ width: 390, height: 844 });
+  225 |     await expect(page.getByRole("navigation")).toBeVisible();
+  226 |     await expect(page.getByLabel(/Toggle menu/i)).toBeVisible();
+  227 | 
+  228 |     await page.setViewportSize({ width: 1280, height: 800 });
+  229 |     await expect(page.getByRole("navigation")).toBeVisible();
+  230 |     await expect(page.getByLabel(/Toggle menu/i)).toBeHidden();
+  231 |   });
+  232 | });
+  233 | 
+```

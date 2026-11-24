@@ -1,14 +1,14 @@
 import { Link } from "wouter";
-import { Globe, GitFork, Bot, Layers, ArrowRight, ShieldCheck } from "lucide-react";
+import { Sparkles, ShieldCheck, ArrowRight } from "lucide-react";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-[#08090D] overflow-hidden border-t border-[#252938]">
-      {/* Subtle Background Glow */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden>
-        <div className="absolute top-0 inset-x-0 h-40 bg-gradient-to-b from-[#8B5CF6]/5 to-transparent" />
+    <footer className="relative bg-slate-950 overflow-hidden border-t border-slate-800/60">
+      {/* Subtle background glow */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-0 inset-x-0 h-48 bg-gradient-to-b from-indigo-500/8 to-transparent" />
       </div>
 
       <div className="atomest-container pt-16 pb-12 relative z-10">
@@ -16,35 +16,35 @@ export function Footer() {
           {/* Brand Column */}
           <div className="md:col-span-5 space-y-4">
             <Link href="/" className="flex items-center gap-2.5 group inline-flex" aria-label="Atomest Home">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-[#8B5CF6] to-[#3B82F6] flex items-center justify-center font-bold text-white text-base shadow-md shadow-[#8B5CF6]/30 group-hover:scale-105 transition-transform">
+              <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-indigo-500 to-blue-600 flex items-center justify-center font-bold text-white text-base shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition-transform">
                 A
               </div>
               <div className="flex flex-col leading-none">
-                <span className="font-extrabold text-xl font-display tracking-tight text-[#F5F6FA]">
+                <span className="font-display font-extrabold text-xl tracking-tight text-slate-50">
                   ATOMEST
                 </span>
-                <span className="text-[9px] font-mono text-[#8B5CF6] uppercase tracking-wider font-semibold">
-                  AI Solutions
+                <span className="text-[9px] font-mono text-indigo-400 uppercase tracking-wider font-semibold">
+                  AI Automation Studio
                 </span>
               </div>
             </Link>
 
-            <p className="text-xs sm:text-sm text-[#A0A5B5] max-w-sm leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-400 max-w-sm leading-relaxed">
               We build intelligent websites, powerful automations and AI systems that help ambitious businesses operate smarter and grow faster.
             </p>
 
-            <div className="pt-2 flex items-center gap-2 text-xs text-[#C4B5FD]">
-              <ShieldCheck className="w-4 h-4 text-[#8B5CF6]" />
+            <div className="pt-4 flex items-center gap-2 text-xs text-slate-300">
+              <ShieldCheck className="w-4 h-4 text-indigo-400" />
               <span>Production-grade engineering & zero data retention standard</span>
             </div>
           </div>
 
           {/* Solutions Column */}
           <div className="md:col-span-3 space-y-3">
-            <h4 className="font-display font-bold text-sm text-[#F5F6FA] uppercase tracking-wider text-xs">
+            <h4 className="font-display font-bold text-sm text-slate-50 uppercase tracking-wider text-xs">
               Solutions
             </h4>
-            <ul className="space-y-2 text-xs text-[#A0A5B5]">
+            <ul className="space-y-2 text-xs text-slate-400">
               <li>
                 <Link href="/solutions/websites" className="hover:text-white transition-colors">
                   AI Website Solutions
@@ -70,10 +70,10 @@ export function Footer() {
 
           {/* Company Column */}
           <div className="md:col-span-2 space-y-3">
-            <h4 className="font-display font-bold text-sm text-[#F5F6FA] uppercase tracking-wider text-xs">
+            <h4 className="font-display font-bold text-sm text-slate-50 uppercase tracking-wider text-xs">
               Company
             </h4>
-            <ul className="space-y-2 text-xs text-[#A0A5B5]">
+            <ul className="space-y-2 text-xs text-slate-400">
               <li>
                 <Link href="/about" className="hover:text-white transition-colors">
                   About Atomest
@@ -94,10 +94,10 @@ export function Footer() {
 
           {/* Legal Column */}
           <div className="md:col-span-2 space-y-3">
-            <h4 className="font-display font-bold text-sm text-[#F5F6FA] uppercase tracking-wider text-xs">
+            <h4 className="font-display font-bold text-sm text-slate-50 uppercase tracking-wider text-xs">
               Legal
             </h4>
-            <ul className="space-y-2 text-xs text-[#A0A5B5]">
+            <ul className="space-y-2 text-xs text-slate-400">
               <li>
                 <Link href="/privacy" className="hover:text-white transition-colors">
                   Privacy Policy
@@ -113,10 +113,10 @@ export function Footer() {
 
           {/* Governance Column */}
           <div className="md:col-span-2 space-y-3">
-            <h4 className="font-display font-bold text-sm text-[#F5F6FA] uppercase tracking-wider text-xs">
+            <h4 className="font-display font-bold text-sm text-slate-50 uppercase tracking-wider text-xs">
               Governance
             </h4>
-            <ul className="space-y-2 text-xs text-[#A0A5B5]">
+            <ul className="space-y-2 text-xs text-slate-400">
               <li>
                 <span className="cursor-default">Zero-Data Retention</span>
               </li>
@@ -128,7 +128,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-[#1C1F2B] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#A0A5B5]">
+        <div className="pt-8 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
           <p>
             &copy; {currentYear} Atomest Technologies. All rights reserved.
           </p>

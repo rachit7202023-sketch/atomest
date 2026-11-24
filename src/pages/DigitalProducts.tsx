@@ -16,8 +16,8 @@ export default function DigitalProducts() {
       id: "speed-to-lead-blueprint",
       category: "Automation Blueprint",
       icon: GitFork,
-      color: "text-[#8B5CF6]",
-      border: "border-[#8B5CF6]/30",
+      border: "border-indigo-500/30",
+      color: "text-indigo-400",
       title: "Speed-to-Lead Automation Workflow Kit",
       status: "In Technical Verification & QA",
       statusBadge: "Internal Audit in Progress",
@@ -35,8 +35,8 @@ export default function DigitalProducts() {
       id: "smb-operations-os",
       category: "Notion System",
       icon: Layers,
-      color: "text-[#3B82F6]",
-      border: "border-[#3B82F6]/30",
+      border: "border-blue-500/30",
+      color: "text-blue-400",
       title: "SMB Client Operations & Project Workspace",
       status: "In Design & Packaging",
       statusBadge: "Coming Soon",
@@ -54,8 +54,8 @@ export default function DigitalProducts() {
       id: "ai-prompt-chains",
       category: "AI Workflow System",
       icon: Bot,
-      color: "text-emerald-400",
       border: "border-emerald-500/30",
+      color: "text-emerald-400",
       title: "Grounded Support & Qualification Prompt Library",
       status: "In Research & Formulation",
       statusBadge: "Coming Soon",
@@ -112,55 +112,57 @@ export default function DigitalProducts() {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-[#08090D] flex flex-col justify-between text-[#F5F6FA]">
+      <div className="min-h-screen bg-slate-950 flex flex-col justify-between text-slate-50">
         <Navbar />
 
         {/* Hero Section */}
-        <section className="relative overflow-hidden pt-24 sm:pt-32 pb-16 border-b border-[#252938]">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-[#8B5CF6]/15 via-[#3B82F6]/10 to-transparent rounded-full blur-[120px] pointer-events-none" />
-
-          <div className="atomest-container relative z-10 text-center max-w-3xl mx-auto space-y-5">
-            <div className="atomest-badge-violet inline-flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5 text-[#8B5CF6]" />
-              <span>Division B: AI & Digital Products</span>
+        <section className="relative overflow-hidden pt-24 sm:pt-32 pb-20 border-b border-slate-800/60">
+          <div
+            className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-indigo-500/10 via-blue-500/5 to-transparent rounded-full blur-[120px] pointer-events-none"
+            aria-hidden="true"
+          />
+          <div className="atomest-container relative z-10 text-center max-w-3xl mx-auto space-y-5 reveal-section">
+            <div className="atomest-badge-indigo inline-flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Division B — AI & Digital Products</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl font-extrabold font-display tracking-tight text-[#F5F6FA] leading-[1.1]">
+            <h1 className="atomest-section-title text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.1] mb-4 text-balance">
               Practical Digital Products.{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8B5CF6] via-[#A78BFA] to-[#3B82F6]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-blue-400 to-indigo-400">
                 Built for Immediate Use.
               </span>
             </h1>
 
-            <p className="text-base sm:text-lg text-[#A0A5B5] leading-relaxed">
-              We design, test, and package operational digital assets—from automation workflows to Notion systems and AI prompt libraries—that solve specific bottlenecks for solo operators and growing businesses.
+            <p className="text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl mx-auto">
+              We design, test, and package operational digital assets — from automation workflows to Notion systems and AI prompt libraries — that solve specific bottlenecks for solo operators and growing businesses.
             </p>
           </div>
         </section>
 
-        {/* Storefront Transparency & Genuine Coming Soon Section */}
+        {/* Storefront Transparency */}
         <main className="atomest-container py-16 sm:py-24 space-y-16">
           {/* Transparency Callout */}
-          <div className="p-6 rounded-2xl bg-[#10121A] border border-[#252938] max-w-3xl mx-auto text-center space-y-2">
-            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase text-[#8B5CF6] tracking-wider">
-              <ShieldCheck className="w-4 h-4 text-[#8B5CF6]" />
+          <div className="reveal-item p-6 rounded-2xl border border-slate-800 bg-slate-900 max-w-3xl mx-auto text-center space-y-2">
+            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase text-indigo-400 tracking-wider">
+              <ShieldCheck className="w-4 h-4 text-indigo-400" />
               <span>Storefront Status: Verification & Packaging Phase</span>
             </div>
-            <p className="text-xs sm:text-sm text-[#A0A5B5] leading-relaxed">
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
               Atomest strictly avoids listing fake or unverified products. Every kit, workflow, and template below is actively undergoing technical testing, documentation formatting, and QA before its official release.
             </p>
           </div>
 
           {/* Gumroad Storefront */}
-          <div className="p-8 rounded-2xl bg-[#10121A] border border-[#252938] max-w-3xl mx-auto text-center space-y-4 mb-12">
-            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase text-[#8B5CF6] tracking-wider">
-              <ShoppingCart className="w-4 h-4 text-[#8B5CF6]" />
+          <div className="reveal-item p-8 rounded-2xl border border-slate-800 bg-slate-900 max-w-3xl mx-auto text-center space-y-4 mb-12">
+            <div className="inline-flex items-center gap-2 text-xs font-mono uppercase text-indigo-400 tracking-wider">
+              <ShoppingCart className="w-4 h-4 text-indigo-400" />
               <span>Available on Gumroad</span>
             </div>
-            <h3 className="text-2xl font-extrabold font-display text-[#F5F6FA] mb-2">
+            <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-slate-50 mb-2">
               Purchase digital products directly
             </h3>
-            <p className="text-xs sm:text-sm text-[#A0A5B5] leading-relaxed max-w-md mx-auto mb-6">
+            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-md mx-auto mb-6">
               All Atomest digital products are sold through Gumroad — secure checkout, instant delivery, and automatic tax handling. Prices and availability are confirmed upon public release.
             </p>
             <a
@@ -175,52 +177,52 @@ export default function DigitalProducts() {
           </div>
 
           {/* Genuine Upcoming Products Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="reveal-section grid grid-cols-1 lg:grid-cols-3 gap-8">
             {upcomingPipelines.map((item) => {
               const Icon = item.icon;
               return (
                 <div
                   key={item.id}
-                  className="p-8 rounded-3xl bg-[#10121A] border border-[#252938] flex flex-col justify-between shadow-xl space-y-6"
+                  className="reveal-item p-8 rounded-3xl border border-slate-800 bg-slate-900 flex flex-col justify-between shadow-xl space-y-6 group transition-all duration-300 hover:border-indigo-500/40"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <div className={`w-12 h-12 rounded-2xl bg-[#151824] border ${item.border} flex items-center justify-center ${item.color}`}>
+                      <div className={`w-12 h-12 rounded-2xl bg-slate-800 border ${item.border} flex items-center justify-center ${item.color}`}>
                         <Icon className="w-6 h-6" />
                       </div>
-                      <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#151824] text-[#C4B5FD] border border-[#252938]">
+                      <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
                         {item.statusBadge}
                       </span>
                     </div>
 
                     <div>
-                      <span className="text-xs font-mono uppercase text-[#8B5CF6] tracking-wider">
+                      <span className="text-xs font-mono uppercase text-indigo-400 tracking-wider">
                         {item.category}
                       </span>
-                      <h2 className="text-xl font-bold font-display text-[#F5F6FA] mt-1">
+                      <h2 className="text-xl font-bold font-display text-slate-50 mt-1">
                         {item.title}
                       </h2>
                     </div>
 
-                    <p className="text-xs sm:text-sm text-[#A0A5B5] leading-relaxed">
+                    <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
                       {item.description}
                     </p>
 
-                    <div className="space-y-2 pt-4 border-t border-[#1C1F2B]">
-                      <div className="text-[11px] font-mono uppercase text-[#A0A5B5] tracking-wider mb-2">
+                    <div className="space-y-2 pt-4 border-t border-slate-800/60">
+                      <div className="text-[11px] font-mono uppercase text-slate-400 tracking-wider mb-2">
                         Planned Deliverables
                       </div>
                       {item.deliverables.map((deliv, dIdx) => (
-                        <div key={dIdx} className="flex items-start gap-2 text-xs text-[#C4B5FD]">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-[#8B5CF6] shrink-0 mt-0.5" />
+                        <div key={dIdx} className="flex items-start gap-2 text-sm text-slate-400">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400 shrink-0 mt-0.5" />
                           <span>{deliv}</span>
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-[#1C1F2B]">
-                    <div className="text-[11px] font-mono text-[#A0A5B5] italic">
+                  <div className="pt-4 border-t border-slate-800/60">
+                    <div className="text-[11px] font-mono text-slate-400 italic">
                       {item.notice}
                     </div>
                   </div>
@@ -230,12 +232,12 @@ export default function DigitalProducts() {
           </div>
 
           {/* Direct Launch Alert Form */}
-          <div className="max-w-2xl mx-auto p-8 sm:p-12 rounded-3xl bg-gradient-to-b from-[#151824] to-[#10121A] border border-[#252938] text-center space-y-6 shadow-2xl">
+          <div className="reveal-section max-w-2xl mx-auto p-8 sm:p-12 rounded-3xl border border-slate-800 bg-gradient-to-b from-slate-900 to-slate-950 text-center space-y-6 shadow-2xl reveal-item">
             <div className="space-y-2">
-              <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-[#F5F6FA]">
+              <h3 className="text-2xl sm:text-3xl font-extrabold font-display text-slate-50">
                 Get notified when products release
               </h3>
-              <p className="text-xs sm:text-sm text-[#A0A5B5] leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
                 Enter your email to receive notification the moment our verified templates and blueprints launch with introductory pricing.
               </p>
             </div>
@@ -248,14 +250,14 @@ export default function DigitalProducts() {
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto text-left">
                 <div>
-                  <label htmlFor="product-select" className="text-[11px] font-mono uppercase text-[#A0A5B5] block mb-1">
+                  <label htmlFor="product-select" className="text-[11px] font-mono uppercase text-slate-400 block mb-1">
                     Select Product Category of Interest
                   </label>
                   <select
                     id="product-select"
                     value={selectedProduct}
                     onChange={(e) => setSelectedProduct(e.target.value)}
-                    className="w-full h-11 px-3.5 rounded-xl bg-[#08090D] border border-[#252938] text-xs text-[#F5F6FA] focus:outline-none focus:border-[#8B5CF6]"
+                    className="w-full h-11 px-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-50 focus:outline-none focus:border-indigo-500"
                   >
                     <option value="all">All Upcoming Digital Products</option>
                     <option value="speed-to-lead-blueprint">Speed-to-Lead Automation Workflow Kit</option>
@@ -265,7 +267,7 @@ export default function DigitalProducts() {
                 </div>
 
                 <div>
-                  <label htmlFor="email-input" className="text-[11px] font-mono uppercase text-[#A0A5B5] block mb-1">
+                  <label htmlFor="email-input" className="text-[11px] font-mono uppercase text-slate-400 block mb-1">
                     Work Email
                   </label>
                   <input
@@ -275,7 +277,7 @@ export default function DigitalProducts() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@company.com"
-                    className="w-full h-11 px-3.5 rounded-xl bg-[#08090D] border border-[#252938] text-xs text-[#F5F6FA] placeholder:text-[#A0A5B5]/50 focus:outline-none focus:border-[#8B5CF6]"
+                    className="w-full h-11 px-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-50 placeholder:text-slate-500/50 focus:outline-none focus:border-indigo-500"
                   />
                 </div>
 
@@ -289,7 +291,7 @@ export default function DigitalProducts() {
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="w-full atomest-btn-primary py-3 text-xs flex items-center justify-center gap-2"
+                  className="w-full atomest-btn-primary py-3 text-xs flex items-center justify-center gap-2 disabled:opacity-50"
                 >
                   <span>{status === "submitting" ? "Registering..." : "Notify Me on Launch"}</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -297,7 +299,7 @@ export default function DigitalProducts() {
               </form>
             )}
 
-            <div className="text-[10px] font-mono text-[#A0A5B5] pt-2">
+            <div className="text-[10px] font-mono text-slate-400 pt-2">
               Zero spam. Unsubscribe at any time with one click.
             </div>
           </div>
@@ -308,4 +310,3 @@ export default function DigitalProducts() {
     </>
   );
 }
-
