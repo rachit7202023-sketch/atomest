@@ -33,6 +33,8 @@ import { Helmet } from "react-helmet-async";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { HeroVideoCommandCenter } from "@/components/hero/HeroVideoCommandCenter";
+import { PinnedCapabilitiesShowcase } from "@/components/home/PinnedCapabilitiesShowcase";
+import { PinnedWorkflowConduit } from "@/components/home/PinnedWorkflowConduit";
 import { motion, AnimatePresence } from "motion/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -44,106 +46,6 @@ if (typeof window !== "undefined") {
 /* ------------------------------------------------------------------ */
 /* Data                                                               */
 /* ------------------------------------------------------------------ */
-
-const fourCapabilities = [
-  {
-    id: "agents",
-    number: "01",
-    title: "AI Agents",
-    tagline: "Conversational & Voice Intelligence",
-    badge: "Active Voice & Chat",
-    description:
-      "24/7 AI voice receptionists, customer support copilots, and intelligent triage agents that answer calls, resolve questions, and book appointments without hallucinating.",
-    icon: Bot,
-    route: "/services/ai-voice-receptionist",
-    color: "text-violet-400",
-    bg: "bg-violet-500/10",
-    border: "border-violet-500/25",
-    hoverBorder: "hover:border-violet-500/50",
-    glow: "hover:shadow-[0_20px_50px_rgba(139,92,246,0.15)]",
-    deliverables: [
-      "AI voice receptionist & automated booking",
-      "Grounded 24/7 customer support assistants",
-      "Inbound lead qualification agents",
-      "Internal document & SOP copilots",
-    ],
-  },
-  {
-    id: "sales",
-    number: "02",
-    title: "Lead Generation & Sales",
-    tagline: "Speed-to-Lead & Pipelines",
-    badge: "Sub-60s Response",
-    description:
-      "Automated lead capture, instant qualification, and multi-channel routing that contacts prospects in under 60 seconds before they look at competitors.",
-    icon: GitFork,
-    route: "/services/lead-automation",
-    color: "text-blue-400",
-    bg: "bg-blue-500/10",
-    border: "border-blue-500/25",
-    hoverBorder: "hover:border-blue-500/50",
-    glow: "hover:shadow-[0_20px_50px_rgba(59,130,246,0.15)]",
-    deliverables: [
-      "Instant lead capture & SMS / chat alerts",
-      "Automated lead scoring & qualification",
-      "Speed-to-Lead notification workflows",
-      "Multi-channel follow-up sequences",
-    ],
-  },
-  {
-    id: "workflows",
-    number: "03",
-    title: "Workflow Automation",
-    tagline: "Deterministic Business Systems",
-    badge: "Zero Manual Drag",
-    description:
-      "Connect your CRMs, calendars, inboxes, and spreadsheets. Replace repetitive manual copy-pasting with self-healing, automated business processes.",
-    icon: Workflow,
-    route: "/services/crm-workflow-automation",
-    color: "text-indigo-400",
-    bg: "bg-indigo-500/10",
-    border: "border-indigo-500/25",
-    hoverBorder: "hover:border-indigo-500/50",
-    glow: "hover:shadow-[0_20px_50px_rgba(99,102,241,0.15)]",
-    deliverables: [
-      "CRM & Google Sheets synchronization",
-      "Calendar scheduling & appointment workflows",
-      "Error-resilient webhook pipelines",
-      "Automated client onboarding handoffs",
-    ],
-  },
-  {
-    id: "integrations",
-    number: "04",
-    title: "Integrations & BI",
-    tagline: "Unified Business Intelligence",
-    badge: "Connected Telemetry",
-    description:
-      "Connect your existing software platforms into one synchronized data fabric with real-time operational telemetry, live reporting, and automated alerts.",
-    icon: BarChart3,
-    route: "/services",
-    color: "text-emerald-400",
-    bg: "bg-emerald-500/10",
-    border: "border-emerald-500/25",
-    hoverBorder: "hover:border-emerald-500/50",
-    glow: "hover:shadow-[0_20px_50px_rgba(16,185,129,0.15)]",
-    deliverables: [
-      "Multi-app integration & API bridges",
-      "Real-time operational dashboard sync",
-      "Cross-platform data reconciliation",
-      "Executive metrics & automated alerts",
-    ],
-  },
-];
-
-const platformFoundation = {
-  title: "High-Performance Web Platforms & Funnels",
-  tagline: "Conversion Engine & Digital Storefront",
-  description:
-    "The authoritative digital foundation for your business: sub-second loading websites and high-converting landing pages built to turn visitors into booked clients.",
-  route: "/services/premium-business-websites",
-  icon: Globe,
-};
 
 const whoWeHelp = [
   {
@@ -388,225 +290,6 @@ function HeroEcosystem() {
 }
 
 /* ------------------------------------------------------------------ */
-/* Animated workflow nodes (interactive automation showcase)          */
-/* ------------------------------------------------------------------ */
-
-const WORKFLOW_STEPS = [
-  { label: "Incoming Call", sub: "Customer enquiry arrives" },
-  { label: "AI Receptionist", sub: "24/7 intelligent handling" },
-  { label: "Qualification", sub: "Lead scored & routed" },
-  { label: "CRM Update", sub: "Data synced to your CRM" },
-  { label: "Booking", sub: "Appointment confirmed" },
-  { label: "Confirmation", sub: "Message sent to customer" },
-];
-
-function InteractiveWorkflow() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !ref.current) return;
-
-    const prefersReduced =
-      typeof window.matchMedia === "function" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    const container = ref.current;
-    const stepEls = Array.from(
-      container.querySelectorAll<HTMLElement>('[data-step]')
-    );
-    const connectorEls = Array.from(
-      container.querySelectorAll<HTMLElement>('[data-connector]')
-    );
-
-    const highlight = (index: number) => {
-      stepEls.forEach((el, i) => {
-        const isActive = i === index;
-        const target = isActive
-          ? { scale: 1.12, borderColor: "rgba(79,70,229,0.9)", boxShadow: "0 0 0 8px rgba(79,70,229,0.25)" }
-          : { scale: 1, borderColor: "#334155", boxShadow: "none" };
-        gsap.to(el, { ...target, duration: 0.5, ease: "power2.out" });
-        const title = el.querySelector<HTMLElement>("[data-title]");
-        const sub = el.querySelector<HTMLElement>("[data-sub]");
-        if (title)
-          gsap.to(title, {
-            color: isActive ? "#F8FAFC" : "#94A3B8",
-            duration: 0.4,
-          });
-        if (sub)
-          gsap.to(sub, {
-            color: isActive ? "#CBD5E1" : "#64748B",
-            duration: 0.4,
-          });
-      });
-      connectorEls.forEach((el, i) => {
-        const isActive = i === index || i === index - 1;
-        gsap.to(el, {
-          background: isActive ? "rgba(79,70,229,0.6)" : "rgba(148,163,184,0.12)",
-          duration: 0.5,
-          ease: "power2.out",
-        });
-      });
-    };
-
-    // Animate connectors from left to right on load
-    connectorEls.forEach((el, i) => {
-      gsap.fromTo(
-        el,
-        { scaleX: 0 },
-        {
-          scaleX: 1,
-          duration: 0.8,
-          delay: 0.6 + i * 0.15,
-          ease: "power2.out",
-          transformOrigin: "left center",
-        }
-      );
-    });
-
-    if (!prefersReduced) {
-      // Auto-cycle through steps
-      const interval = setInterval(() => {
-        setActiveIndex((i) => (i + 1) % WORKFLOW_STEPS.length);
-      }, 3200);
-      return () => clearInterval(interval);
-    }
-
-    highlight(0);
-    return;
-  }, []);
-
-  useEffect(() => {
-    // Highlight on manual change
-    const stepEls = Array.from(
-      (ref.current as HTMLElement).querySelectorAll<HTMLElement>('[data-step]')
-    );
-    const connectorEls = Array.from(
-      (ref.current as HTMLElement).querySelectorAll<HTMLElement>('[data-connector]')
-    );
-    stepEls.forEach((el, i) => {
-      const isActive = i === activeIndex;
-      gsap.to(el, {
-        scale: isActive ? 1.12 : 1,
-        borderColor: isActive ? "rgba(79,70,229,0.9)" : "#334155",
-        boxShadow: isActive ? "0 0 0 8px rgba(79,70,229,0.25)" : "none",
-        duration: 0.5,
-        ease: "power2.out",
-      });
-      const title = el.querySelector<HTMLElement>("[data-title]");
-      const sub = el.querySelector<HTMLElement>("[data-sub]");
-      if (title)
-        gsap.to(title, { color: isActive ? "#F8FAFC" : "#94A3B8", duration: 0.4 });
-      if (sub)
-        gsap.to(sub, { color: isActive ? "#CBD5E1" : "#64748B", duration: 0.4 });
-    });
-    connectorEls.forEach((el, i) => {
-      const isActive = i === activeIndex || i === activeIndex - 1;
-      gsap.to(el, {
-        background: isActive ? "rgba(79,70,229,0.6)" : "rgba(148,163,184,0.12)",
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    });
-  }, [activeIndex]);
-
-  return (
-    <section
-      ref={ref}
-      className="atomest-section relative overflow-hidden"
-      id="workflow"
-    >
-      <div className="atomest-container">
-        <div className="max-w-3xl mb-16 text-center">
-          <div className="atomest-eyebrow mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-            <span className="atomest-eyebrow-text">Signature Experience</span>
-          </div>
-          <h2 className="atomest-section-title text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 text-balance">
-            One seamless automation, end to end.
-          </h2>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Watch a lead move through a complete Atomest automation — from first contact to confirmed appointment, without a single manual handoff.
-          </p>
-        </div>
-
-        <div className="relative flex flex-col items-center justify-center gap-4 max-w-4xl mx-auto">
-          {WORKFLOW_STEPS.map((step, i) => {
-            const isLast = i === WORKFLOW_STEPS.length - 1;
-            return (
-              <Fragment key={`step-group-${i}`}>
-                {/* Node */}
-                <motion.div
-                  key={`node-${i}`}
-                  data-step
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="relative flex items-center gap-3 px-5 py-3 rounded-full border border-slate-800 bg-slate-900 text-left transition-all duration-500"
-                  onMouseEnter={() => setActiveIndex(i)}
-                  onMouseLeave={() => setActiveIndex(0)}
-                >
-                  <div
-                    className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 transition-all"
-                  >
-                    {i === 0 ? (
-                      <Phone className="w-5 h-5 text-indigo-400" />
-                    ) : i === 1 ? (
-                      <Bot className="w-5 h-5 text-indigo-400" />
-                    ) : i === 2 ? (
-                      <CheckCircle2 className="w-5 h-5 text-blue-400" />
-                    ) : i === 3 ? (
-                      <Layers className="w-5 h-5 text-blue-400" />
-                    ) : i === 4 ? (
-                      <Clock className="w-5 h-5 text-emerald-400" />
-                    ) : (
-                      <MessageSquare className="w-5 h-5 text-emerald-400" />
-                    )}
-                  </div>
-                  <div>
-                    <div data-title className="font-display font-semibold text-sm text-slate-300 leading-tight">
-                      {step.label}
-                    </div>
-                    <div data-sub className="text-[10px] font-mono text-slate-500 leading-none">
-                      {step.sub}
-                    </div>
-                  </div>
-                </motion.div>
-
-                {!isLast && (
-                  <motion.div
-                    key={`conn-${i}`}
-                    data-connector
-                    className="w-16 h-px bg-slate-700/30 relative overflow-hidden"
-                    style={{ transformOrigin: "left center" }}
-                  >
-                    <div className="absolute left-0 top-0 h-full w-full bg-indigo-500/60 scale-x-0 origin-left" />
-                  </motion.div>
-                )}
-              </Fragment>
-            );
-          })}
-        </div>
-
-        {/* Active step detail panel */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 10 }}
-          className="mt-10 max-w-2xl mx-auto rounded-2xl border border-slate-800 bg-slate-900/60 p-6 text-center backdrop-blur-sm"
-        >
-          <div data-title className="font-display font-bold text-xl text-slate-50 mb-1">
-            {WORKFLOW_STEPS[activeIndex].label}
-          </div>
-          <div data-sub className="text-sm text-slate-400">
-            {WORKFLOW_STEPS[activeIndex].sub}
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
 /* Home                                                               */
 /* ------------------------------------------------------------------ */
 
@@ -642,6 +325,29 @@ export default function Home() {
         { y: 40, opacity: 0, duration: 0.9, ease: "power3.out" },
         "-=0.6"
       );
+
+    // Hero 3D Command Deck Scroll Scrub (Dynamic perspective leveling into viewport)
+    gsap.fromTo(
+      ".hero-deck-viewport",
+      {
+        rotateX: 18,
+        scale: 0.90,
+        y: 40,
+        transformOrigin: "center top",
+      },
+      {
+        rotateX: 0,
+        scale: 1,
+        y: 0,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".hero-3d-stage",
+          start: "top 80%",
+          end: "center center",
+          scrub: 1.2,
+        },
+      }
+    );
 
     // Section scroll reveals
     gsap.utils.toArray(".reveal-section").forEach((section) => {
@@ -756,9 +462,11 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Cinematic Command Center Hero Visual */}
-            <div className="hero-visual max-w-5xl mx-auto">
-              <HeroVideoCommandCenter />
+            {/* Cinematic Command Center Hero Visual with 3D Scroll Perspective */}
+            <div className="hero-visual hero-3d-stage max-w-5xl mx-auto [perspective:1400px]">
+              <div className="hero-deck-viewport will-change-transform transform-gpu">
+                <HeroVideoCommandCenter />
+              </div>
             </div>
           </div>
         </section>
@@ -813,101 +521,11 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ============================ SERVICES / 4 CAPABILITIES ============================ */}
-        <section id="services" className="atomest-section border-b border-slate-800/60 reveal-section">
-          <div className="atomest-container">
-            <div className="max-w-3xl mb-14">
-              <div className="atomest-eyebrow mb-3">
-                <Layers className="w-3.5 h-3.5 text-indigo-400" />
-                <span className="atomest-eyebrow-text">Intelligent System Capabilities</span>
-              </div>
-              <h2 className="atomest-section-title text-3xl sm:text-5xl font-extrabold tracking-tight mb-6 text-balance">
-                Four interconnected capabilities. One unified studio.
-              </h2>
-              <p className="text-base sm:text-lg text-slate-400 leading-relaxed">
-                We engineer intelligent systems that connect conversational AI agents, sales outreach, deterministic workflows, and cross-platform telemetry into an unfair competitive edge.
-              </p>
-            </div>
+        {/* ============================ PINNED 4-NODE CAPABILITIES DECK ============================ */}
+        <PinnedCapabilitiesShowcase />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-              {fourCapabilities.map((cap, idx) => {
-                const Icon = cap.icon;
-                return (
-                  <Link
-                    key={idx}
-                    href={cap.route}
-                    className={`reveal-item group flex flex-col justify-between p-6 sm:p-7 rounded-2xl border ${cap.border} bg-slate-900/90 ${cap.hoverBorder} ${cap.glow} transition-all duration-300`}
-                  >
-                    <div>
-                      <div className="flex items-center justify-between mb-4">
-                        <div className={`w-11 h-11 rounded-xl ${cap.bg} border ${cap.border} flex items-center justify-center ${cap.color} group-hover:scale-110 transition-transform`}>
-                          <Icon className="w-6 h-6" />
-                        </div>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700/60">
-                          {cap.badge}
-                        </span>
-                      </div>
-                      <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400 mb-1">
-                        Node {cap.number} // {cap.tagline}
-                      </div>
-                      <h3 className="font-display font-bold text-xl text-slate-50 mb-3 group-hover:text-indigo-300 transition-colors">
-                        {cap.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-slate-400 leading-relaxed mb-6">
-                        {cap.description}
-                      </p>
-                    </div>
-
-                    <div>
-                      <div className="space-y-2 pt-4 border-t border-slate-800/80 mb-5">
-                        {cap.deliverables.map((item, dIdx) => (
-                          <div key={dIdx} className="flex items-start gap-2 text-xs text-slate-300">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-indigo-400 shrink-0 mt-0.5" />
-                            <span>{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="atomest-btn-secondary flex items-center justify-center gap-2 w-full text-xs font-semibold border border-slate-800 group-hover:border-indigo-500/50 group-hover:text-indigo-300 transition-colors py-2.5">
-                        <span>Explore {cap.title}</span>
-                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-
-            {/* Foundational Web Platform Banner */}
-            <div className="mt-8 p-6 sm:p-8 rounded-2xl border border-slate-800 bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 shrink-0">
-                  <Globe className="w-6 h-6" />
-                </div>
-                <div>
-                  <div className="text-xs font-mono uppercase tracking-wider text-indigo-400 mb-1">
-                    Foundational Platform
-                  </div>
-                  <h3 className="font-display font-bold text-xl text-slate-50 mb-1">
-                    {platformFoundation.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-400 max-w-2xl leading-relaxed">
-                    {platformFoundation.description}
-                  </p>
-                </div>
-              </div>
-              <Link
-                href={platformFoundation.route}
-                className="atomest-btn-secondary inline-flex items-center gap-2 text-xs font-semibold shrink-0"
-              >
-                <span>View Web Platforms</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ============================ INTERACTIVE WORKFLOW ============================ */}
-        <InteractiveWorkflow />
+        {/* ============================ PINNED SIGNATURE WORKFLOW CONDUIT ============================ */}
+        <PinnedWorkflowConduit />
 
         {/* ============================ INDUSTRIES ============================ */}
         <section className="atomest-section bg-slate-900/40 border-b border-slate-800/60 reveal-section">

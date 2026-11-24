@@ -40,30 +40,33 @@ async function main() {
     await desktopPage.goto("http://localhost:4180/", { waitUntil: "networkidle" });
     await desktopPage.waitForTimeout(2000);
 
-    const desktopHeroPath = path.join(localScreenshotsDir, "atomest-2.0-hero-desktop.png");
-    await desktopPage.screenshot({ path: desktopHeroPath });
-    fs.copyFileSync(desktopHeroPath, path.join(artifactsDir, "atomest-2.0-hero-desktop.png"));
-    console.log("Desktop hero screenshot saved.");
-
-    // Scroll down to Command Center view
-    await desktopPage.evaluate(() => {
-      window.scrollBy(0, 300);
-    });
+    // Desktop Hero 3D Deck
+    await desktopPage.evaluate(() => window.scrollBy(0, 320));
     await desktopPage.waitForTimeout(1000);
-    const desktopCommandCenterPath = path.join(localScreenshotsDir, "atomest-2.0-command-center-desktop.png");
-    await desktopPage.screenshot({ path: desktopCommandCenterPath });
-    fs.copyFileSync(desktopCommandCenterPath, path.join(artifactsDir, "atomest-2.0-command-center-desktop.png"));
-    console.log("Desktop command center screenshot saved.");
+    const heroDeckPath = path.join(localScreenshotsDir, "atomest-premium-hero-3d.png");
+    await desktopPage.screenshot({ path: heroDeckPath });
+    fs.copyFileSync(heroDeckPath, path.join(artifactsDir, "atomest-premium-hero-3d.png"));
+    console.log("Hero 3D deck screenshot saved.");
 
-    // Scroll down to Services
+    // Desktop Pinned Capabilities Deck (#services)
     await desktopPage.evaluate(() => {
       document.querySelector("#services")?.scrollIntoView({ behavior: "instant" });
     });
-    await desktopPage.waitForTimeout(1800);
-    const desktopServicesSectionPath = path.join(localScreenshotsDir, "atomest-2.0-capabilities-desktop.png");
-    await desktopPage.screenshot({ path: desktopServicesSectionPath });
-    fs.copyFileSync(desktopServicesSectionPath, path.join(artifactsDir, "atomest-2.0-capabilities-desktop.png"));
-    console.log("Desktop capabilities screenshot saved.");
+    await desktopPage.waitForTimeout(1500);
+    const capabilitiesDeckPath = path.join(localScreenshotsDir, "atomest-premium-capabilities-pinned.png");
+    await desktopPage.screenshot({ path: capabilitiesDeckPath });
+    fs.copyFileSync(capabilitiesDeckPath, path.join(artifactsDir, "atomest-premium-capabilities-pinned.png"));
+    console.log("Capabilities pinned deck screenshot saved.");
+
+    // Desktop Pinned Workflow Conduit (#workflow)
+    await desktopPage.evaluate(() => {
+      document.querySelector("#workflow")?.scrollIntoView({ behavior: "instant" });
+    });
+    await desktopPage.waitForTimeout(1500);
+    const workflowConduitPath = path.join(localScreenshotsDir, "atomest-premium-workflow-conduit.png");
+    await desktopPage.screenshot({ path: workflowConduitPath });
+    fs.copyFileSync(workflowConduitPath, path.join(artifactsDir, "atomest-premium-workflow-conduit.png"));
+    console.log("Workflow conduit screenshot saved.");
 
     // 2. Mobile 390x844 (iPhone 14)
     const mobileContext = await browser.newContext({
@@ -78,41 +81,25 @@ async function main() {
     await mobilePage.goto("http://localhost:4180/", { waitUntil: "networkidle" });
     await mobilePage.waitForTimeout(2000);
 
-    const mobileHeroPath = path.join(localScreenshotsDir, "atomest-2.0-hero-mobile.png");
+    // Mobile Hero Command Center
+    await mobilePage.evaluate(() => window.scrollBy(0, 480));
+    await mobilePage.waitForTimeout(1000);
+    const mobileHeroPath = path.join(localScreenshotsDir, "atomest-premium-hero-mobile.png");
     await mobilePage.screenshot({ path: mobileHeroPath });
-    fs.copyFileSync(mobileHeroPath, path.join(artifactsDir, "atomest-2.0-hero-mobile.png"));
+    fs.copyFileSync(mobileHeroPath, path.join(artifactsDir, "atomest-premium-hero-mobile.png"));
     console.log("Mobile hero screenshot saved.");
 
-    // Scroll down to Command Center on mobile
+    // Mobile Workflow
     await mobilePage.evaluate(() => {
-      window.scrollBy(0, 480);
+      document.querySelector("#workflow")?.scrollIntoView({ behavior: "instant" });
     });
     await mobilePage.waitForTimeout(1200);
-    const mobileCommandCenterPath = path.join(localScreenshotsDir, "atomest-2.0-command-center-mobile.png");
-    await mobilePage.screenshot({ path: mobileCommandCenterPath });
-    fs.copyFileSync(mobileCommandCenterPath, path.join(artifactsDir, "atomest-2.0-command-center-mobile.png"));
-    console.log("Mobile command center screenshot saved.");
+    const mobileWorkflowPath = path.join(localScreenshotsDir, "atomest-premium-workflow-mobile.png");
+    await mobilePage.screenshot({ path: mobileWorkflowPath });
+    fs.copyFileSync(mobileWorkflowPath, path.join(artifactsDir, "atomest-premium-workflow-mobile.png"));
+    console.log("Mobile workflow screenshot saved.");
 
-    // Scroll down to Services on mobile
-    await mobilePage.evaluate(() => {
-      document.querySelector("#services")?.scrollIntoView({ behavior: "instant" });
-    });
-    await mobilePage.waitForTimeout(1800);
-    const mobileServicesPath = path.join(localScreenshotsDir, "atomest-2.0-capabilities-mobile.png");
-    await mobilePage.screenshot({ path: mobileServicesPath });
-    fs.copyFileSync(mobileServicesPath, path.join(artifactsDir, "atomest-2.0-capabilities-mobile.png"));
-    console.log("Mobile capabilities screenshot saved.");
-
-    // 3. Services Page Desktop
-    console.log("Navigating to /services...");
-    await desktopPage.goto("http://localhost:4180/services", { waitUntil: "networkidle" });
-    await desktopPage.waitForTimeout(1200);
-    const servicesPagePath = path.join(localScreenshotsDir, "atomest-2.0-services-page.png");
-    await desktopPage.screenshot({ path: servicesPagePath });
-    fs.copyFileSync(servicesPagePath, path.join(artifactsDir, "atomest-2.0-services-page.png"));
-    console.log("Services page screenshot saved.");
-
-    console.log("All screenshots captured successfully!");
+    console.log("All premium animation verification screenshots captured successfully!");
   } finally {
     await browser.close();
     server.close();
