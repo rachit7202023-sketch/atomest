@@ -310,87 +310,74 @@ export default function Home() {
 
     if (prefersReduced) return;
 
-    const tl = gsap.timeline();
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline();
 
-    // Hero staggered entrance
-    tl.from(".hero-reveal", {
-      y: 30,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      stagger: 0.12,
-    })
-      .from(
+      // Hero staggered entrance
+      tl.from(".hero-reveal", {
+        y: 36,
+        opacity: 0,
+        duration: 0.9,
+        ease: "power3.out",
+        stagger: 0.13,
+      }).from(
         ".hero-visual",
-        { y: 40, opacity: 0, duration: 0.9, ease: "power3.out" },
-        "-=0.6"
+        { y: 48, opacity: 0, duration: 1, ease: "power3.out" },
+        "-=0.65"
       );
 
-    // Hero 3D Command Deck Scroll Scrub (Dynamic perspective leveling into viewport)
-    gsap.fromTo(
-      ".hero-deck-viewport",
-      {
-        rotateX: 18,
-        scale: 0.90,
-        y: 40,
-        transformOrigin: "center top",
-      },
-      {
-        rotateX: 0,
-        scale: 1,
-        y: 0,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".hero-3d-stage",
-          start: "top 80%",
-          end: "center center",
-          scrub: 1.2,
-        },
-      }
-    );
+      // Hero 3D Command Deck Scroll Scrub
+      gsap.fromTo(
+        ".hero-deck-viewport",
+        { rotateX: 16, scale: 0.92, y: 36, transformOrigin: "center top" },
+        {
+          rotateX: 0,
+          scale: 1,
+          y: 0,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: ".hero-3d-stage",
+            start: "top 85%",
+            end: "center center",
+            scrub: 1.4,
+          },
+        }
+      );
 
-    // Section scroll reveals
-    gsap.utils.toArray(".reveal-section").forEach((section) => {
-      const el = section as HTMLElement;
-      gsap.from(el, {
-        scrollTrigger: {
-          trigger: el,
-          start: "top 92%",
-          once: true,
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.7,
-        ease: "power3.out",
-        clearProps: "all",
+      // Section scroll reveals
+      gsap.utils.toArray(".reveal-section").forEach((section) => {
+        const el = section as HTMLElement;
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: "top 92%", once: true },
+          y: 32,
+          opacity: 0,
+          duration: 0.75,
+          ease: "power3.out",
+          clearProps: "all",
+        });
       });
+
+      // Staggered card reveals within sections
+      gsap.utils.toArray(".reveal-item").forEach((item) => {
+        const el = item as HTMLElement;
+        gsap.from(el, {
+          scrollTrigger: { trigger: el, start: "top 98%", once: true },
+          y: 18,
+          opacity: 0,
+          duration: 0.4,
+          ease: "power2.out",
+          clearProps: "all",
+        });
+      });
+
+      const refreshTimer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 350);
+
+      return () => clearTimeout(refreshTimer);
     });
 
-    // Staggered card reveals within sections
-    gsap.utils.toArray(".reveal-item").forEach((item) => {
-      const el = item as HTMLElement;
-      gsap.from(el, {
-        scrollTrigger: {
-          trigger: el,
-          start: "top 98%",
-          once: true,
-        },
-        y: 15,
-        opacity: 0,
-        duration: 0.35,
-        ease: "power2.out",
-        clearProps: "all",
-      });
-    });
-
-    const refreshTimer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 300);
-
-    return () => {
-      clearTimeout(refreshTimer);
-      tl.kill();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -403,7 +390,7 @@ export default function Home() {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-slate-950 flex flex-col justify-between text-slate-50">
+      <div className="min-h-screen bg-slate-950 text-slate-50 relative selection:bg-indigo-500/30">
         <Navbar />
 
         {/* ============================ HERO ============================ */}
@@ -446,19 +433,21 @@ export default function Home() {
               </div>
 
               {/* 4 Capabilities telemetry strip */}
-              <div className="hero-reveal pt-4 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs font-mono text-slate-400">
-                <span className="px-3 py-1 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-violet-400" /> 01. AI Agents
-                </span>
-                <span className="px-3 py-1 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" /> 02. Lead Gen & Sales
-                </span>
-                <span className="px-3 py-1 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" /> 03. Workflow Automation
-                </span>
-                <span className="px-3 py-1 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" /> 04. Integrations & BI
-                </span>
+              <div className="hero-reveal pt-4 flex flex-wrap items-center justify-center gap-2 text-xs font-mono text-slate-400">
+                {[
+                  { dot: "bg-violet-400", label: "01. AI Agents" },
+                  { dot: "bg-blue-400", label: "02. Lead Gen & Sales" },
+                  { dot: "bg-indigo-400", label: "03. Workflow Automation" },
+                  { dot: "bg-emerald-400", label: "04. Integrations & BI" },
+                ].map((item) => (
+                  <span
+                    key={item.label}
+                    className="px-3 py-1 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 flex items-center gap-1.5 whitespace-nowrap"
+                  >
+                    <span className={`w-1.5 h-1.5 rounded-full ${item.dot} shrink-0`} />
+                    {item.label}
+                  </span>
+                ))}
               </div>
             </div>
 
@@ -565,8 +554,8 @@ export default function Home() {
                         {ind.solution}
                       </div>
                     </div>
-                    <div className="mt-5 pt-4 border-t border-slate-800/60 flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
-                      <span>Explore {ind.title} automation</span>
+                    <div className="mt-auto pt-4 border-t border-slate-800/60 flex items-center gap-1.5 text-[10px] font-mono text-emerald-400">
+                      <span>Explore {ind.title}</span>
                       <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform group-hover:text-emerald-400" />
                     </div>
                   </div>
@@ -592,45 +581,31 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
               {howWeWorkSteps.map((step, idx) => {
                 const Icon = step.icon;
                 const isLast = idx === howWeWorkSteps.length - 1;
                 return (
-                  <div key={idx} className="reveal-item flex flex-col items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-indigo-400 shrink-0 relative z-10">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <span className="text-[10px] font-mono text-indigo-400 font-semibold">
-                      {step.number}
-                    </span>
-                    <h3 className="font-display font-bold text-sm text-slate-50 text-center leading-tight">
-                      {step.title}
-                    </h3>
-                    {isLast ? null : (
-                      <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-px bg-slate-800 z-0 hidden md:block" />
+                  <div key={idx} className="reveal-item relative">
+                    {/* Connector line between steps on desktop */}
+                    {!isLast && (
+                      <div className="hidden lg:block absolute top-5 left-[calc(100%_-_8px)] w-full h-px bg-gradient-to-r from-slate-700 to-transparent z-0 pointer-events-none" />
                     )}
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
-              <div className="space-y-4">
-                {howWeWorkSteps.map((step, idx) => (
-                  <div key={idx} className="reveal-item flex items-start gap-4 opacity-80 transition-opacity duration-300 group">
-                    <div className="w-8 h-8 rounded-full bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0 mt-0.5">
-                      {step.number}
-                    </div>
-                    <div>
-                      <div className="font-display font-bold text-sm text-slate-50">{step.title}</div>
-                      <div className="text-xs text-slate-400 leading-relaxed mt-0.5">
-                        {step.description}
+                    <div className="relative z-10 p-5 rounded-2xl border border-slate-800 bg-slate-900/60 hover:border-indigo-500/30 transition-all duration-300 h-full flex flex-col gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
+                          <Icon className="w-4.5 h-4.5" />
+                        </div>
+                        <span className="text-[10px] font-mono text-indigo-400 font-semibold tracking-widest">{step.number}</span>
+                      </div>
+                      <div>
+                        <h3 className="font-display font-bold text-base text-slate-50 mb-1.5">{step.title}</h3>
+                        <p className="text-xs text-slate-400 leading-relaxed">{step.description}</p>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -670,10 +645,11 @@ export default function Home() {
         </section>
 
         {/* ============================ FINAL CTA ============================ */}
-        <section className="atomest-section pt-24 sm:pt-32 pb-20 sm:pb-32 reveal-section">
+        <section className="atomest-section reveal-section">
           <div className="atomest-container">
-            <div className="p-8 sm:p-16 rounded-3xl border border-slate-800 bg-gradient-to-b from-slate-900 to-slate-950 relative overflow-hidden text-center shadow-2xl reveal-section">
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(79,70,229,0.12),transparent_100%)] -z-10" />
+            <div className="p-8 sm:p-14 lg:p-20 rounded-3xl border border-slate-800 bg-gradient-to-b from-slate-900 to-slate-950 relative overflow-hidden text-center shadow-2xl">
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_0%,rgba(79,70,229,0.14),transparent_100%)] pointer-events-none" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-indigo-500/40 to-transparent pointer-events-none" />
               <div className="max-w-2xl mx-auto relative z-10 space-y-6">
                 <div className="atomest-eyebrow mx-auto mb-2">
                   <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
@@ -685,12 +661,19 @@ export default function Home() {
                 <p className="text-base sm:text-lg text-slate-400 leading-relaxed">
                   Tell us about your project or current operational bottlenecks. We will assess your requirements and deliver a clear, transparent proposal.
                 </p>
-                <div className="pt-4">
+                <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
                   <Link
                     href="/contact?solution=combined"
                     className="atomest-btn-primary atomest-btn-lg inline-flex items-center gap-2 shadow-lg shadow-indigo-500/25"
                   >
                     <span>Book a Discovery Call</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                  <Link
+                    href="/services"
+                    className="atomest-btn-secondary atomest-btn-lg inline-flex items-center gap-2"
+                  >
+                    <span>View All Services</span>
                     <ArrowRight className="w-4 h-4" />
                   </Link>
                 </div>

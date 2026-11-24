@@ -518,6 +518,15 @@
 
   .text-balance { text-wrap: balance; }
 
+  /* ── Hide scrollbar (cross-browser) ── */
+  .no-scrollbar {
+    -ms-overflow-style: none;   /* IE / Edge */
+    scrollbar-width: none;      /* Firefox */
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;              /* Chrome / Safari / Opera */
+  }
+
   /* Background grid pattern */
   .atomest-grid-bg {
     background-image:
